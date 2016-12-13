@@ -52,7 +52,7 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li id="balance">
-                    Balance :
+                    Balance : 500
                 </li>
                 <li class="active">
                     <a href="index.php">Place Order</a>
@@ -75,17 +75,112 @@
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
-
+        <style>
+        
+.red{
+    color:red;
+    }
+.form-area
+{
+    background-color: #FAFAFA;
+	padding: 10px 40px 60px;
+	margin: 10px 0px 60px;
+	border: 1px solid GREY;
+	}
+        </style>
+        
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
-                 <a href="#menu-toggle" class="btn btn-default pull-right" id="menu-toggle">Toggle Menu</a>
+                 
+                
+              <div class="col-md-5">
+    <div class="form-area">  
+        <form role="form">
+        <br style="clear:both">
+                    <h3 style="margin-bottom: 25px; text-align: center;">Place Order</h3>
+                    <div class="form-group">
+                    <label class="radio-inline"><input type="radio" name="buysell" value="buy">Buy</label>
+                    <label class="radio-inline"><input type="radio" name="buysell" value="sell">Sell</label>
+                    </div>
+            
+                    <div class="form-group">
+                      <label for="sel1">Select company:</label>
+                      <select class="form-control" id="company">
+                        <option>Company1</option>
+                        <option>Company2</option>
+                      </select>
+                    </div>
+
+					<div class="form-group">
+						<input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" required>
+					</div>
+            
+                    <div class="form-group">
+                    <label class="radio-inline"><input type="radio" name="limit" value="market">Market</label>
+                    <label class="radio-inline"><input type="radio" name="limit" value="limit">Limit</label>
+                    </div>   
+            
+                    <div class="form-group">
+						<input type="number" class="form-control" id="limit_price" name="limit_price" placeholder="Limit Price">
+					</div>
+                    <input type="submit" id="submit" name="Submit" class="btn btn-primary pull-right">
+                    </div>
+            
+        
+        </form>
+    </div>
+                
+                <div class="col-md-5 pull-right">
+                    <div class="row">
+                    <div class="col-lg-12">
+                        
+                        <div class="table-title">
+                            <h3>Stock Prices</h3>
+                        </div>
+                        <table class="table-fill">
+                            <thead>
+                            <tr>
+                            <th class="text-left">Company</th>
+                            <th class="text-left">Price</th>
+                           
+                            </tr>
+                            </thead>
+                            <tbody class="table-hover">
+                            <tr>
+                            <td class="text-left">Company 1</td>
+                            <td class="text-left">$ 50,000.00</td>
+                        
+                            </tr>
+                            <tr>
+                            <td class="text-left">Company 2</td>
+                            <td class="text-left">$ 50,000.00</td>
+                            </tr>
+                             <tr>
+                            <td class="text-left">Company 2</td>
+                            <td class="text-left">$ 50,000.00</td>
+                            </tr>
+                             <tr>
+                            <td class="text-left">Company 2</td>
+                            <td class="text-left">$ 50,000.00</td>
+                            </tr>
+                        </table>
+                       
+                       
+                    </div>
+                </div>
+                    
+                </div>
+</div>
              
+                <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
             </div>
+        
         </div>
         <!-- /#page-content-wrapper -->
-
+        
     </div>
+
     <!-- /#wrapper -->
 
     <!-- jQuery -->

@@ -66,10 +66,10 @@
                     <a href="trades.php" class="active">Trade Book</a>
                 </li>
                 <li>
-                    <a href="#">About</a>
+                    <a href="about.php">About</a>
                 </li>
                 <li>
-                    <a href="#">Logout</a>
+                    <a href="logout.php">Logout</a>
                 </li>
             </ul>
         </div>
