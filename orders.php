@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php
+include "classes.php";
+include "conn.inc.php";    
+    
+?>
+    
 <head>
 
     <meta charset="utf-8">
