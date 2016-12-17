@@ -2,7 +2,7 @@
 <html lang="en">
 
 <?php
-include "classes.php";
+include "classes.inc.php";
 include "conn.inc.php";    
     
 ?>

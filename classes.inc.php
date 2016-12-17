@@ -13,6 +13,11 @@ class User
         $this->balance = $new_balance;
     }
     
+    function set_balance($new_balance)
+    {
+        $this->balance = $new_balance;
+    }
+    
     /*function set_id($new_id)
     {
         $this->id = $new_id;

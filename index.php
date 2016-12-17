@@ -1,8 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-include "classes.php";
-include "conn.inc.php";    
+include "classes.inc.php";
+include "conn.inc.php";
+include "reg_login_fun.inc.php";    
+
+//registering the user    
+if(isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email']) && isset($_POST['phone']) && isset($_POST['password']))
+{
+    if(register($conn, ($_POST['first_name']), ($_POST['last_name']), ($_POST['email']), ($_POST['phone']), md5(($_POST['password']))))
+    {
+        //registration successful
+    }
+    else
+    {
+        echo "Registration error";
+        //might wanna refresh
+    }
+}
+    
+if(!isLoggedIn())
+	{
+        header("Location:login.php");
+	}
     
 ?>
     
