@@ -13,9 +13,19 @@ class User
         $this->balance = $new_balance;
     }
     
-    function set_balance($new_balance)
+    function set_balance($conn, $new_balance)
     {
         $this->balance = $new_balance;
+        
+        //also need to update in the database
+        $query = "UPDATE users SET balance = $new_balance WHERE id=$id";
+        
+        if(mysqli_query($conn, $query))
+        {
+            echo "Balance Updated";
+        }
+        else
+            echo "Error balance update in db";
     }
     
     /*function set_id($new_id)
@@ -80,9 +90,19 @@ class Company
         echo $this->price;
     }
     
-    function set_price($new_price)
+    function set_price($conn, $new_price)
     {
         $this->price = $new_price;
+        
+        //also need to update in the database
+        $query = "UPDATE companies SET price = $new_price WHERE id=$id";
+        
+        if(mysqli_query($conn, $query))
+        {
+            echo "Price Updated";
+        }
+        else
+            echo "Error price update in db";
     }
     
 }

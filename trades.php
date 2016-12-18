@@ -6,6 +6,13 @@
 include "classes.inc.php";
 include "conn.inc.php";    
     
+    
+//leave if not logged in
+if(!isLoggedIn())
+{
+    header("Location:login.php");
+}
+    
 ?>
 <head>
 
@@ -57,7 +64,7 @@ include "conn.inc.php";
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li id="balance">
-                    Balance :
+                    Balance : <?php echo $user->get_balance(); ?>
                 </li>
                 <li>
                     <a href="index.php">Place Order</a>
@@ -75,7 +82,7 @@ include "conn.inc.php";
                     <a href="about.php">About</a>
                 </li>
                 <li>
-                    <a href="logout.php">Logout</a>
+                    <a href="logout.php">Logout (<?php echo $user->get_name(); ?>)</a>
                 </li>
             </ul>
         </div>

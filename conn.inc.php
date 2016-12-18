@@ -19,18 +19,21 @@ if ($conn->connect_error)
 function isLoggedIn()
 {
 	if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']))
-	{
-        $balance = getBalance($_SESSION['user_id']);
-        
-        //create the User object
-        $user = new User($_SESSION['user_name'], $_SESSION['user_id'], $balance);
-        
+	{   
 		return true;
 	}
 	else
 	{
 		return false;
 	}
+}
+
+if(isLoggedIn())
+{
+    $balance = getBalance($_SESSION['user_id']);
+        
+    //create the User object
+    $user = new User($_SESSION['user_name'], $_SESSION['user_id'], $balance);
 }
 
 function getBalance($id)

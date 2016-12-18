@@ -19,10 +19,29 @@ if(isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['em
     }
 }
     
+//loggin in the user
+if(isset($_POST['email']) && isset($_POST['password']))
+{
+    if(login($conn, $_POST['email'], md5($_POST['password'])))
+    {
+        header("Location:index.php");
+    }
+    else
+    {
+        echo "<script>alert('Wrong Email/Password');</script>";
+        header("refresh:0,index.php");
+        
+    }
+}
+    
+//leave if not logged in
 if(!isLoggedIn())
-	{
+{
+    if(!isset($_POST['email']))    
         header("Location:login.php");
-	}
+}
+    
+
     
 ?>
     
@@ -78,7 +97,7 @@ if(!isLoggedIn())
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li id="balance">
-                    Balance : 500
+                    Balance : <?php echo $user->get_balance(); ?>
                 </li>
                 <li class="active">
                     <a href="index.php">Place Order</a>
@@ -96,7 +115,7 @@ if(!isLoggedIn())
                     <a href="about.php">About</a>
                 </li>
                 <li>
-                    <a href="logout.php">Logout</a>
+                    <a href="logout.php">Logout (<?php echo $user->get_name(); ?>)</a>
                 </li>
             </ul>
         </div>
@@ -133,8 +152,8 @@ if(!isLoggedIn())
                     <div class="form-group">
                       <label for="sel1">Select company:</label>
                       <select class="form-control" id="company">
-                        <option>Company1</option>
-                        <option>Company2</option>
+                        <option>Company 1</option>
+                        <option>Company 2</option>
                       </select>
                     </div>
 
@@ -173,23 +192,40 @@ if(!isLoggedIn())
                             </tr>
                             </thead>
                             <tbody class="table-hover">
-                            <tr>
-                            <td class="text-left">Company 1</td>
-                            <td class="text-left">$ 50,000.00</td>
-                        
-                            </tr>
-                            <tr>
-                            <td class="text-left">Company 2</td>
-                            <td class="text-left">$ 50,000.00</td>
-                            </tr>
-                             <tr>
-                            <td class="text-left">Company 2</td>
-                            <td class="text-left">$ 50,000.00</td>
-                            </tr>
-                             <tr>
-                            <td class="text-left">Company 2</td>
-                            <td class="text-left">$ 50,000.00</td>
-                            </tr>
+                                
+                                
+                                
+                            <?php
+                                
+                                //get all the company names and their prices
+                                $query = "SELECT id, name, abbr, price FROM companies";
+                                
+                                if($run = mysqli_query($conn, $query))
+                                {
+                                    if(mysqli_num_rows($run) >= 1)
+                                    {
+                                        
+                                        while($array = mysqli_fetch_assoc($run))
+                                        {
+                                            $company_id = $array['id'];
+                                            $company_name = $array['name'];
+                                            $company_abbr = $array['abbr'];
+                                            $company_price = $array['price'];
+                                            
+                                            echo "<tr>";
+                                            echo "<td class='text-left'><a href='company.php?id=$company_id'>$company_name </a>($company_abbr)</td>";
+                                            echo "<td class='text-left'>$company_price</td>";
+                                            echo "</tr>";
+                                        }
+                                        
+                                    }
+                                }
+                                
+                                
+                                
+                                
+                            ?>
+                            </tbody>
                         </table>
                        
                        
