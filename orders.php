@@ -11,6 +11,15 @@ if(!isLoggedIn())
 {
     header("Location:login.php");
 }
+
+    
+//place the order    
+if(isset($_POST['buysell']) && isset($_POST['company_id']) && isset($_POST['quantity']) && isset($_POST['limit_or_market']) && isset($_POST['limit_price']))
+{
+    //call the function to place the order
+    $user->placeOrder($conn, $_POST['buysell'], $_POST['company_id'], $_POST['quantity'], $_POST['limit_or_market'], $_POST['limit_price']);
+}
+    
     
 ?>
     
@@ -155,3 +164,10 @@ if(!isLoggedIn())
 </body>
 
 </html>
+
+
+<?php
+
+
+
+?>

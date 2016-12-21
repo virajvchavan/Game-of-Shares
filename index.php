@@ -141,7 +141,7 @@ if(!isLoggedIn())
                 
               <div class="col-md-5">
     <div class="form-area">  
-        <form role="form">
+        <form role="form" method="post" action="orders.php">
         <br style="clear:both">
                     <h3 style="margin-bottom: 25px; text-align: center;">Place Order</h3>
                     <div class="form-group">
@@ -151,9 +151,30 @@ if(!isLoggedIn())
             
                     <div class="form-group">
                       <label for="sel1">Select company:</label>
-                      <select class="form-control" id="company">
-                        <option>Company 1</option>
-                        <option>Company 2</option>
+                        <select class="form-control" id="company" name="company_id">
+                        <?php
+                        
+                        //get company data
+                        $query_get_companies = "SELECT id, abbr, price FROM companies";
+
+                        if($run_get_companies = mysqli_query($conn, $query_get_companies))
+                            {
+                                if(mysqli_num_rows($run_get_companies) >= 1)
+                                {
+                                    while($array = mysqli_fetch_assoc($run_get_companies))
+                                    {
+                                        $company_id = $array['id'];
+                                        $company_abbr = $array['abbr'];
+                                        $company_stock_price = $array['price'];
+
+                                        echo "<option value='$company_id'><b>$company_abbr</b> ($$company_stock_price) </option>";
+
+                                    }
+                                }
+                        }
+                        
+                        ?>
+                        
                       </select>
                     </div>
 
@@ -162,8 +183,8 @@ if(!isLoggedIn())
 					</div>
             
                     <div class="form-group">
-                    <label class="radio-inline"><input type="radio" name="limit" value="market">Market</label>
-                    <label class="radio-inline"><input type="radio" name="limit" value="limit">Limit</label>
+                    <label class="radio-inline"><input type="radio" name="limit_or_market" value="market">Market</label>
+                    <label class="radio-inline"><input type="radio" name="limit_or_market" value="limit">Limit</label>
                     </div>   
             
                     <div class="form-group">

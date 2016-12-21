@@ -45,17 +45,58 @@ class User
         
     function get_id()
     {
-        echo $this->id;
+        return $this->id;
     }
     
     function get_name()
     {
-        echo $this->name;
+        return $this->name;
     }
     
     function get_balance()
     {
-        echo $this->balance;
+        return $this->balance;
+    }
+    
+    
+    //function to place the order
+    function placeOrder($conn, $type, $company_id, $quantity, $limit_or_market, $limit_price)
+    {
+
+        //get a random amount of time bet min and max
+        $rand = rand(0, 120);
+        $time = time();
+        $time += $rand;
+
+        $query = "INSERT INTO orders(user_id, company_id, quantity, type, limit_or_market, limit_price, time) VALUES('$this->id','$company_id','$quantity','$type','$limit_or_market','$limit_price','$time')";
+
+        if(mysqli_query($conn, $query))
+        {
+            echo "Success";
+        }
+        else
+            echo "Error placing the order";
+    }
+    
+    //execute the orders for this user
+    function executeOrders($conn)
+    {
+        //check with all the orders in the table orders
+        $query = "SELECT * FROM orders WHERE user_id = $this->id";
+        
+        if($run = mysqli_query($conn, $query))
+        {
+            while($array = mysqli_fetch_assoc($run))
+            {
+                $company_id = $array['company_id'];
+                $type = $array['type'];
+                $quantity = $array['quantity'];
+                $limit_or_market = $array['limit_or_market'];
+                $limit_price = $array['limit_price'];
+                
+                $price = get_company_price($company_id);
+            }
+        }
     }
     
 }
@@ -77,17 +118,17 @@ class Company
     
     function get_id()
     {
-        echo $this->id;
+        return $this->id;
     }
     
     function get_name()
     {
-        echo $this->name;
+        return $this->name;
     }
     
     function get_price()
     {
-        echo $this->price;
+        return $this->price;
     }
     
     function set_price($conn, $new_price)
@@ -129,22 +170,22 @@ class Order
     
     function get_id()
     {
-        echo $this->id;
+        return $this->id;
     }
     
     function get_company_id()
     {
-        echo $this->company_id;
+        return $this->company_id;
     }
     
     function get_user_id()
     {
-        echo $this->user_id;
+        return $this->user_id;
     }
     
     function get_limit_price()
     {
-        echo $this->limit_price;
+        return $this->limit_price;
     }
     
 }
