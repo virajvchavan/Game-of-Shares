@@ -106,15 +106,44 @@ if(!isLoggedIn())
                             </tr>
                             </thead>
                             <tbody class="table-hover">
-                            <tr>
-                            <td class="text-left">January</td>
-                            <td class="text-left">$ 50,000.00</td>
-                            <td class="text-left">10.6</td>
-                            </tr>
-                            <tr>
-                            <td class="text-left">January</td>
-                            <td class="text-left">$ 50,000.00</td>
-                            <td class="text-left">10.6</td>
+                                <?php
+                                
+                                $query = "SELECT * FROM shares WHERE user_id =".$user->get_id();
+                                
+                                if($run = mysqli_query($conn, $query))
+                                {
+                                    if(mysqli_num_rows($run) < 1)
+                                    {
+                                        echo "You do not own any shares";
+                                    }
+                                    else
+                                    {
+                                        while($array = mysqli_fetch_assoc($run))
+                                        {
+                                            $company_id = $array['company_id'];
+                                            $quantity = $array['quantity'];
+                                            
+                                            $company_name = getCompanyName($conn, $company_id);
+                                            $company_price = $user->get_company_price($conn, $company_id);
+                                            
+                                            
+                                            echo "<tr>
+                                                    <td class='text-left'>$company_name</td>
+                                                    <td class='text-left'>$quantity</td>
+                                                    <td class='text-left'>$company_price</td>
+                                                 </tr>";
+                                            
+                                        }
+                                    }
+                                }
+                                
+                                
+                                
+                                
+                                ?>
+                                
+                                
+                        
                             </tr>
                         </table>
                        
@@ -145,3 +174,21 @@ if(!isLoggedIn())
 </body>
 
 </html>
+
+<?php
+
+function getCompanyName($conn, $id)
+{   
+    $query = "SELECT name FROM companies WHERE id = $id";
+    
+    if($run = mysqli_query($conn, $query))
+    {
+        while($array = mysqli_fetch_assoc($run))
+        {
+            $name = $array['name'];
+        }
+        
+        return $name;
+    }
+}
+?>

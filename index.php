@@ -5,6 +5,7 @@ include "classes.inc.php";
 include "conn.inc.php";
 include "reg_login_fun.inc.php";    
 
+    
 //registering the user    
 if(isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email']) && isset($_POST['phone']) && isset($_POST['password']))
 {
@@ -19,7 +20,7 @@ if(isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['em
     }
 }
     
-//loggin in the user
+//logging in the user
 if(isset($_POST['email']) && isset($_POST['password']))
 {
     if(login($conn, $_POST['email'], md5($_POST['password'])))
@@ -40,8 +41,9 @@ if(!isLoggedIn())
     if(!isset($_POST['email']))    
         header("Location:login.php");
 }
-    
 
+//execute orders for logged in user
+$user->executeOrders($conn);
     
 ?>
     
@@ -145,13 +147,13 @@ if(!isLoggedIn())
         <br style="clear:both">
                     <h3 style="margin-bottom: 25px; text-align: center;">Place Order</h3>
                     <div class="form-group">
-                    <label class="radio-inline"><input type="radio" name="buysell" value="buy">Buy</label>
-                    <label class="radio-inline"><input type="radio" name="buysell" value="sell">Sell</label>
+                    <label class="radio-inline"><input type="radio" name="buysell" value="buy" required>Buy</label>
+                    <label class="radio-inline"><input type="radio" name="buysell" value="sell" required>Sell</label>
                     </div>
             
                     <div class="form-group">
                       <label for="sel1">Select company:</label>
-                        <select class="form-control" id="company" name="company_id">
+                        <select class="form-control" id="company" name="company_id" required>
                         <?php
                         
                         //get company data
@@ -183,8 +185,8 @@ if(!isLoggedIn())
 					</div>
             
                     <div class="form-group">
-                    <label class="radio-inline"><input type="radio" name="limit_or_market" value="market">Market</label>
-                    <label class="radio-inline"><input type="radio" name="limit_or_market" value="limit">Limit</label>
+                    <label class="radio-inline"><input type="radio" name="limit_or_market" value="market" required>Market</label>
+                    <label class="radio-inline"><input type="radio" name="limit_or_market" value="limit" required>Limit</label>
                     </div>   
             
                     <div class="form-group">

@@ -30,16 +30,23 @@ function isLoggedIn()
 
 if(isLoggedIn())
 {
-    $balance = getBalance($_SESSION['user_id']);
+    $balance = getBalance($conn, $_SESSION['user_id']);
         
     //create the User object
     $user = new User($_SESSION['user_name'], $_SESSION['user_id'], $balance);
 }
 
-function getBalance($id)
+function getBalance($conn, $id)
 {
     //write a query and return the balance of the user with user_id = id
-    $balance = 5000;
+    $query = "SELECT balance FROM users WHERE id = $id";
+    if($run = mysqli_query($conn, $query))
+    {
+        if($array = mysqli_fetch_assoc($run))
+        {
+            $balance = $array['balance'];
+        }
+    }
     return $balance;
 }
 
