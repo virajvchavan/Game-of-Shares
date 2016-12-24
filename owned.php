@@ -17,8 +17,6 @@ if(!isLoggedIn())
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
-    <meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; width=device-width;">
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -28,9 +26,20 @@ if(!isLoggedIn())
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <link href="css/sidebar.css" rel="stylesheet">
     <link href="css/table.css" rel="stylesheet">
     
+        <style>
+    #balance{
+        color: #f6f8f6;
+        font-size: 25px;
+        background-color: #004D40;
+        padding-bottom: 6px;
+        padding-top: 6px;
+        margin: 8px;
+        }
+    
+    </style>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -54,8 +63,8 @@ if(!isLoggedIn())
                 <li>
                     <a href="index.php">Place Order</a>
                 </li>
-                <li class="active">
-                    <a href="owned.php">Your Shares</a>
+                <li>
+                    <a href="owned.php" class="active">Your Shares</a>
                 </li>
                 <li>
                     <a href="orders.php">Pending Orders</a>
@@ -76,13 +85,9 @@ if(!isLoggedIn())
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
-                 <a href="#menu-toggle" class="btn btn-default pull-right" id="menu-toggle">Toggle Menu</a>
                 <div class="row">
                     <div class="col-lg-12">
                         
-                        <div class="table-title">
-                            <h3>Your Shares</h3>
-                        </div>
                         <table class="table-fill">
                             <thead>
                             <tr>
@@ -125,9 +130,7 @@ if(!isLoggedIn())
                                 }
                               
                                 ?>
-                                
-                                
-                        
+                           
                             </tr>
                         </table>
                        
@@ -142,18 +145,9 @@ if(!isLoggedIn())
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script src="js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-
-    <!-- Menu Toggle Script -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    </script>
 
 </body>
 

@@ -63,24 +63,9 @@ $user->executeOrders($conn);
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <link href="css/sidebar.css" rel="stylesheet">
     <link href="css/table.css" rel="stylesheet">
     
-    <style>
-        #balance{
-            color: #1b1c1b;
-            font-size: 25px;
-            background-color: #7f8989;
-            padding-bottom: 6px;
-            padding-top: 6px;
-            margin: 8px;
-        }
-        
-        .active{
-            background-color: #263238 
-        }
-    
-    </style>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -88,6 +73,18 @@ $user->executeOrders($conn);
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    <style>
+    #balance{
+        color: #f6f8f6;
+        font-size: 25px;
+        background-color: #004D40;
+        padding-bottom: 6px;
+        padding-top: 6px;
+        margin: 8px;
+        }
+    
+    </style>
 
 </head>
 
@@ -101,8 +98,8 @@ $user->executeOrders($conn);
                 <li id="balance">
                     Balance : <?php echo $user->get_balance(); ?>
                 </li>
-                <li class="active">
-                    <a href="index.php">Place Order</a>
+                <li>
+                    <a href="index.php"  class="active">Place Order</a>
                 </li>
                 <li>
                     <a href="owned.php">Your Shares</a>
@@ -258,7 +255,6 @@ $user->executeOrders($conn);
                 </div>
 </div>
              
-                <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
             </div>
         
         </div>
@@ -274,13 +270,6 @@ $user->executeOrders($conn);
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
-    <!-- Menu Toggle Script -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    </script>
 
 </body>
 

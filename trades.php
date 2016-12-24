@@ -28,24 +28,21 @@ if(!isLoggedIn())
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="css/simple-sidebar.css" rel="stylesheet">
-    <link href="css/table.css" rel="stylesheet">
-    
-    <style>
-        #balance{
-            color: #1b1c1b;
-            font-size: 25px;
-            background-color: #7f8989;
-            padding-bottom: 6px;
-            padding-top: 6px;
-            margin: 8px;
-        }
-         .active{
-            background-color: #263238 
+        <style>
+    #balance{
+        color: #f6f8f6;
+        font-size: 25px;
+        background-color: #004D40;
+        padding-bottom: 6px;
+        padding-top: 6px;
+        margin: 8px;
         }
     
     </style>
+    
+    <!-- Custom CSS -->
+    <link href="css/sidebar.css" rel="stylesheet">
+    <link href="css/table.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -91,7 +88,6 @@ if(!isLoggedIn())
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
-                 <a href="#menu-toggle" class="btn btn-default pull-right" id="menu-toggle">Toggle Menu</a>
                 <div class="row">
                     <div class="col-lg-12">
                         <table class="table-fill">
@@ -130,12 +126,6 @@ if(!isLoggedIn())
                                             $company_name = $company->get_company_name($conn);
                                             $company_price = $company->get_company_price($conn);
                                             
-                                            if($company_price > $price)
-                                                $change = "Up";
-                                            elseif($company_price < $price)
-                                                $change = "Down";
-                                            else
-                                                $change = " ";
                                             
                                             $balance -= $quantity*$price;
                                             echo "<tr>
@@ -149,7 +139,7 @@ if(!isLoggedIn())
                                                     echo "</td>
                                                     <td class='text-left'>$company_name</td>
                                                     <td class='text-left'>".abs($quantity)."</td>
-                                                    <td class='text-left'>$price  $change</td>
+                                                    <td class='text-left'>$price</td>
                                                     <td class='text-left'>".abs($quantity*$price)."</td>
                                                     <td class='text-left'>$balance</td>
                                                  </tr>";
@@ -177,14 +167,6 @@ if(!isLoggedIn())
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-
-    <!-- Menu Toggle Script -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    </script>
 
 </body>
 

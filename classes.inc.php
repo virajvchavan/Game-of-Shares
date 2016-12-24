@@ -157,9 +157,8 @@ class User
                 {
                     continue;
                 }
-                
                 //check validity for limit orders
-                if($limit_or_market == "limit" && (($type == "buy" && $limit_price > $price) || ($type == "sell" && $limit_price < $price)))
+                if($limit_or_market == "limit" && (($type == "sell" && $limit_price  < $price) || ($type == "buy" && $limit_price >$price )))    
                 {
                     continue;
                 }
@@ -251,9 +250,6 @@ class User
             }
         }
     }
-    
-    
-   
     
 }
 

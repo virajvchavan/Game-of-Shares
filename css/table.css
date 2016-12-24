@@ -1,3 +1,7 @@
+body{
+    background: #FAFAFA;
+}
+
 table {
     border-collapse: collapse;
     margin-bottom: 3em;
@@ -31,11 +35,3 @@ tbody tr:nth-child(2n-1) {
 tbody tr:hover {
     background-color: rgba(129,208,177,.3);
 }
-  #balance{
-            color: #1b1c1b;
-            font-size: 25px;
-            background-color: #7f8989;
-            padding-bottom: 6px;
-            padding-top: 6px;
-            margin: 8px;
-        }

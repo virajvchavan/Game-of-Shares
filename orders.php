@@ -41,20 +41,18 @@ if(isset($_POST['buysell']) && isset($_POST['company_id']) && isset($_POST['quan
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <link href="css/sidebar.css" rel="stylesheet">
     <link href="css/table.css" rel="stylesheet">
+
     
-    <style>
-        #balance{
-            color: #1b1c1b;
-            font-size: 25px;
-            background-color: #7f8989;
-            padding-bottom: 6px;
-            padding-top: 6px;
-            margin: 8px;
-        }
-         .active{
-            background-color: #263238 
+        <style>
+    #balance{
+        color: #f6f8f6;
+        font-size: 25px;
+        background-color: #004D40;
+        padding-bottom: 6px;
+        padding-top: 6px;
+        margin: 8px;
         }
     
     </style>
@@ -103,7 +101,6 @@ if(isset($_POST['buysell']) && isset($_POST['company_id']) && isset($_POST['quan
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
-                 <a href="#menu-toggle" class="btn btn-default pull-right" id="menu-toggle">Toggle Menu</a>
                 <div class="row">
                     <div class="col-lg-12">
                         
@@ -155,7 +152,7 @@ if(isset($_POST['buysell']) && isset($_POST['company_id']) && isset($_POST['quan
                                             if($limit_or_market == "limit")
                                                 echo "($limit_price)";
                                             echo "</td>
-                                                    <td class='text-left'><button href='#'>Cancel</button></td>
+                                                    <td class='text-left'><button class='btn btn-danger btn-sm' href='#'>Cancel</button></td>
                                                  </tr>";
                                             
                                         }
@@ -181,14 +178,6 @@ if(isset($_POST['buysell']) && isset($_POST['company_id']) && isset($_POST['quan
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-
-    <!-- Menu Toggle Script -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    </script>
 
 </body>
 
