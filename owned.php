@@ -29,22 +29,8 @@ if(!isLoggedIn())
 
     <!-- Custom CSS -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
-    <link href="css/index.css" rel="stylesheet">
+    <link href="css/table.css" rel="stylesheet">
     
-    <style>
-        #balance{
-            color: #1b1c1b;
-            font-size: 25px;
-            background-color: #7f8989;
-            padding-bottom: 6px;
-            padding-top: 6px;
-            margin: 8px;
-        }
-         .active{
-            background-color: #263238 
-        }
-    
-    </style>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -123,8 +109,9 @@ if(!isLoggedIn())
                                             $company_id = $array['company_id'];
                                             $quantity = $array['quantity'];
                                             
-                                            $company_name = getCompanyName($conn, $company_id);
-                                            $company_price = $user->get_company_price($conn, $company_id);
+                                            $company = new Company($company_id);
+                                            $company_name = $company->get_company_name($conn);
+                                            $company_price = $company->get_company_price($conn);
                                             
                                             
                                             echo "<tr>
@@ -136,10 +123,7 @@ if(!isLoggedIn())
                                         }
                                     }
                                 }
-                                
-                                
-                                
-                                
+                              
                                 ?>
                                 
                                 
@@ -174,21 +158,3 @@ if(!isLoggedIn())
 </body>
 
 </html>
-
-<?php
-
-function getCompanyName($conn, $id)
-{   
-    $query = "SELECT name FROM companies WHERE id = $id";
-    
-    if($run = mysqli_query($conn, $query))
-    {
-        while($array = mysqli_fetch_assoc($run))
-        {
-            $name = $array['name'];
-        }
-        
-        return $name;
-    }
-}
-?>

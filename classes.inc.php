@@ -69,7 +69,8 @@ class User
         if($type == "buy")
         {
             //first get price of the share
-            $price = $this->get_company_price($conn, $company_id);
+            $company = new Company($company_id);
+            $price = $company->get_company_price($conn);
 
             if($this->balance < $quantity*$price)
             {
@@ -147,7 +148,8 @@ class User
                 $time = $array['time'];
                 
                 //get price of the share
-                $price = $this->get_company_price($conn, $company_id);
+                $company = new Company($company_id);
+                $price = $company->get_company_price($conn);
                 
                
                 
@@ -251,19 +253,7 @@ class User
     }
     
     
-    //get company price from its id
-    function get_company_price($conn, $company_id)
-    {
-        $query = "SELECT price FROM companies WHERE id='$company_id'";
-        if($run = mysqli_query($conn, $query))
-        {
-            while($array = mysqli_fetch_assoc($run))
-            {
-                $price = $array['price'];
-            }
-            return $price;
-        }
-    }
+   
     
 }
 
@@ -275,11 +265,9 @@ class Company
     var $name;
     var $price;
     
-    function __construct($new_name, $new_id, $new_price)
+    function __construct($new_id)
     {
         $this->id = $new_id;
-        $this->name = $new_name;
-        $this->price = $new_price;
     }
     
     function get_id()
@@ -310,6 +298,35 @@ class Company
         }
         else
             echo "Error price update in db";
+    }
+    
+    function get_company_name($conn)
+    {   
+        $query = "SELECT name FROM companies WHERE id = $this->id";
+
+        if($run = mysqli_query($conn, $query))
+        {
+            while($array = mysqli_fetch_assoc($run))
+            {
+                $name = $array['name'];
+            }
+
+            return $name;
+        }
+    }
+    
+     //get company price from its id
+    function get_company_price($conn)
+    {
+        $query = "SELECT price FROM companies WHERE id='$this->id'";
+        if($run = mysqli_query($conn, $query))
+        {
+            while($array = mysqli_fetch_assoc($run))
+            {
+                $price = $array['price'];
+            }
+            return $price;
+        }
     }
     
 }

@@ -64,7 +64,7 @@ $user->executeOrders($conn);
 
     <!-- Custom CSS -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
-    <link href="css/index.css" rel="stylesheet">
+    <link href="css/table.css" rel="stylesheet">
     
     <style>
         #balance{

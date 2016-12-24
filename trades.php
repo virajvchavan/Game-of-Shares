@@ -30,7 +30,7 @@ if(!isLoggedIn())
 
     <!-- Custom CSS -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
-    <link href="css/index.css" rel="stylesheet">
+    <link href="css/table.css" rel="stylesheet">
     
     <style>
         #balance{
@@ -94,10 +94,6 @@ if(!isLoggedIn())
                  <a href="#menu-toggle" class="btn btn-default pull-right" id="menu-toggle">Toggle Menu</a>
                 <div class="row">
                     <div class="col-lg-12">
-                        
-                        <div class="table-title">
-                            <h3>Trade Book</h3>
-                        </div>
                         <table class="table-fill">
                             <thead>
                             <tr>
@@ -111,24 +107,59 @@ if(!isLoggedIn())
                             </tr>
                             </thead>
                             <tbody class="table-hover">
-                            <tr>
-                            <td class="text-left">January</td>
-                            <td class="text-left">$ 50,000.00</td>
-                            <td class="text-left">10.6</td>
-                            <td class="text-left">January</td>
-                            <td class="text-left">$ 50,000.00</td>
-                            <td class="text-left">10.6</td>
-                            <td class="text-left">Blah</td>
-                            </tr>
-                            <tr>
-                            <td class="text-left">January</td>
-                            <td class="text-left">$ 50,000.00</td>
-                            <td class="text-left">10.6</td>
-                            <td class="text-left">January</td>
-                            <td class="text-left">$ 50,000.00</td>
-                            <td class="text-left">10.6</td>
-                            <td class="text-left">Blah</td>
-                            </tr>
+                                <?php
+                                
+                                $query = "SELECT * FROM transactions WHERE user_id =".$user->get_id();
+                                
+                                if($run = mysqli_query($conn, $query))
+                                {
+                                    if(mysqli_num_rows($run) < 1)
+                                    {
+                                        echo "<tr><td colspan='7'>No transactions to show</td></tr>";
+                                    }
+                                    else
+                                    {
+                                        $balance = 5000;
+                                        while($array = mysqli_fetch_assoc($run))
+                                        {
+                                            $company_id = $array['company_id'];
+                                            $quantity = $array['quantity'];
+                                            $time = $array['time'];
+                                            $price = $array['price'];
+                                            $company = new Company($company_id);
+                                            $company_name = $company->get_company_name($conn);
+                                            $company_price = $company->get_company_price($conn);
+                                            
+                                            if($company_price > $price)
+                                                $change = "Up";
+                                            elseif($company_price < $price)
+                                                $change = "Down";
+                                            else
+                                                $change = " ";
+                                            
+                                            $balance -= $quantity*$price;
+                                            echo "<tr>
+                                                    <td class='text-left'>$time</td>
+                                                    <td class='text-left'>";
+                                                    if($quantity > 0)
+                                                        echo "Buy";
+                                                    elseif($quantity < 0)
+                                                        echo "Sell";
+                                            
+                                                    echo "</td>
+                                                    <td class='text-left'>$company_name</td>
+                                                    <td class='text-left'>".abs($quantity)."</td>
+                                                    <td class='text-left'>$price  $change</td>
+                                                    <td class='text-left'>".abs($quantity*$price)."</td>
+                                                    <td class='text-left'>$balance</td>
+                                                 </tr>";
+                                            
+                                        }
+                                    }
+                                }   
+                                
+                                ?>
+                            </tbody>
                         </table>
                        
                        

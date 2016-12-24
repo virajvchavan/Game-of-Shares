@@ -42,7 +42,7 @@ if(isset($_POST['buysell']) && isset($_POST['company_id']) && isset($_POST['quan
 
     <!-- Custom CSS -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
-    <link href="css/index.css" rel="stylesheet">
+    <link href="css/table.css" rel="stylesheet">
     
     <style>
         #balance{
@@ -107,37 +107,63 @@ if(isset($_POST['buysell']) && isset($_POST['company_id']) && isset($_POST['quan
                 <div class="row">
                     <div class="col-lg-12">
                         
-                        <div class="table-title">
-                            <h3>Pending Orders</h3>
-                        </div>
                         <table class="table-fill">
                             <thead>
                             <tr>
                             <th class="text-left">Time</th>
-                            <th class="text-left">Company</th>
                             <th class="text-left">Buy/Sell</th>
+                            <th class="text-left">Company</th>
                             <th class="text-left">Quantity</th>
                             <th class="text-left">Type</th>
                             <th class="text-left">Action</th>
                             </tr>
                             </thead>
                             <tbody class="table-hover">
-                            <tr>
-                            <td class="text-left">January</td>
-                            <td class="text-left">$ 50,000.00</td>
-                            <td class="text-left">10.6</td>
-                            <td class="text-left">January</td>
-                            <td class="text-left">$ 50,000.00</td>
-                            <td class="text-left">10.6</td>
-                            </tr>
-                            <tr>
-                            <td class="text-left">January</td>
-                            <td class="text-left">$ 50,000.00</td>
-                            <td class="text-left">10.6</td>
-                            <td class="text-left">January</td>
-                            <td class="text-left">$ 50,000.00</td>
-                            <td class="text-left">10.6</td>
-                            </tr>
+                                
+                                <?php
+                                
+                                $query = "SELECT * FROM orders WHERE user_id =".$user->get_id();
+                                
+                                if($run = mysqli_query($conn, $query))
+                                {
+                                    if(mysqli_num_rows($run) < 1)
+                                    {
+                                        echo "<tr><td colspan='6'>No pending orders to show</td></tr>";
+                                    }
+                                    else
+                                    {
+                                        while($array = mysqli_fetch_assoc($run))
+                                        {
+                                            $company_id = $array['company_id'];
+                                            $quantity = $array['quantity'];
+                                            $type = $array['type'];
+                                            $time = $array['time'];
+                                            $limit_or_market = $array['limit_or_market'];
+                                            $limit_price = $array['limit_price'];
+                                            
+                                            $company = new Company($company_id);
+                                            $company_name = $company->get_company_name($conn);
+                                            $company_price = $company->get_company_price($conn);
+                                            
+                                            
+                                            echo "<tr>
+                                                    <td class='text-left'>".date('m/d/Y H:i:s', $time)."</td>
+                                                    <td class='text-left'>".ucfirst($type)."</td>
+                                                    <td class='text-left'>$company_name</td>
+                                                    <td class='text-left'>$quantity</td>
+                                                    <td class='text-left'>".ucfirst($limit_or_market);
+                                            if($limit_or_market == "limit")
+                                                echo "($limit_price)";
+                                            echo "</td>
+                                                    <td class='text-left'><button href='#'>Cancel</button></td>
+                                                 </tr>";
+                                            
+                                        }
+                                    }
+                                }   
+                                
+                                ?>
+                            </tbody>
                         </table>
                        
                        
