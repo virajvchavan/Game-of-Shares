@@ -140,7 +140,7 @@ $user->executeOrders($conn);
                 
               <div class="col-md-5">
     <div class="form-area">  
-        <form role="form" method="post" action="orders.php">
+        <form role="form" method="post" action="orders.php" onsubmit="return validateForm()">
         <br style="clear:both">
                     <h3 style="margin-bottom: 25px; text-align: center;">Place Order</h3>
                     <div class="form-group">
@@ -182,18 +182,19 @@ $user->executeOrders($conn);
 					</div>
             
                     <div class="form-group">
-                    <label class="radio-inline"><input type="radio" name="limit_or_market" value="market" required>Market</label>
-                    <label class="radio-inline"><input type="radio" name="limit_or_market" value="limit" required>Limit</label>
+                    <label class="radio-inline"><input type="radio" id="market" name="limit_or_market" value="market" required>Market</label>
+                    <label class="radio-inline"><input type="radio" id="limit" name="limit_or_market" value="limit" required>Limit</label>
                     </div>   
             
                     <div class="form-group">
-						<input type="number" class="form-control" id="limit_price" name="limit_price" placeholder="Limit Price">
+						<input type="number" class="form-control" id="limit_price" name="limit_price" placeholder="Limit Price" id="required_later">
 					</div>
                     <input type="submit" id="submit" name="Submit" class="btn btn-primary pull-right">
                     </div>
             
         
         </form>
+                  
     </div>
                 
                 <div class="col-md-5 pull-right">

@@ -23,6 +23,14 @@ if(isset($_POST['buysell']) && isset($_POST['company_id']) && isset($_POST['quan
     }
 }
     
+//delete an order
+if(isset($_POST['delete_id']) && !empty($_POST['delete_id']))
+{
+    $order = new Order($_POST['delete_id']);
+    $order->delete_order($conn);
+
+}
+    
     
 ?>
     
@@ -56,6 +64,8 @@ if(isset($_POST['buysell']) && isset($_POST['company_id']) && isset($_POST['quan
         }
     
     </style>
+    
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -131,6 +141,7 @@ if(isset($_POST['buysell']) && isset($_POST['company_id']) && isset($_POST['quan
                                     {
                                         while($array = mysqli_fetch_assoc($run))
                                         {
+                                            $order_id = $array['id'];
                                             $company_id = $array['company_id'];
                                             $quantity = $array['quantity'];
                                             $type = $array['type'];
@@ -151,8 +162,30 @@ if(isset($_POST['buysell']) && isset($_POST['company_id']) && isset($_POST['quan
                                                     <td class='text-left'>".ucfirst($limit_or_market);
                                             if($limit_or_market == "limit")
                                                 echo "($limit_price)";
+                                            
+                                            ?>
+                                
+                                            <script>
+                                                    function deleteOrder()
+                                                        {
+
+                                                            if(confirm("Sure to Cancel the order?"))
+                                                            {
+                                                               return true;
+                                                            }
+                                                            else
+                                                               return false;
+                                                        }
+
+                                            </script>
+                                
+                                <?php
                                             echo "</td>
-                                                    <td class='text-left'><button class='btn btn-danger btn-sm' href='#'>Cancel</button></td>
+                                                    <td class='text-left'>
+                                                    <form method='post' action='orders.php' onsubmit='return deleteOrder()'>
+                                                    <input type='text' value='$order_id' name='delete_id' hidden>
+                                                    <input type='submit' class='btn btn-danger btn-sm' value='Cancel'>
+                                                    </td>
                                                  </tr>";
                                             
                                         }

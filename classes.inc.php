@@ -126,6 +126,8 @@ class User
         }
     }
     
+    
+    
     //execute the orders for this user
     function executeOrders($conn)
     {
@@ -168,12 +170,79 @@ class User
                 if($type == "buy")
                 {
                     $this->balance -= $total_price;
+                    if($this->balance <= 0)
+                    {
+                        echo "One order could not be executed due to: Insufficient Balance\n.";
+                        continue;
+                    }
                 
                 }
                 if($type == "sell")
                 {
                     $this->balance += $total_price;
                 }
+                
+                
+                //insert into or update shares table
+                
+                    //check if some shares already there
+                    $query = "SELECT * FROM shares WHERE company_id = '$company_id' AND user_id = '$this->id'"; 
+                
+                    if($run = mysqli_query($conn, $query))
+                    {
+                    
+                        if(mysqli_num_rows($run) == 1)
+                        {
+                            
+                            while($array = mysqli_fetch_assoc($run))
+                            {
+                                $owned = $array['quantity'];
+                            }
+                            //update shares quantity
+                            if($type == "buy")
+                                $query_update = "UPDATE shares SET quantity = quantity + '$quantity' WHERE company_id = '$company_id' AND user_id = '$this->id'";
+                            elseif($type == "sell")
+                            {
+                                if($owned < $quantity)
+                                {
+                                    echo "\nOne order could not be executed due to: Insufficient Shares\n";
+                                    continue;
+                                }
+                                $query_update = "UPDATE shares SET quantity = quantity - '$quantity' WHERE company_id = '$company_id' AND user_id = '$this->id'";
+                            }
+
+                            if(mysqli_query($conn, $query_update))
+                            {
+                                echo "Updated quantity\n";
+                            }
+                            else
+                                echo "Error updating shares";
+                        }
+                        elseif(mysqli_num_rows($run) == 0)
+                        {
+                            
+                            if($type == "sell")
+                            {
+                                echo "\nOne order could not be executed due to: Insufficient Shares\n";
+                                continue;
+                            }
+
+                            //insert new entry
+                            if($type == "buy")
+                            {
+                                $query = "INSERT INTO shares(user_id, company_id, quantity) VALUES ('$this->id', '$company_id', '$quantity')";
+
+                                if(mysqli_query($conn, $query))
+                                {
+                                    echo "Inserted shares";
+                                }
+                                else
+                                    echo "Couldnt insert shares";
+                            }
+                        }
+                  
+                    }
+                
                 
                 //update user balance
                 $this->set_balance($conn, $this->balance);
@@ -191,47 +260,7 @@ class User
                     echo "Error transaction add";
                 
                 
-                //insert into or update shares table
                 
-                    //check if some shares already there
-                    $query = "SELECT * FROM shares WHERE company_id = '$company_id' AND user_id = '$this->id'"; 
-                
-                    if($run = mysqli_query($conn, $query))
-                    {
-                    
-                        if(mysqli_num_rows($run) == 1)
-                        {
-                            //update shares quantity
-                            if($type == "buy")
-                                $query_update = "UPDATE shares SET quantity = quantity + '$quantity' WHERE company_id = '$company_id' AND user_id = '$this->id'";
-                            elseif($type == "sell")
-                                $query_update = "UPDATE shares SET quantity = quantity - '$quantity' WHERE company_id = '$company_id' AND user_id = '$this->id'";
-
-                            if(mysqli_query($conn, $query_update))
-                            {
-                                echo "Updated quantity\n";
-                            }
-                            else
-                                echo "Error updating shares";
-                        }
-                        elseif(mysqli_num_rows($run) == 0)
-                        {
-
-                            //insert new entry
-                            if($type == "buy")
-                            {
-                                $query = "INSERT INTO shares(user_id, company_id, quantity) VALUES ('$this->id', '$company_id', '$quantity')";
-
-                                if(mysqli_query($conn, $query))
-                                {
-                                    echo "Inserted shares";
-                                }
-                                else
-                                    echo "Couldnt insert shares";
-                            }
-                        }
-                  
-                    }
                 
                 
                 //now delete from the orders table
@@ -338,13 +367,9 @@ class Order
     var $type;
     var $limit_price;
     
-    function __construct($new_id, $new_user_id, $new_company_id, $new_quantity, $new_type, $new_limit_price)
+    function __construct($new_id)
     {
         $this->id = $new_id;
-        $this->company_id = $new_company_id;
-        $this->user_id = $new_user_id;
-        $this->type = $new_type;
-        $this->limit_price = $new_limit_price;
     }
     
     function get_id()
@@ -366,6 +391,20 @@ class Order
     {
         return $this->limit_price;
     }
+    
+    function delete_order($conn)
+    {
+        $query_delete = "DELETE FROM orders WHERE id=$this->id";
+        
+        if(mysqli_query($conn, $query_delete))
+        {
+            echo "Order Deleted";
+            return true;
+        }
+        else
+            return false;
+    }
+    
     
 }
 
