@@ -1,5 +1,6 @@
 body{
     background: #FAFAFA;
+    
 }
 
 table {
@@ -35,3 +36,25 @@ tbody tr:nth-child(2n-1) {
 tbody tr:hover {
     background-color: rgba(129,208,177,.3);
 }
+.green{
+    color: green;
+}
+.red{
+    color: red;
+}
+
+#note{
+    position: absolute;
+    z-index: 101;
+    top: 0;
+    left: 250px;
+    right: 0;
+    background: #fde073;
+    text-align: center;
+    line-height: 3;
+    overflow: hidden; 
+    -webkit-box-shadow: 0 0 5px black;
+    -moz-box-shadow:    0 0 5px black;
+    box-shadow:         0 0 5px black;
+}
+

@@ -47,7 +47,11 @@ changePrices($conn);
 
     
 //execute orders for logged in user
-$user->executeOrders($conn);
+$message = $user->executeOrders($conn);
+if($message != "")
+{
+    echo "<div id='note'>$message<a id='close' class='pull-right'>[Close]</a></div>";
+}
     
 ?>
     
@@ -70,6 +74,7 @@ $user->executeOrders($conn);
     <link href="css/sidebar.css" rel="stylesheet">
     <link href="css/table.css" rel="stylesheet">
     
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -81,14 +86,32 @@ $user->executeOrders($conn);
     <style>
     #balance{
         color: #f6f8f6;
-        font-size: 25px;
+        font-size: 23px;
         background-color: #004D40;
         padding-bottom: 6px;
         padding-top: 6px;
         margin: 8px;
         }
+        body{
+            font-family: 'Montserrat', sans-serif;
+        }
     
     </style>
+    
+    <script>
+    function validateForm()
+        {
+            var limit_price = document.forms["order"]["limit_price"].value;
+            var type = document.forms["order"]["limit_or_market"].value;
+            
+            if(type == "limit" && limit_price == "")
+            {
+                alert("Please enter the Limit Price");
+                return false;
+            }
+            return true;
+        }
+    </script>
 
 </head>
 
@@ -100,7 +123,7 @@ $user->executeOrders($conn);
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li id="balance">
-                    Balance : <?php echo $user->get_balance(); ?>
+                    Balance: <?php echo $user->get_balance(); ?>
                 </li>
                 <li>
                     <a href="index.php"  class="active">Place Order</a>
@@ -113,6 +136,9 @@ $user->executeOrders($conn);
                 </li>
                 <li>
                     <a href="trades.php">Trade Book</a>
+                </li>
+                <li>
+                    <a href="help.php">Help</a>
                 </li>
                 <li>
                     <a href="about.php">About</a>
@@ -144,7 +170,7 @@ $user->executeOrders($conn);
                 
               <div class="col-md-5">
     <div class="form-area">  
-        <form role="form" method="post" action="orders.php" onsubmit="return validateForm()">
+        <form role="form" method="post" action="orders.php" onsubmit="return validateForm()" name="order">
         <br style="clear:both">
                     <h3 style="margin-bottom: 25px; text-align: center;">Place Order</h3>
                     <div class="form-group">
@@ -169,7 +195,7 @@ $user->executeOrders($conn);
                                         $company_id = $array['id'];
                                         $company_abbr = $array['abbr'];
                                         $company_stock_price = $array['price'];
-
+                                                                                
                                         echo "<option value='$company_id'><b>$company_abbr</b> ($$company_stock_price) </option>";
 
                                     }
@@ -211,10 +237,10 @@ $user->executeOrders($conn);
                         <table class="table-fill">
                             <thead>
                             <tr>
-                            <th class="text-left">Company</th>
-                            <th class="text-left">Price</th>
-                            <th class="text-left">High</th>
-                            <th class="text-left">Low</th>
+                            <th>Company</th>
+                            <th >Price</th>
+                            <th>High</th>
+                            <th>Low</th>
                            
                             </tr>
                             </thead>
@@ -244,18 +270,21 @@ $user->executeOrders($conn);
                                             
                                             if($company_price > $prev_price)
                                             {
+                                                $class = "green";
                                                 $change = "&uarr;";
+                                                
                                             }
                                             else
                                             {
                                                 $change = "&darr;";
+                                                $class = "red";
                                             }
                                             
                                             echo "<tr>";
-                                            echo "<td class='text-left'><a href='company.php?id=$company_id'>$company_name </a>($company_abbr)</td>";
-                                            echo "<td class='text-left'>$company_price $change</td>
-                                            <td class='text-left'>$high</td>
-                                            <td class='text-left'>$low</td>";
+                                            echo "<td><a href='company.php?id=$company_id'>$company_name </a>($company_abbr)</td>";
+                                            echo "<td><span class='$class'>$company_price $change</span></td>
+                                            <td>$high</td>
+                                            <td>$low</td>";
                                             echo "</tr>";
                                         }
                                         
@@ -291,6 +320,13 @@ $user->executeOrders($conn);
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
+    <script>
+ close = document.getElementById("close");
+ close.addEventListener('click', function() {
+   note = document.getElementById("note");
+   note.style.display = 'none';
+ }, false);
+</script>
 
 </body>
 

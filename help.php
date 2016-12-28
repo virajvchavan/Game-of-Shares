@@ -36,7 +36,6 @@ $user->executeOrders($conn);
     <link href="css/table.css" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-
     
         <style>
     #balance{
@@ -87,10 +86,10 @@ $user->executeOrders($conn);
                     <a href="trades.php">Trade Book</a>
                 </li>
                 <li>
-                    <a href="help.php">Help</a>
+                    <a href="help.php"  class="active">Help</a>
                 </li>
                 <li>
-                    <a href="about.php" class="active">About</a>
+                    <a href="about.php">About</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout (<?php echo $user->get_name(); ?>)</a>
@@ -104,7 +103,7 @@ $user->executeOrders($conn);
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2>This is me.</h2>
+                        <h2>I'll be there for you...&#9835;</h2>
                        
                     </div>
                 </div>

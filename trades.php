@@ -13,6 +13,15 @@ if(!isLoggedIn())
     header("Location:login.php");
 }
     
+    
+//execute orders for logged in user
+$message = $user->executeOrders($conn);
+if($message != "")
+{
+    echo "<div id='note'>$message<a id='close' class='pull-right'>[Close]</a></div>";
+}
+    
+
 ?>
 <head>
 
@@ -27,16 +36,21 @@ if(!isLoggedIn())
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
         <style>
     #balance{
         color: #f6f8f6;
-        font-size: 25px;
+        font-size: 23px;
         background-color: #004D40;
         padding-bottom: 6px;
         padding-top: 6px;
         margin: 8px;
         }
+            body{
+                font-family: 'Montserrat', sans-serif;
+            }
     
     </style>
     
@@ -61,7 +75,7 @@ if(!isLoggedIn())
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li id="balance">
-                    Balance : <?php echo $user->get_balance(); ?>
+                    Balance: <?php echo $user->get_balance(); ?>
                 </li>
                 <li>
                     <a href="index.php">Place Order</a>
@@ -74,6 +88,9 @@ if(!isLoggedIn())
                 </li>
                 <li>
                     <a href="trades.php" class="active">Trade Book</a>
+                </li>
+                <li>
+                    <a href="help.php">Help</a>
                 </li>
                 <li>
                     <a href="about.php">About</a>
@@ -93,13 +110,13 @@ if(!isLoggedIn())
                         <table class="table-fill">
                             <thead>
                             <tr>
-                            <th class="text-left">Time</th>
-                            <th class="text-left">Buy/Sell</th>
-                            <th class="text-left">Company</th>
-                            <th class="text-left">Quantity</th>
-                            <th class="text-left">Price</th>
-                            <th class="text-left">Total</th>
-                            <th class="text-left">Balance</th>
+                            <th>Time</th>
+                            <th>Buy/Sell</th>
+                            <th>Company</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                            <th>Balance</th>
                             </tr>
                             </thead>
                             <tbody class="table-hover">
@@ -130,19 +147,28 @@ if(!isLoggedIn())
                                             
                                             $balance -= $quantity*$price;
                                             echo "<tr>
-                                                    <td class='text-left'>$time</td>
-                                                    <td class='text-left'>";
+                                                    <td>$time</td>
+                                                    <td>";
                                                     if($quantity > 0)
+                                                    {
                                                         echo "Buy";
+                                                        $class = "red";
+                                                    }
                                                     elseif($quantity < 0)
+                                                    {
                                                         echo "Sell";
+                                                        $class = "green";
+                                                    }
                                             
                                                     echo "</td>
-                                                    <td class='text-left'>$company_name</td>
-                                                    <td class='text-left'>".abs($quantity)."</td>
-                                                    <td class='text-left'>$price</td>
-                                                    <td class='text-left'>".abs($quantity*$price)."</td>
-                                                    <td class='text-left'>$balance</td>
+                                                    <td><a href='company.php?id=$company_id'>$company_name</a></td>
+                                                    <td>".abs($quantity)."</td>
+                                                    <td>$price</td>
+                                                    <td class='$class'>";
+                                                    if($quantity < 0)
+                                                        echo "+";
+                                                    echo -$quantity*$price."</td>
+                                                    <td>$balance</td>
                                                  </tr>";
                                             
                                         }
@@ -168,6 +194,14 @@ if(!isLoggedIn())
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+    
+    <script>
+ close = document.getElementById("close");
+ close.addEventListener('click', function() {
+   note = document.getElementById("note");
+   note.style.display = 'none';
+ }, false);
+</script>
 
 </body>
 

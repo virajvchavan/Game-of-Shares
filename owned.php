@@ -12,6 +12,13 @@ if(!isLoggedIn())
     header("Location:login.php");
 }
     
+//execute orders for logged in user
+$message = $user->executeOrders($conn);
+if($message != "")
+{
+    echo "<div id='note'>$message<a id='close' class='pull-right'>[Close]</a></div>";
+}
+    
 ?>
 <head>
 
@@ -28,16 +35,20 @@ if(!isLoggedIn())
     <!-- Custom CSS -->
     <link href="css/sidebar.css" rel="stylesheet">
     <link href="css/table.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     
         <style>
     #balance{
         color: #f6f8f6;
-        font-size: 25px;
+        font-size: 23px;
         background-color: #004D40;
         padding-bottom: 6px;
         padding-top: 6px;
         margin: 8px;
         }
+            body{
+                font-family: 'Montserrat', sans-serif;
+            }
     
     </style>
 
@@ -58,7 +69,7 @@ if(!isLoggedIn())
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li id="balance">
-                    Balance : <?php echo $user->get_balance(); ?>
+                    Balance: <?php echo $user->get_balance(); ?>
                 </li>
                 <li>
                     <a href="index.php">Place Order</a>
@@ -71,6 +82,9 @@ if(!isLoggedIn())
                 </li>
                 <li>
                     <a href="trades.php">Trade Book</a>
+                </li>
+                <li>
+                    <a href="help.php">Help</a>
                 </li>
                 <li>
                     <a href="about.php">About</a>
@@ -91,11 +105,11 @@ if(!isLoggedIn())
                         <table class="table-fill">
                             <thead>
                             <tr>
-                            <th class="text-left">Company</th>
-                            <th class="text-left">Quantity</th>
-                            <th class="text-left">Current Price</th>
-                            <th class="text-left">High</th>
-                            <th class="text-left">Low</th>
+                            <th>Company</th>
+                            <th>Quantity</th>
+                            <th>Current Price</th>
+                            <th>High</th>
+                            <th>Low</th>
                             </tr>
                             </thead>
                             <tbody class="table-hover">
@@ -107,7 +121,7 @@ if(!isLoggedIn())
                                 {
                                     if(mysqli_num_rows($run) < 1)
                                     {
-                                        echo "You do not own any shares";
+                                        echo "<tr><td colspan='6'>You do not own any shares</td></tr>";
                                     }
                                     else
                                     {
@@ -123,11 +137,11 @@ if(!isLoggedIn())
                                             
                                             
                                             echo "<tr>
-                                                    <td class='text-left'>$company_name</td>
-                                                    <td class='text-left'>$quantity</td>
-                                                    <td class='text-left'>$company_price</td>
-                                                    <td class='text-left'>$high</td>
-                                                    <td class='text-left'>$low</td>
+                                                    <td><a href='company.php?id=$company_id'>$company_name</a></td>
+                                                    <td>$quantity</td>
+                                                    <td>$company_price</td>
+                                                    <td>$high</td>
+                                                    <td>$low</td>
                                                  </tr>";
                                             
                                         }
@@ -153,6 +167,13 @@ if(!isLoggedIn())
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+    <script>
+ close = document.getElementById("close");
+ close.addEventListener('click', function() {
+   note = document.getElementById("note");
+   note.style.display = 'none';
+ }, false);
+</script>
 
 </body>
 

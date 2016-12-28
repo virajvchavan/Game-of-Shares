@@ -21,13 +21,33 @@ if(isset($_POST['buysell']) && isset($_POST['company_id']) && isset($_POST['quan
     {
         header("refresh:0,index.php");
     }
+    
+    if($_POST['limit_or_market'] == 'limit')
+    {
+        if($_POST['buysell'] == "buy")
+            $person = "Seller";
+        else
+            $person = "Buyer";
+        echo "<div id='note'>Order will be executed once a $person is available at price ". $_POST['limit_price']."<a id='close' class='pull-right'>[Close]</a></div>";
+    }
+}
+
+
+//execute orders for logged in user
+$message = $user->executeOrders($conn);
+if($message != "")
+{
+    echo "<div id='note'>$message<a id='close' class='pull-right'>[Close]</a></div>";
 }
     
+
 //delete an order
 if(isset($_POST['delete_id']) && !empty($_POST['delete_id']))
 {
     $order = new Order($_POST['delete_id']);
     $order->delete_order($conn);
+    
+    echo "<div id='note'>Order Deleted<a id='close' class='pull-right'>[Close]</a></div>";
 
 }
     
@@ -52,16 +72,20 @@ if(isset($_POST['delete_id']) && !empty($_POST['delete_id']))
     <link href="css/sidebar.css" rel="stylesheet">
     <link href="css/table.css" rel="stylesheet">
 
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     
         <style>
     #balance{
         color: #f6f8f6;
-        font-size: 25px;
+        font-size: 23px;
         background-color: #004D40;
         padding-bottom: 6px;
         padding-top: 6px;
         margin: 8px;
         }
+            body{
+                font-family: 'Montserrat', sans-serif;
+            }
     
     </style>
     
@@ -84,7 +108,7 @@ if(isset($_POST['delete_id']) && !empty($_POST['delete_id']))
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li id="balance">
-                    Balance : <?php echo $user->get_balance(); ?>
+                    Balance: <?php echo $user->get_balance(); ?>
                 </li>
                 <li>
                     <a href="index.php">Place Order</a>
@@ -97,6 +121,9 @@ if(isset($_POST['delete_id']) && !empty($_POST['delete_id']))
                 </li>
                 <li>
                     <a href="trades.php">Trade Book</a>
+                </li>
+                <li>
+                    <a href="help.php">Help</a>
                 </li>
                 <li>
                     <a href="about.php">About</a>
@@ -155,13 +182,13 @@ if(isset($_POST['delete_id']) && !empty($_POST['delete_id']))
                                             
                                             
                                             echo "<tr>
-                                                    <td class='text-left'>".date('m/d/Y H:i:s', $time)."</td>
+                                                    <td class='text-left'>".$time."</td>
                                                     <td class='text-left'>".ucfirst($type)."</td>
-                                                    <td class='text-left'>$company_name</td>
+                                                    <td class='text-left'><a href='company.php?id=$company_id'>$company_name</a></td>
                                                     <td class='text-left'>$quantity</td>
                                                     <td class='text-left'>".ucfirst($limit_or_market);
                                             if($limit_or_market == "limit")
-                                                echo "($limit_price)";
+                                                echo " ($limit_price)";
                                             
                                             ?>
                                 
@@ -211,6 +238,14 @@ if(isset($_POST['delete_id']) && !empty($_POST['delete_id']))
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+    
+    <script>
+ close = document.getElementById("close");
+ close.addEventListener('click', function() {
+   note = document.getElementById("note");
+   note.style.display = 'none';
+ }, false);
+</script>
 
 </body>
 

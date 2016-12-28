@@ -11,9 +11,18 @@ if(!isLoggedIn())
 {
     header("Location:login.php");
 }
+    
+if(!isset($_GET['id']) && empty($_GET['id']))
+{
+    header("Location:index.php");
+}
 
 //execute orders for logged in user
-$user->executeOrders($conn);
+$message = $user->executeOrders($conn);
+if($message != "")
+{
+    echo "<div id='note'>$message<a id='close' class='pull-right'>[Close]</a></div>";
+}
      
 ?>
     
@@ -34,7 +43,7 @@ $user->executeOrders($conn);
     <!-- Custom CSS -->
     <link href="css/sidebar.css" rel="stylesheet">
     <link href="css/table.css" rel="stylesheet">
-
+    
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
     
@@ -90,7 +99,7 @@ $user->executeOrders($conn);
                     <a href="help.php">Help</a>
                 </li>
                 <li>
-                    <a href="about.php" class="active">About</a>
+                    <a href="about.php">About</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout (<?php echo $user->get_name(); ?>)</a>
@@ -104,7 +113,51 @@ $user->executeOrders($conn);
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2>This is me.</h2>
+                       <?php
+                        
+                        $company_id = $_GET['id'];
+                        
+                        $query = "SELECT * FROM companies WHERE id='$company_id'";
+                        
+                        if($run = mysqli_query($conn, $query))
+                        {
+                            if(mysqli_num_rows($run) == 0)
+                                echo "\n<h3>Dude, you're lost!</h3>\n";
+                            while($array = mysqli_fetch_assoc($run))
+                            {
+                                $name = $array['name'];
+                                $price = $array['price'];
+                                $abbr = $array['abbr'];
+                                $prev_price = $array['prev_price'];
+                                $high = $array['high'];
+                                $low = $array['low'];
+                                $description = $array['description'];
+                                
+                                echo "<div id='name' class='jumbotron'><div class='page-header'>
+                                      <h1>$name</h1>
+                                    </div>
+                                <div>($abbr)</div></div>
+                                <div class='row'>
+                                <div class='col-sm-3'>
+                                <div class='panel panel-primary'><div class='panel-heading'>Current Price</div><div class='panel-body'>$price</div></div></div>
+                                <div class='col-sm-3'>
+                                <div class='panel panel-primary'><div class='panel-heading'>Previous Price</div><div class='panel-body'>$prev_price</div></div></div>
+                                <div class='col-sm-3'>
+                                <div class='panel panel-primary'><div class='panel-heading'>Lowest Price</div><div class='panel-body'>$low</div></div></div>
+                                <div class='col-sm-3'>
+                                <div class='panel panel-primary'><div class='panel-heading'>Highest Price</div><div class='panel-body'>$high</div></div>
+                                </div>
+                                </div>
+                                <br><div class='panel panel-primary' id = 'description'><div class='panel-body'>$description</div></div>";
+                                
+                                
+                            }
+                        }
+                        
+                        
+                        
+                        
+                        ?>
                        
                     </div>
                 </div>
@@ -120,14 +173,15 @@ $user->executeOrders($conn);
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+    
+    <script>
+ close = document.getElementById("close");
+ close.addEventListener('click', function() {
+   note = document.getElementById("note");
+   note.style.display = 'none';
+ }, false);
+</script>
 
 </body>
 
 </html>
-
-
-<?php
-
-
-
-?>

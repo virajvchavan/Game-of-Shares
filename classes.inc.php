@@ -22,7 +22,7 @@ class User
         
         if(mysqli_query($conn, $query))
         {
-            echo "Balance Updated";
+            
         }
         else
             echo "Error balance update in db";
@@ -89,13 +89,8 @@ class User
             }
         
         }
-        //set a random future timestamp for this order
-        //get a random amount of time bet min and max
-        $rand = rand(0, 10);
-        $time = time();
-        $time += $rand;
 
-        $query = "INSERT INTO orders(user_id, company_id, quantity, type, limit_or_market, limit_price, time) VALUES('$this->id','$company_id','$quantity','$type','$limit_or_market','$limit_price','$time')";
+        $query = "INSERT INTO orders(user_id, company_id, quantity, type, limit_or_market, limit_price) VALUES('$this->id','$company_id','$quantity','$type','$limit_or_market','$limit_price')";
 
         if(mysqli_query($conn, $query))
         {
@@ -130,14 +125,16 @@ class User
     //execute the orders for this user
     function executeOrders($conn)
     {
+        $message_to_return = "";
         //check with all the orders in the table orders
         $query_get_orders = "SELECT * FROM orders WHERE user_id = '$this->id'";
         if($run_get_orders = mysqli_query($conn, $query_get_orders))
         {
             if(mysqli_num_rows($run_get_orders) < 1)
             {
-                return;
+                return $message_to_return;
             }
+            $count = 0;
             while($array = mysqli_fetch_assoc($run_get_orders))
             {
                 $order_id = $array['id'];
@@ -146,18 +143,11 @@ class User
                 $quantity = $array['quantity'];
                 $limit_or_market = $array['limit_or_market'];
                 $limit_price = $array['limit_price'];
-                $time = $array['time'];
                 
                 //get price of the share
                 $company = new Company($company_id);
                 $price = $company->get_company_price($conn);
                 
-               
-                
-                if($time > time())
-                {
-                    continue;
-                }
                 //check validity for limit orders
                 if($limit_or_market == "limit" && (($type == "sell" && $price  < $limit_price) || ($type == "buy" && $price >$limit_price)))    
                 {
@@ -171,7 +161,7 @@ class User
                     $this->balance -= $total_price;
                     if($this->balance <= 0)
                     {
-                        echo "One order could not be executed due to: Insufficient Balance\n.";
+                        $message_to_return.="One order could not be executed due to: Insufficient Balance\n.";
                         continue;
                     }
                 
@@ -205,7 +195,7 @@ class User
                             {
                                 if($owned < $quantity)
                                 {
-                                    echo "\nOne order could not be executed due to: Insufficient Shares\n";
+                                    $message_to_return.="\nOne order could not be executed due to: Insufficient Shares\n";
                                     continue;
                                 }
                                 $query_update = "UPDATE shares SET quantity = quantity - '$quantity' WHERE company_id = '$company_id' AND user_id = '$this->id'";
@@ -213,7 +203,7 @@ class User
 
                             if(mysqli_query($conn, $query_update))
                             {
-                                echo "Updated quantity\n";
+                                
                             }
                             else
                                 echo "Error updating shares";
@@ -223,7 +213,7 @@ class User
                             
                             if($type == "sell")
                             {
-                                echo "\nOne order could not be executed due to: Insufficient Shares\n";
+                               $message_to_return.="\nOne order could not be executed due to: Insufficient Shares\n";
                                 continue;
                             }
 
@@ -234,7 +224,7 @@ class User
 
                                 if(mysqli_query($conn, $query))
                                 {
-                                    echo "Inserted shares";
+                                    
                                 }
                                 else
                                     echo "Couldnt insert shares";
@@ -254,13 +244,10 @@ class User
                     $query = "INSERT INTO transactions(user_id, company_id, quantity, price) VALUES ('$this->id', '$company_id', '-$quantity', '$price')";
                 if(mysqli_query($conn, $query))
                 {
-                    echo "Transaction added. \n";
+                    
                 }
                 else
                     echo "Error transaction add";
-                
-                
-                
                 
                 
                 //now delete from the orders table
@@ -268,15 +255,19 @@ class User
                 
                 if(mysqli_query($conn, $query_delete))
                 {
-                    echo "Deleted from orders";
+                   
                 }
                 else
                 {
                     echo "Error deleting order";
                 }
-                
-                
+                $count++;
+                if($count == 1)
+                    $message_to_return .= "One Order was executed. See <a href='trades.php'>Trade Book</a>";
+                elseif($count > 1)
+                    $message_to_return .= "$count Orders were executed. See <a href='trades.php'>Trade Book</a>";
             }
+            return $message_to_return;
         }
     }
     
@@ -426,7 +417,6 @@ class Order
         
         if(mysqli_query($conn, $query_delete))
         {
-            echo "Order Deleted";
             return true;
         }
         else
