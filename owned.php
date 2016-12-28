@@ -94,6 +94,8 @@ if(!isLoggedIn())
                             <th class="text-left">Company</th>
                             <th class="text-left">Quantity</th>
                             <th class="text-left">Current Price</th>
+                            <th class="text-left">High</th>
+                            <th class="text-left">Low</th>
                             </tr>
                             </thead>
                             <tbody class="table-hover">
@@ -113,16 +115,19 @@ if(!isLoggedIn())
                                         {
                                             $company_id = $array['company_id'];
                                             $quantity = $array['quantity'];
-                                            
                                             $company = new Company($company_id);
                                             $company_name = $company->get_company_name($conn);
                                             $company_price = $company->get_company_price($conn);
+                                            $high = $company->get_high_price($conn);
+                                            $low = $company->get_low_price($conn);
                                             
                                             
                                             echo "<tr>
                                                     <td class='text-left'>$company_name</td>
                                                     <td class='text-left'>$quantity</td>
                                                     <td class='text-left'>$company_price</td>
+                                                    <td class='text-left'>$high</td>
+                                                    <td class='text-left'>$low</td>
                                                  </tr>";
                                             
                                         }

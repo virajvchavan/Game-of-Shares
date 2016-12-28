@@ -82,4 +82,59 @@ function login_session_start($id, $first_name)
     
 }
 
+//check if prices for companies need to be changed, and change them
+function changePrices($conn)
+{ 
+    $query = "SELECT id, time, price, high, low FROM companies";
+    if($run = mysqli_query($conn, $query))
+    {
+        while($array = mysqli_fetch_assoc($run))
+        {
+            $time = $array['time'];
+            
+            if($time > time())
+            {
+                continue;
+            }
+            
+            $company_id = $array['id'];
+            $price = $array['price'];
+            $high = $array['high'];
+            $low = $array['low'];
+            
+            //set a random amount of time for the future
+            $rand_time = rand(0, 5);
+            $time = time();
+            $time += $rand_time;
+
+            //set a random change in price
+            $rand_price = random_float(-5.0, 5.0);
+            $new_price = round($price + $rand_price, 1);
+            if($new_price < 0)
+            {
+                $new_price += round(abs(2*$rand_price), 1);
+            }
+            
+            if($new_price > $high)
+                $high = $new_price;
+            elseif($new_price < $low)
+                $low = $new_price;
+            
+            $query_update = "UPDATE companies SET price = $new_price, time = $time, prev_price = $price, high = $high, low = $low WHERE id = $company_id";
+            
+            if(mysqli_query($conn, $query_update))
+            {
+                
+            }
+            else
+                echo "Err";
+            
+        }
+    }
+}
+
+function random_float ($min,$max) {
+    return ($min + lcg_value()*(abs($max - $min)));
+}
+
 ?>

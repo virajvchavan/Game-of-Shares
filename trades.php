@@ -115,7 +115,8 @@ if(!isLoggedIn())
                                     }
                                     else
                                     {
-                                        $balance = 5000;
+                                        //set the initial balance
+                                        $balance = 100000;
                                         while($array = mysqli_fetch_assoc($run))
                                         {
                                             $company_id = $array['company_id'];

@@ -3,7 +3,7 @@
 <?php
 include "classes.inc.php";
 include "conn.inc.php";
-include "reg_login_fun.inc.php";    
+include "functions.index.php";    
 
     
 //registering the user    
@@ -42,6 +42,10 @@ if(!isLoggedIn())
         header("Location:login.php");
 }
 
+//change the share price of companies (from functions.index.php)
+changePrices($conn);
+
+    
 //execute orders for logged in user
 $user->executeOrders($conn);
     
@@ -209,6 +213,8 @@ $user->executeOrders($conn);
                             <tr>
                             <th class="text-left">Company</th>
                             <th class="text-left">Price</th>
+                            <th class="text-left">High</th>
+                            <th class="text-left">Low</th>
                            
                             </tr>
                             </thead>
@@ -219,7 +225,7 @@ $user->executeOrders($conn);
                             <?php
                                 
                                 //get all the company names and their prices
-                                $query = "SELECT id, name, abbr, price FROM companies";
+                                $query = "SELECT * FROM companies";
                                 
                                 if($run = mysqli_query($conn, $query))
                                 {
@@ -232,10 +238,24 @@ $user->executeOrders($conn);
                                             $company_name = $array['name'];
                                             $company_abbr = $array['abbr'];
                                             $company_price = $array['price'];
+                                            $prev_price = $array['prev_price'];
+                                            $high = $array['high'];
+                                            $low = $array['low'];
+                                            
+                                            if($company_price > $prev_price)
+                                            {
+                                                $change = "&uarr;";
+                                            }
+                                            else
+                                            {
+                                                $change = "&darr;";
+                                            }
                                             
                                             echo "<tr>";
                                             echo "<td class='text-left'><a href='company.php?id=$company_id'>$company_name </a>($company_abbr)</td>";
-                                            echo "<td class='text-left'>$company_price</td>";
+                                            echo "<td class='text-left'>$company_price $change</td>
+                                            <td class='text-left'>$high</td>
+                                            <td class='text-left'>$low</td>";
                                             echo "</tr>";
                                         }
                                         

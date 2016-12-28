@@ -99,7 +99,6 @@ class User
 
         if(mysqli_query($conn, $query))
         {
-            echo "Success";
             return true;
         }
         else
@@ -160,7 +159,7 @@ class User
                     continue;
                 }
                 //check validity for limit orders
-                if($limit_or_market == "limit" && (($type == "sell" && $limit_price  < $price) || ($type == "buy" && $limit_price >$price )))    
+                if($limit_or_market == "limit" && (($type == "sell" && $price  < $limit_price) || ($type == "buy" && $price >$limit_price)))    
                 {
                     continue;
                 }
@@ -177,6 +176,7 @@ class User
                     }
                 
                 }
+                
                 if($type == "sell")
                 {
                     $this->balance += $total_price;
@@ -351,6 +351,34 @@ class Company
                 $price = $array['price'];
             }
             return $price;
+        }
+    }
+    
+     //get low price from its id
+    function get_low_price($conn)
+    {
+        $query = "SELECT low FROM companies WHERE id='$this->id'";
+        if($run = mysqli_query($conn, $query))
+        {
+            while($array = mysqli_fetch_assoc($run))
+            {
+                $low = $array['low'];
+            }
+            return $low;
+        }
+    }
+    
+     //get high price from its id
+    function get_high_price($conn)
+    {
+        $query = "SELECT high FROM companies WHERE id='$this->id'";
+        if($run = mysqli_query($conn, $query))
+        {
+            while($array = mysqli_fetch_assoc($run))
+            {
+                $high = $array['high'];
+            }
+            return $high;
         }
     }
     
