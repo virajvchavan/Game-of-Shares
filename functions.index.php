@@ -4,7 +4,7 @@
 function register($conn, $first_name, $last_name, $email, $phone, $password)
 {
     //set initial balance for user
-    $initial_balance = 5000;
+    $initial_balance = 500000;
     
     $ok = true;
     

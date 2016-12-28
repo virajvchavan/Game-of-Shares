@@ -133,7 +133,9 @@ if($message != "")
                                     else
                                     {
                                         //set the initial balance
-                                        $balance = 100000;
+                                        //IMPORTANT: This has to be same as the one stored in the database
+                                        $balance = 500000;
+                                        
                                         while($array = mysqli_fetch_assoc($run))
                                         {
                                             $company_id = $array['company_id'];

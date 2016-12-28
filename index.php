@@ -227,8 +227,7 @@ if($message != "")
                   
     </div>
                 
-                <div class="col-md-5 pull-right">
-                    <div class="row">
+                <div class="col-md-7 pull-right">
                     <div class="col-lg-12">
                         
                         <div class="table-title">
@@ -300,7 +299,6 @@ if($message != "")
                        
                        
                     </div>
-                </div>
                     
                 </div>
 </div>
