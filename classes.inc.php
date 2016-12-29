@@ -373,6 +373,20 @@ class Company
         }
     }
     
+     //get high price from its id
+    function get_abbr($conn)
+    {
+        $query = "SELECT abbr FROM companies WHERE id='$this->id'";
+        if($run = mysqli_query($conn, $query))
+        {
+            while($array = mysqli_fetch_assoc($run))
+            {
+                $abbr = $array['abbr'];
+            }
+            return $abbr;
+        }
+    }
+    
 }
 
 
@@ -416,6 +430,18 @@ class Order
         $query_delete = "DELETE FROM orders WHERE id=$this->id";
         
         if(mysqli_query($conn, $query_delete))
+        {
+            return true;
+        }
+        else
+            return false;
+    }
+    
+    function edit_order($conn, $new_price)
+    {
+        $query_update = "UPDATE orders SET limit_price = '$new_price' WHERE id=$this->id";
+        
+        if(mysqli_query($conn, $query_update))
         {
             return true;
         }

@@ -51,6 +51,15 @@ if(isset($_POST['delete_id']) && !empty($_POST['delete_id']))
 
 }
     
+//edit the limit price
+if(isset($_POST['edit_id']) && !empty($_POST['edit_id']) && isset($_POST['new_price']) && !empty($_POST['new_price']))
+{
+    $order = new Order($_POST['edit_id']);
+    $order->edit_order($conn, $_POST['new_price']);
+    
+    echo "<div id='note'>Limit Price Changed to ".$_POST['new_price']."<a id='close' class='pull-right'>[Close]</a></div>";
+}
+    
     
 ?>
     
@@ -58,8 +67,7 @@ if(isset($_POST['delete_id']) && !empty($_POST['delete_id']))
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
-    <meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; width=device-width;">
+    <meta name="viewport" content="width=1024">
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -111,10 +119,7 @@ if(isset($_POST['delete_id']) && !empty($_POST['delete_id']))
                     Balance: <?php echo $user->get_balance(); ?>
                 </li>
                 <li>
-                    <a href="index.php">Place Order</a>
-                </li>
-                <li >
-                    <a href="owned.php">Your Shares</a>
+                    <a href="index.php">Dashboard</a>
                 </li>
                 <li>
                     <a href="orders.php" class="active">Pending Orders</a>
@@ -144,12 +149,13 @@ if(isset($_POST['delete_id']) && !empty($_POST['delete_id']))
                         <table class="table-fill">
                             <thead>
                             <tr>
-                            <th class="text-left">Time</th>
-                            <th class="text-left">Buy/Sell</th>
-                            <th class="text-left">Company</th>
-                            <th class="text-left">Quantity</th>
-                            <th class="text-left">Type</th>
-                            <th class="text-left">Action</th>
+                            <th>Time</th>
+                            <th>Buy/Sell</th>
+                            <th>Company</th>
+                            <th>Quantity</th>
+                            <th>Type</th>
+                            <th>Limit Price</th>
+                            <th>Action</th>
                             </tr>
                             </thead>
                             <tbody class="table-hover">
@@ -182,13 +188,11 @@ if(isset($_POST['delete_id']) && !empty($_POST['delete_id']))
                                             
                                             
                                             echo "<tr>
-                                                    <td class='text-left'>".$time."</td>
-                                                    <td class='text-left'>".ucfirst($type)."</td>
-                                                    <td class='text-left'><a href='company.php?id=$company_id'>$company_name</a></td>
-                                                    <td class='text-left'>$quantity</td>
-                                                    <td class='text-left'>".ucfirst($limit_or_market);
-                                            if($limit_or_market == "limit")
-                                                echo " ($limit_price)";
+                                                    <td>".$time."</td>
+                                                    <td>".ucfirst($type)."</td>
+                                                    <td><a href='company.php?id=$company_id'>$company_name</a></td>
+                                                    <td>$quantity</td>
+                                                    <td>".ucfirst($limit_or_market);
                                             
                                             ?>
                                 
@@ -208,11 +212,22 @@ if(isset($_POST['delete_id']) && !empty($_POST['delete_id']))
                                 
                                 <?php
                                             echo "</td>
-                                                    <td class='text-left'>
+                                                    <td>
+                                                    <form method='post' action='orders.php' onsubmit='return editOrder()'>
+                                                    <input type='text' value='$order_id' name='edit_id' hidden>
+                                                    <input type='text' name='new_price' class='input-sm col-xs-3' value='$limit_price'>
+                                                    &nbsp;&nbsp;
+                                                    <input type='submit' class='btn btn-primary btn-sm' value='Edit'>
+                                                    </form>
+                                                    </td>
+                                                    
+                                                    <td>
                                                     <form method='post' action='orders.php' onsubmit='return deleteOrder()'>
                                                     <input type='text' value='$order_id' name='delete_id' hidden>
                                                     <input type='submit' class='btn btn-danger btn-sm' value='Cancel'>
+                                                    </form>
                                                     </td>
+                                                  
                                                  </tr>";
                                             
                                         }

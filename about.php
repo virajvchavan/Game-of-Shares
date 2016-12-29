@@ -21,8 +21,7 @@ $user->executeOrders($conn);
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
-    <meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; width=device-width;">
+    <meta name="viewport" content="width=1024">
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -75,10 +74,7 @@ $user->executeOrders($conn);
                     Balance: <?php echo $user->get_balance(); ?>
                 </li>
                 <li>
-                    <a href="index.php">Place Order</a>
-                </li>
-                <li >
-                    <a href="owned.php">Your Shares</a>
+                    <a href="index.php">Dashboard</a>
                 </li>
                 <li>
                     <a href="orders.php">Pending Orders</a>

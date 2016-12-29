@@ -60,8 +60,7 @@ if($message != "")
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
-    <meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; width=device-width;">
+    <meta name="viewport" content="width=1024">
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -126,10 +125,7 @@ if($message != "")
                     Balance: <?php echo $user->get_balance(); ?>
                 </li>
                 <li>
-                    <a href="index.php"  class="active">Place Order</a>
-                </li>
-                <li>
-                    <a href="owned.php">Your Shares</a>
+                    <a href="index.php"  class="active">Dashboard</a>
                 </li>
                 <li>
                     <a href="orders.php">Pending Orders</a>
@@ -196,7 +192,7 @@ if($message != "")
                                         $company_abbr = $array['abbr'];
                                         $company_stock_price = $array['price'];
                                                                                 
-                                        echo "<option value='$company_id'><b>$company_abbr</b> ($$company_stock_price) </option>";
+                                        echo "<option value='$company_id'><b>$company_abbr</b> ($company_stock_price) </option>";
 
                                     }
                                 }
@@ -226,8 +222,59 @@ if($message != "")
         </form>
                   
     </div>
+          
+        <div class="col-md-6 pull-right">
+                <div class="col-lg-12">
+                    <div class="table-title">
+                            <h3>Your Shares</h3>
+                        </div>
+                <table class="table-fill">
+                            <thead>
+                            <tr>
+                            <th>Company</th>
+                            <th>Quantity</th>
+                            </tr>
+                            </thead>
+                            <tbody class="table-hover">
+                                <?php
+                                
+                                $query = "SELECT * FROM shares WHERE user_id =".$user->get_id();
+                                
+                                if($run = mysqli_query($conn, $query))
+                                {
+                                    if(mysqli_num_rows($run) < 1)
+                                    {
+                                        echo "<tr><td colspan='6'>You do not own any shares</td></tr>";
+                                    }
+                                    else
+                                    {
+                                        while($array = mysqli_fetch_assoc($run))
+                                        {
+                                            
+                                            $company_id = $array['company_id'];
+                                            $quantity = $array['quantity'];
+                                            $company = new Company($company_id);
+                                            $company_name = $company->get_company_name($conn); 
+                                            $abbr = $company->get_abbr($conn);
+                                            
+                                            echo "<tr>
+                                                    <td><a href='company.php?id=$company_id'>$company_name ($abbr)</a></td>
+                                                    <td>$quantity</td>
+                                                 </tr>";
+                                            
+                                        }
+                                    }
+                                }
+                              
+                                ?>
+                           
+                            </tr>
+                        </table>
+                </div>
                 
-                <div class="col-md-7 pull-right">
+                </div>
+            
+                <div class="col-md-12">
                     <div class="col-lg-12">
                         
                         <div class="table-title">
