@@ -286,34 +286,38 @@ class Company
         $this->id = $new_id;
     }
     
-    function get_id()
-    {
-        return $this->id;
-    }
-    
-    function get_name()
-    {
-        return $this->name;
-    }
-    
-    function get_price()
-    {
-        return $this->price;
-    }
-    
+
     function set_price($conn, $new_price)
     {
         $this->price = $new_price;
         
-        //also need to update in the database
-        $query = "UPDATE companies SET price = $new_price WHERE id=$id";
-        
-        if(mysqli_query($conn, $query))
+        $query = "SELECT id, price, high, low FROM companies WHERE id = $this->id";
+        if($run = mysqli_query($conn, $query))
         {
-            echo "Price Updated";
+            while($array = mysqli_fetch_assoc($run))
+            {
+                $company_id = $array['id'];
+                $price = $array['price'];
+                $high = $array['high'];
+                $low = $array['low'];
+
+                if($new_price > $high)
+                    $high = $new_price;
+                elseif($new_price < $low)
+                    $low = $new_price;
+
+                $query_update = "UPDATE companies SET price = $new_price, prev_price = $price, high = $high, low = $low WHERE id = $this->id";
+
+                if(mysqli_query($conn, $query_update))
+                {
+
+                }
+                else
+                    echo "Err";
+
+            }
         }
-        else
-            echo "Error price update in db";
+        return true;
     }
     
     function get_company_name($conn)

@@ -217,7 +217,7 @@ if(isset($_POST['edit_id']) && !empty($_POST['edit_id']) && isset($_POST['new_pr
                                                     <input type='text' value='$order_id' name='edit_id' hidden>
                                                     <input type='text' name='new_price' class='input-sm col-xs-3' value='$limit_price'>
                                                     &nbsp;&nbsp;
-                                                    <input type='submit' class='btn btn-primary btn-sm' value='Edit'>
+                                                    <input type='submit' class='btn btn-primary btn-sm' value='Change'>
                                                     </form>
                                                     </td>
                                                     
