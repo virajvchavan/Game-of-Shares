@@ -12,6 +12,9 @@ if(!isLoggedIn())
     header("Location:login.php");
 }
 
+//change the share price of companies (from functions.index.php)
+changePrices($conn, $time_limit_for_company, $price_limit_for_company);    
+    
 //execute orders for logged in user
 $user->executeOrders($conn);
      

@@ -12,7 +12,10 @@ if(!isLoggedIn())
     header("Location:login.php");
 }
 
-    
+//change the share price of companies (from functions.index.php)
+changePrices($conn, $time_limit_for_company, $price_limit_for_company);
+
+
 //place the order    
 if(isset($_POST['buysell']) && isset($_POST['company_id']) && isset($_POST['quantity']) && isset($_POST['limit_or_market']) && isset($_POST['limit_price']))
 {

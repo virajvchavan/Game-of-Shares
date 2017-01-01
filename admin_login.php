@@ -83,7 +83,7 @@ function admin_login($conn, $password)
 
 function admin_session_start($admin)
 {
-    $_SESSION['admin'] = $admin;
+    $_SESSION['gos_admin'] = $admin;
     
 }
 

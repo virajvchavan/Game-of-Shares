@@ -4,22 +4,15 @@
 <?php
 include "classes.inc.php";
 include "conn.inc.php";
+
+
     
-    
-//leave if not logged in
-if(!isLoggedIn())
+//leave if admin not logged in
+if(!isset($_SESSION['gos_admin']))
 {
     header("Location:login.php");
 }
-
-    
-//change the share price of companies (from functions.index.php)
-changePrices($conn, $time_limit_for_company, $price_limit_for_company);
-    
-//execute orders for logged in user
-$user->executeOrders($conn);
-     
-?>
+    ?>
     
 <head>
 
@@ -39,7 +32,6 @@ $user->executeOrders($conn);
     <link href="css/table.css" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-
     
         <style>
     #balance{
@@ -55,15 +47,6 @@ $user->executeOrders($conn);
             }
     
     </style>
-    
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
 </head>
 
@@ -75,25 +58,19 @@ $user->executeOrders($conn);
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li id="balance">
-                    Balance: <?php echo $user->get_balance(); ?>
+                    Admin
                 </li>
                 <li>
-                    <a href="index.php">Dashboard</a>
+                    <a href="admin.php">Companies</a>
                 </li>
                 <li>
-                    <a href="orders.php">Pending Orders</a>
+                    <a href="users.php">Users</a>
                 </li>
                 <li>
-                    <a href="trades.php">Trade Book</a>
+                    <a href="password.php" class="active">Change Password</a>
                 </li>
                 <li>
-                    <a href="help.php">Help</a>
-                </li>
-                <li>
-                    <a href="about.php" class="active">About</a>
-                </li>
-                <li>
-                    <a href="logout.php">Logout (<?php echo $user->get_name(); ?>)</a>
+                    <a href="logout.php">Logout</a>
                 </li>
             </ul>
         </div>
@@ -104,8 +81,8 @@ $user->executeOrders($conn);
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2>This is me.</h2>
-                       
+                        
+                        
                     </div>
                 </div>
             </div>
@@ -120,6 +97,14 @@ $user->executeOrders($conn);
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+    
+        <script>
+ close = document.getElementById("close");
+ close.addEventListener('click', function() {
+   note = document.getElementById("note");
+   note.style.display = 'none';
+ }, false);
+</script>
 
 </body>
 
@@ -127,6 +112,7 @@ $user->executeOrders($conn);
 
 
 <?php
+
 
 
 

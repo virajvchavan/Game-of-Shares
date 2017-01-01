@@ -8,7 +8,7 @@ include "conn.inc.php";
 
     
 //leave if admin not logged in
-if(!isset($_SESSION['admin']))
+if(!isset($_SESSION['gos_admin']))
 {
     header("Location:login.php");
 }
@@ -68,6 +68,9 @@ if(!isset($_SESSION['admin']))
                     <a href="users.php"  class="active">Users</a>
                 </li>
                 <li>
+                    <a href="password.php">Change Password</a>
+                </li>
+                <li>
                     <a href="logout.php">Logout</a>
                 </li>
             </ul>
@@ -80,6 +83,14 @@ if(!isset($_SESSION['admin']))
                 <div class="row">
                     <div class="col-lg-12">
                         
+                        <form action="export_users.php" method="post" name="export_excel">
+                             <div class="control-group">
+                                <div class="controls">
+                                    <button type="submit" id="export" name="export" class="btn btn-primary button-loading" data-loading-text="Loading...">Download Excel File</button>
+                                </div>
+                            </div>
+                        </form>
+                        <br>
                         <table class="table-fill">
                             <thead>
                             <tr>

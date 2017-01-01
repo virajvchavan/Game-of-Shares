@@ -287,16 +287,16 @@ class Company
     }
     
 
+    //used only when the admin changes the price
     function set_price($conn, $new_price)
     {
         $this->price = $new_price;
         
-        $query = "SELECT id, price, high, low FROM companies WHERE id = $this->id";
+        $query = "SELECT price, high, low FROM companies WHERE id = $this->id";
         if($run = mysqli_query($conn, $query))
         {
             while($array = mysqli_fetch_assoc($run))
             {
-                $company_id = $array['id'];
                 $price = $array['price'];
                 $high = $array['high'];
                 $low = $array['low'];
@@ -317,6 +317,16 @@ class Company
 
             }
         }
+        
+        //insert into 'price_variation' table
+        $query_price = "INSERT INTO price_variation(company_id, price) VALUES('$this->id', '$new_price')";
+        if(mysqli_query($conn, $query_price))
+        {		
+
+        }
+        else
+            echo "Error price table";
+        
         return true;
     }
     

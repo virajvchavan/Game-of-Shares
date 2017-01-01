@@ -5,10 +5,11 @@
 include "classes.inc.php";
 include "conn.inc.php";
 
-
+//change the share price of companies (from functions.index.php)
+changePrices($conn, $time_limit_for_company, $price_limit_for_company);
     
 //leave if admin not logged in
-if(!isset($_SESSION['admin']))
+if(!isset($_SESSION['gos_admin']))
 {
     header("Location:login.php");
 }
@@ -20,7 +21,7 @@ if(isset($_GET['id']) && isset($_POST['name']) && isset($_POST['abbr']) && isset
     $id = $_GET['id'];
     $name = $_POST['name'];
     $abbr = $_POST['abbr'];
-    $description = $_POST['description'];
+    $description = nl2br($_POST['description']);
     $price = $_POST['price'];
     
 
@@ -36,27 +37,42 @@ if(isset($_GET['id']) && isset($_POST['name']) && isset($_POST['abbr']) && isset
     else
         echo "Gandlo";
 }
-    
+  
+//adding the new company
 if(isset($_POST['new_name']) && isset($_POST['new_abbr']) && isset($_POST['new_description']) && isset($_POST['new_price']))
 {
     $name = $_POST['new_name'];
     $abbr = $_POST['new_abbr'];
-    $description = $_POST['new_description'];
+    $description = nl2br($_POST['new_description']);
     $price = $_POST['new_price'];
     
     //set a random amount of time for the future
-    $rand_time = rand(0, 10);
+    $rand_time = rand(0, $time_limit_for_company);
     $time = time();
     $time += $rand_time;
     
+    //insert into 'companies' table
     $query_resgister = "INSERT INTO companies(name,abbr, description, price, high, low, time) VALUES('$name','$abbr', '$description', '$price', '$price', '$price', '$time')";
 
 		if(mysqli_query($conn, $query_resgister))
-		{		
+		{
+            $last_id = mysqli_insert_id($conn);
+            
+            //insert into 'price_variation' table
+            $query_price = "INSERT INTO price_variation(company_id, price) VALUES('$last_id', '$price')";
+            if(mysqli_query($conn, $query_price))
+            {		
+
+            }
+            else
+                echo "Error price table";
+            
 			echo "<div id='note'>New Company Added: $name<a id='close' class='pull-right'>[Close]&nbsp;</a></div>";
 		}
 		else
 			echo "Error Registering.";
+    
+    
 }
 ?>
     
@@ -111,6 +127,9 @@ if(isset($_POST['new_name']) && isset($_POST['new_abbr']) && isset($_POST['new_d
                 </li>
                 <li>
                     <a href="users.php">Users</a>
+                </li>
+                <li>
+                    <a href="password.php">Change Password</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout</a>

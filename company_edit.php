@@ -8,7 +8,7 @@ include "conn.inc.php";
 
     
 //leave if admin not logged in
-if(!isset($_SESSION['admin']))
+if(!isset($_SESSION['gos_admin']))
 {
     header("Location:login.php");
 }
@@ -73,6 +73,9 @@ if(!isset($_POST['edit_id']) || empty($_POST['edit_id']))
                 </li>
                 <li>
                     <a href="users.php">Users</a>
+                </li>
+                <li>
+                    <a href="password.php">Change Password</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout</a>
