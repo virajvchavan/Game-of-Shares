@@ -166,11 +166,11 @@ if($message != "")
 
                         
                         <!-- Resources -->
-<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
-<script src="https://www.amcharts.com/lib/3/serial.js"></script>
-<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
-<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
-<script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
+                        <script src="js/amcharts.js"></script>
+                        <script src="js/serial.js"></script>
+                        <script src="js/export.min.js"></script>
+                        <link rel="stylesheet" href="css/export.css" type="text/css" media="all" />
+                        <script src="js/dark.js"></script>
 
 
                         <div id="chartdiv"></div>					
@@ -246,7 +246,7 @@ if($message != "")
                             },
                             "categoryField": "date",
                             "categoryAxis": {
-                                "minPeriod": "hh",
+                                "minPeriod": "mm",
                                 "parseDates": true,
                                 "dashLength": 1,
                                 "minorGridEnabled": true
