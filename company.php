@@ -17,6 +17,9 @@ if(!isset($_GET['id']) && empty($_GET['id']))
     header("Location:index.php");
 }
 
+//change the share price of companies (from functions.index.php)
+changePrices($conn, $time_limit_for_company, $price_limit_for_company);
+    
 //execute orders for logged in user
 $message = $user->executeOrders($conn);
 if($message != "")
@@ -182,7 +185,7 @@ if($message != "")
                             "marginLeft": 40,
                             "autoMarginOffset": 20,
                             "mouseWheelZoomEnabled":true,
-                            "dataDateFormat": "YYYY-MM-DD HH-MM-SS",
+                            "dataDateFormat": "YYYY-MM-DD HH:NN:SS",
                             "valueAxes": [{
                                 "id": "v1",
                                 "axisAlpha": 0,
@@ -243,12 +246,14 @@ if($message != "")
                             },
                             "categoryField": "date",
                             "categoryAxis": {
+                                "minPeriod": "hh",
                                 "parseDates": true,
                                 "dashLength": 1,
                                 "minorGridEnabled": true
                             },
                             "export": {
-                                "enabled": true
+                                "enabled": true,
+                                "dateFormat": "YYYY-MM-DD HH:NN:SS"
                             },
                             "dataProvider": [
                         <?php
