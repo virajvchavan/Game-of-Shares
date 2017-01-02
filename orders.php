@@ -130,11 +130,15 @@ if(isset($_POST['edit_id']) && !empty($_POST['edit_id']) && isset($_POST['new_pr
                 <li>
                     <a href="trades.php">Trade Book</a>
                 </li>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                 <li>
                     <a href="help.php">Help</a>
                 </li>
                 <li>
                     <a href="about.php">About</a>
+                </li>
+                <li>
+                    <a href="user_password.php">Change Password</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout (<?php echo $user->get_name(); ?>)</a>
@@ -158,6 +162,7 @@ if(isset($_POST['edit_id']) && !empty($_POST['edit_id']) && isset($_POST['new_pr
                             <th>Quantity</th>
                             <th>Type</th>
                             <th>Limit Price</th>
+                            <th>Current</th>
                             <th>Action</th>
                             </tr>
                             </thead>
@@ -218,12 +223,13 @@ if(isset($_POST['edit_id']) && !empty($_POST['edit_id']) && isset($_POST['new_pr
                                                     <td>
                                                     <form method='post' action='orders.php' onsubmit='return editOrder()'>
                                                     <input type='text' value='$order_id' name='edit_id' hidden>
-                                                    <input type='text' name='new_price' class='input-sm col-xs-3' value='$limit_price'>
+                                                    <input type='text' name='new_price' class='input-sm col-sm-3' value='$limit_price'>
                                                     &nbsp;&nbsp;
                                                     <input type='submit' class='btn btn-primary btn-sm' value='Change'>
                                                     </form>
                                                     </td>
                                                     
+                                                    <td>$company_price</td>
                                                     <td>
                                                     <form method='post' action='orders.php' onsubmit='return deleteOrder()'>
                                                     <input type='text' value='$order_id' name='delete_id' hidden>

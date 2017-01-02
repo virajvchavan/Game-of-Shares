@@ -88,11 +88,15 @@ if($message != "")
                 <li>
                     <a href="trades.php" class="active">Trade Book</a>
                 </li>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                 <li>
                     <a href="help.php">Help</a>
                 </li>
                 <li>
                     <a href="about.php">About</a>
+                </li>
+                <li>
+                    <a href="user_password.php">Change Password</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout (<?php echo $user->get_name(); ?>)</a>

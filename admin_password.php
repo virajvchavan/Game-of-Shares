@@ -5,14 +5,17 @@
 include "classes.inc.php";
 include "conn.inc.php";
 
-
     
 //leave if admin not logged in
 if(!isset($_SESSION['gos_admin']))
 {
     header("Location:login.php");
 }
-    ?>
+    
+//change the share price of companies (from functions.index.php)
+changePrices($conn, $time_limit_for_company, $price_limit_for_company);
+    
+?>
     
 <head>
 
@@ -47,6 +50,25 @@ if(!isset($_SESSION['gos_admin']))
             }
     
     </style>
+    
+    <script>
+    function validateForm()
+                {
+                    var pass1 = document.forms["password"]["new_p"].value;
+                    var pass2 = document.forms["password"]["new_confirm_p"].value;
+                    if(pass1 != pass2)
+                        {
+                            alert("Passwords do not match.");
+                            return false;
+                        }
+                    if(pass1.length < 6)
+                        {
+                            alert("Password must be at least 6 characters.");
+                            return false;
+                        }
+                }
+   
+    </script>
 
 </head>
 
@@ -55,22 +77,22 @@ if(!isset($_SESSION['gos_admin']))
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li id="balance">
+        <div id='sidebar-wrapper'>
+            <ul class='sidebar-nav'>
+                <li id='balance'>
                     Admin
                 </li>
                 <li>
-                    <a href="admin.php">Companies</a>
+                    <a href='admin.php'>Companies</a>
                 </li>
                 <li>
-                    <a href="users.php">Users</a>
+                    <a href='users.php'>Users</a>
                 </li>
                 <li>
-                    <a href="password.php" class="active">Change Password</a>
+                    <a href='password.php' class='active'>Change Password</a>
                 </li>
                 <li>
-                    <a href="logout.php">Logout</a>
+                    <a href='logout.php'>Logout</a>
                 </li>
             </ul>
         </div>
@@ -81,7 +103,21 @@ if(!isset($_SESSION['gos_admin']))
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        
+                        <form action="admin.php" method="post" onsubmit="return validateForm()" name="password">
+                            <div class="form-group">
+                                <label for="name">Current Password</label>
+                                <input type="text" class="form-control" name="current_p" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="abbr">New Password:</label>
+                                <input type="text" class="form-control" name="new_p" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Retype New Password</label>
+                                <input type='text' class="form-control" name="new_confirm_p" required>
+                            </div>
+                                <input type="submit" class="btn btn-success" value="Change Password">
+                        </form>
                         
                     </div>
                 </div>

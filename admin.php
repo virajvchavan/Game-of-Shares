@@ -37,6 +37,30 @@ if(isset($_GET['id']) && isset($_POST['name']) && isset($_POST['abbr']) && isset
     else
         echo "Gandlo";
 }
+   
+//change the password for admin    
+if(isset($_POST['current_p']) && isset($_POST['new_p']) && isset($_POST['new_confirm_p']))
+{
+    $query = "SELECT password FROM admin";
+    if($run = mysqli_query($conn, $query))
+    {
+        $array = mysqli_fetch_assoc($run);
+        
+        $real_p = $array['password'];
+    }
+    
+    if(md5($_POST['current_p']) != $real_p)
+    {
+        echo "<script>alert('Wrong current password.')</script>";
+        header("refresh:0,url=admin_password.php");       
+    }
+    $query_change_p = "UPDATE admin SET password = '".md5($_POST['new_p'])."'";
+    if(mysqli_query($conn, $query_change_p))
+    {
+         echo "<div id='note'>Password Changed Successfuly. <a id='close' class='pull-right'>[Close]&nbsp;</a></div>";
+    }
+    
+}
   
 //adding the new company
 if(isset($_POST['new_name']) && isset($_POST['new_abbr']) && isset($_POST['new_description']) && isset($_POST['new_price']))

@@ -31,7 +31,7 @@
                         }
                     if(pass1.length < 6)
                         {
-                            alert("Password must be greater than 6 characters.");
+                            alert("Password must be at least 6 characters.");
                             return false;
                         }
                 }

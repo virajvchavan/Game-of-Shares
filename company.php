@@ -69,6 +69,17 @@ if($message != "")
 	width	: 100%;
 	height	: 500px;
 }
+            #name{
+                background-color: #262626;
+                color: white;
+            }
+            #user_shares{
+                 background-color: white;
+                color: #262626;
+                padding: 8px;
+                font-size: 16px;
+                border-radius: 7px;
+            }
 										
     
     </style>
@@ -103,11 +114,15 @@ if($message != "")
                 <li>
                     <a href="trades.php">Trade Book</a>
                 </li>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                 <li>
                     <a href="help.php">Help</a>
                 </li>
                 <li>
                     <a href="about.php">About</a>
+                </li>
+                <li>
+                    <a href="user_password.php">Change Password</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout (<?php echo $user->get_name(); ?>)</a>
@@ -125,8 +140,22 @@ if($message != "")
                         
                         $company_id = $_GET['id'];
                         
-                        $query = "SELECT * FROM companies WHERE id='$company_id'";
+                        //to show how many shares usser owns of this company
+                        $query_get_users_shares = "SELECT quantity FROM shares WHERE user_id = $user->id AND company_id = $company_id";
+                        if($run_user_shares = mysqli_query($conn, $query_get_users_shares))
+                        {
+                            if(mysqli_num_rows($run_user_shares) == 0)
+                                $user_shares = 0;
+                            else
+                            {
+                                $array_users_shares = mysqli_fetch_assoc($run_user_shares);
+                                $user_shares = $array_users_shares['quantity'];
+                            }
+                            
+                        }
                         
+                        //get all the company data
+                        $query = "SELECT * FROM companies WHERE id='$company_id'";                      
                         if($run = mysqli_query($conn, $query))
                         {
                             if(mysqli_num_rows($run) == 0)
@@ -142,6 +171,7 @@ if($message != "")
                                 $description = $array['description'];
                                 
                                 echo "<div id='name' class='jumbotron'><div class='page-header'>
+                                        <div class='pull-right' id='user_shares'>You own: $user_shares</div>
                                       <h1>$name</h1>
                                     </div>
                                 <div>($abbr)</div></div>

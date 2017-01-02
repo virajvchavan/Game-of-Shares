@@ -42,6 +42,30 @@ if(!isLoggedIn())
         header("Location:login.php");
 }
 
+    
+//change the password for admin    
+if(isset($_POST['current_p']) && isset($_POST['new_p']) && isset($_POST['new_confirm_p']))
+{
+    $query = "SELECT password FROM users WHERE id = $user->id";
+    if($run = mysqli_query($conn, $query))
+    {
+        $array = mysqli_fetch_assoc($run);
+        
+        $real_p = $array['password'];
+    }
+    
+    if(md5($_POST['current_p']) != $real_p)
+    {
+        echo "<script>alert('Wrong current password.')</script>";
+        header("refresh:0,url=user_password.php");       
+    }
+    $query_change_p = "UPDATE users SET password = '".md5($_POST['new_p'])."' WHERE id = '$user->id'";
+    if(mysqli_query($conn, $query_change_p))
+    {
+         echo "<div id='note'>Password Changed Successfuly. <a id='close' class='pull-right'>[Close]&nbsp;</a></div>";
+    }
+    
+}    
 //change the share price of companies (from functions.index.php)
 changePrices($conn, $time_limit_for_company, $price_limit_for_company);
 
@@ -126,11 +150,15 @@ if($message != "")
                 <li>
                     <a href="trades.php">Trade Book</a>
                 </li>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                 <li>
                     <a href="help.php">Help</a>
                 </li>
                 <li>
                     <a href="about.php">About</a>
+                </li>
+                <li>
+                    <a href="user_password.php">Change Password</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout (<?php echo $user->get_name(); ?>)</a>
@@ -250,10 +278,13 @@ if($message != "")
                                             $company_name = $company->get_company_name($conn); 
                                             $abbr = $company->get_abbr($conn);
                                             
-                                            echo "<tr>
+                                            if($quantity > 0)
+                                            {
+                                                echo "<tr>
                                                     <td><a href='company.php?id=$company_id'>$company_name ($abbr)</a></td>
                                                     <td>$quantity</td>
                                                  </tr>";
+                                            }
                                             
                                         }
                                     }

@@ -86,11 +86,15 @@ $user->executeOrders($conn);
                 <li>
                     <a href="trades.php">Trade Book</a>
                 </li>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                 <li>
                     <a href="help.php">Help</a>
                 </li>
                 <li>
                     <a href="about.php" class="active">About</a>
+                </li>
+                <li>
+                    <a href="user_password.php">Change Password</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout (<?php echo $user->get_name(); ?>)</a>
@@ -104,7 +108,16 @@ $user->executeOrders($conn);
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2>This is me.</h2>
+                        <h2>Developed By:</h2>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3>Viraj Chavan</h3>
+                            </div>
+                            <div class="panel-body">
+                            Third Year Information Technology,<br>
+                            Walchand College of Engineering, Sangli
+                                </div>
+                        </div>
                        
                     </div>
                 </div>

@@ -14,7 +14,9 @@ if(isLoggedIn())
     header("Location:index.php");
 }    
     
-    
+//change the share price of companies (from functions.index.php)
+changePrices($conn, $time_limit_for_company, $price_limit_for_company);
+
 ?>    
 <body>
     
