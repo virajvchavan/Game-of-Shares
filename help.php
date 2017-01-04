@@ -73,7 +73,7 @@ $user->executeOrders($conn);
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li id="balance">
-                    Balance: <?php echo $user->get_balance(); ?>
+                    Balance: <?php echo number_format($user->get_balance()); ?>
                 </li>
                 <li>
                     <a href="index.php">Dashboard</a>

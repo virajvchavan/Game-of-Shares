@@ -103,7 +103,7 @@ if($message != "")
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li id="balance">
-                    Balance: <?php echo $user->get_balance(); ?>
+                    Balance: <?php echo number_format($user->get_balance()); ?>
                 </li>
                 <li>
                     <a href="index.php">Dashboard</a>
@@ -159,7 +159,11 @@ if($message != "")
                         if($run = mysqli_query($conn, $query))
                         {
                             if(mysqli_num_rows($run) == 0)
-                                echo "\n<h3>Dude, you're lost!</h3>\n";
+                            {
+                                echo "\n<h3>Dude, you're lost!</h3>";
+                                header("Location:index.php");
+                                
+                            }
                             while($array = mysqli_fetch_assoc($run))
                             {
                                 $name = $array['name'];
@@ -321,6 +325,76 @@ if($message != "")
                         </script>
                     </div>
                 </div>
+                <br>
+                
+                    <div class="col-lg-12">
+                        <h3>Past Transactions with <?php echo $name; ?></h3>
+                        <table class="table-fill">
+                            <thead>
+                            <tr>
+                            <th>Time</th>
+                            <th>Buy/Sell</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody class="table-hover">
+                                <?php
+                                
+                                $query = "SELECT quantity, price, time FROM transactions WHERE user_id =".$user->id." AND company_id = $company_id";
+                                
+                                if($run = mysqli_query($conn, $query))
+                                {
+                                    if(mysqli_num_rows($run) < 1)
+                                    {
+                                        echo "<tr><td colspan='5'>No transactions to show</td></tr>";
+                                    }
+                                    else
+                                    {
+                                        
+                                        while($array = mysqli_fetch_assoc($run))
+                                        {
+                                            
+                                            $quantity = $array['quantity'];
+                                            $time = $array['time'];
+                                            $price = $array['price'];
+                                            
+
+                                            echo "<tr>
+                                                    <td>$time</td>
+                                                    <td>";
+                                                    if($quantity > 0)
+                                                    {
+                                                        echo "Buy";
+                                                        $class = "red";
+                                                    }
+                                                    elseif($quantity < 0)
+                                                    {
+                                                        echo "Sell";
+                                                        $class = "green";
+                                                    }
+                                            
+                                                    echo "</td>
+                                                    <td>".abs($quantity)."</td>
+                                                    <td>$price</td>
+                                                    <td class='$class'>";
+                                                    if($quantity < 0)
+                                                        echo "+";
+                                                    echo number_format(-$quantity*$price)."</td>
+                                                 </tr>";
+                                            
+                                        }
+                                    }
+                                }   
+                                
+                                ?>
+                            </tbody>
+                        </table>
+                       
+                       
+                    </div>
+                
             </div>
         </div>
         <!-- /#page-content-wrapper -->

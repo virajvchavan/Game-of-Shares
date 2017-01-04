@@ -2,6 +2,14 @@
     <head>
         <title>Login | Game Of Shares</title>
         <link type="text/css" href="css/login.css" rel="stylesheet">
+        <style>
+            #link{
+                margin-top: 10px;
+                font-size: 18px;
+                padding: 10px;
+            }
+        
+        </style>
     </head>
 
 <?php
@@ -23,7 +31,7 @@ changePrices($conn, $time_limit_for_company, $price_limit_for_company);
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-              <h1 class="text-center">Welcome</h1>
+              <h1 class="text-center">Game of Shares</h1>
             </div>
              <div class="modal-body">
                  <form name="login" action="index.php" method="post">
@@ -37,10 +45,10 @@ changePrices($conn, $time_limit_for_company, $price_limit_for_company);
 
                      <div class="form-group">
                          <input type="submit" class="btn btn-block btn-lg btn-primary" value="Login"/>
-                         <span class="pull-right"><a href="register.php">Register</a></span><span><a href="#">Forgot Password</a></span>
-                     </div>
-                     <div class="form-group">
-                       <span class="center"> <a href="admin_login.php">Admin Access</a></span>
+                         <span class="pull-left" id="link"> <a href="admin_login.php">Admin Access</a></span>
+                         <span class="pull-right" id="link"><a href="register.php">Register</a></span>
+                         <span id="link" class="pull-left"><a href="#">Forgot Password</a></span><br>
+                         
                      </div>
                 </form>
              </div>

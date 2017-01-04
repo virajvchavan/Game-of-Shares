@@ -2,6 +2,13 @@
     <head>
         <title>Login | Game Of Shares</title>
         <link type="text/css" href="css/login.css" rel="stylesheet">
+        <style>
+        #link{
+                margin-top: 10px;
+                font-size: 18px;
+                padding: 10px;
+            }
+        </style>
     </head>
 
 <?php
@@ -47,7 +54,8 @@ if(isLoggedIn())
 
                      <div class="form-group">
                          <input type="submit" class="btn btn-block btn-lg btn-primary" value="Login"/>
-                         <span class="pull-right"><a href="login.php">User Login</a></span>
+                         <span class="pull-right"><a href="login.php" id="link">User Login</a></span>
+                         
                      </div>
                 </form>
              </div>

@@ -36,14 +36,6 @@ if(isset($_POST['buysell']) && isset($_POST['company_id']) && isset($_POST['quan
 }
 
 
-//execute orders for logged in user
-$message = $user->executeOrders($conn);
-if($message != "")
-{
-    echo "<div id='note'>$message<a id='close' class='pull-right'>[Close]</a></div>";
-}
-    
-
 //delete an order
 if(isset($_POST['delete_id']) && !empty($_POST['delete_id']))
 {
@@ -62,7 +54,13 @@ if(isset($_POST['edit_id']) && !empty($_POST['edit_id']) && isset($_POST['new_pr
     
     echo "<div id='note'>Limit Price Changed to ".$_POST['new_price']."<a id='close' class='pull-right'>[Close]</a></div>";
 }
-    
+   
+//execute orders for logged in user
+$message = $user->executeOrders($conn);
+if($message != "")
+{
+    echo "<div id='note'>$message<a id='close' class='pull-right'>[Close]</a></div>";
+}    
     
 ?>
     
@@ -119,7 +117,7 @@ if(isset($_POST['edit_id']) && !empty($_POST['edit_id']) && isset($_POST['new_pr
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li id="balance">
-                    Balance: <?php echo $user->get_balance(); ?>
+                    Balance: <?php echo number_format($user->get_balance()); ?>
                 </li>
                 <li>
                     <a href="index.php">Dashboard</a>

@@ -77,7 +77,7 @@ if($message != "")
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li id="balance">
-                    Balance: <?php echo $user->get_balance(); ?>
+                    Balance: <?php echo number_format($user->get_balance()); ?>
                 </li>
                 <li>
                     <a href="index.php">Dashboard</a>
@@ -172,8 +172,8 @@ if($message != "")
                                                     <td class='$class'>";
                                                     if($quantity < 0)
                                                         echo "+";
-                                                    echo -$quantity*$price."</td>
-                                                    <td>$balance</td>
+                                                    echo number_format(-$quantity*$price)."</td>
+                                                    <td>".number_format($balance)."</td>
                                                  </tr>";
                                             
                                         }

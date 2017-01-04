@@ -120,8 +120,7 @@ class User
         }
     }
     
-    
-    
+   
     //execute the orders for this user
     function executeOrders($conn)
     {
@@ -198,7 +197,11 @@ class User
                                     $message_to_return.="\nOne order could not be executed due to: Insufficient Shares\n";
                                     continue;
                                 }
-                                $query_update = "UPDATE shares SET quantity = quantity - '$quantity' WHERE company_id = '$company_id' AND user_id = '$this->id'";
+                                $new_quantity = $owned - $quantity;
+                                if($new_quantity > 0)
+                                    $query_update = "UPDATE shares SET quantity = '$new_quantity' WHERE company_id = '$company_id' AND user_id = '$this->id'";
+                                elseif($new_quantity == 0)
+                                    $query_update = "DELETE FROM shares WHERE company_id = $company_id AND user_id = $this->id";
                             }
 
                             if(mysqli_query($conn, $query_update))

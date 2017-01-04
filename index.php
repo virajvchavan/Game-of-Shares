@@ -139,7 +139,7 @@ if($message != "")
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li id="balance">
-                    Balance: <?php echo $user->get_balance(); ?>
+                    Balance: <?php echo number_format($user->get_balance()); ?>
                 </li>
                 <li>
                     <a href="index.php"  class="active">Dashboard</a>
@@ -263,12 +263,15 @@ if($message != "")
                                 
                                 if($run = mysqli_query($conn, $query))
                                 {
+                                    
+                                    
                                     if(mysqli_num_rows($run) < 1)
                                     {
-                                        echo "<tr><td colspan='6'>You do not own any shares</td></tr>";
+                                        echo "<tr><td colspan='2'>You do not own any shares</td></tr>";
                                     }
                                     else
                                     {
+                                        
                                         while($array = mysqli_fetch_assoc($run))
                                         {
                                             
