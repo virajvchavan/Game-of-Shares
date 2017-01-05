@@ -16,8 +16,15 @@ if(!isLoggedIn())
 //change the share price of companies (from functions.index.php)
 changePrices($conn, $time_limit_for_company, $price_limit_for_company);
     
+//check for any messages    
+$user->checkMessages($conn);
+    
 //execute orders for logged in user
-$user->executeOrders($conn);
+$message = $user->executeOrders($conn);
+if($message != "")
+{
+    echo "<div id='note'>$message<a id='close' class='pull-right'>[Close]</a></div>";
+}
      
 ?>
     
@@ -75,7 +82,7 @@ $user->executeOrders($conn);
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li id="balance">
-                    Balance: <?php echo number_format($user->get_balance()); ?>
+                    Balance: <?php echo number_format($user->get_balance($conn)); ?>
                 </li>
                 <li>
                     <a href="index.php">Dashboard</a>
@@ -97,7 +104,7 @@ $user->executeOrders($conn);
                     <a href="user_password.php">Change Password</a>
                 </li>
                 <li>
-                    <a href="logout.php">Logout (<?php echo $user->get_name(); ?>)</a>
+                    <a href="logout.php">Logout (<?php echo $user->get_name($conn); ?>)</a>
                 </li>
             </ul>
         </div>

@@ -37,7 +37,7 @@ if(isLoggedIn())
     $balance = getBalance($conn, $_SESSION['gos_user_id']);
         
     //create the User object
-    $user = new User($_SESSION['gos_user_name'], $_SESSION['gos_user_id'], $balance);
+    $user = new User($_SESSION['gos_user_id'], $conn);
 }
 
 function getBalance($conn, $id)

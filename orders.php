@@ -54,7 +54,10 @@ if(isset($_POST['edit_id']) && !empty($_POST['edit_id']) && isset($_POST['new_pr
     
     echo "<div id='note'>Limit Price Changed to ".$_POST['new_price']."<a id='close' class='pull-right'>[Close]</a></div>";
 }
-   
+
+//check for any messages    
+$user->checkMessages($conn);
+
 //execute orders for logged in user
 $message = $user->executeOrders($conn);
 if($message != "")
@@ -117,7 +120,7 @@ if($message != "")
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li id="balance">
-                    Balance: <?php echo number_format($user->get_balance()); ?>
+                    Balance: <?php echo number_format($user->get_balance($conn)); ?>
                 </li>
                 <li>
                     <a href="index.php">Dashboard</a>
@@ -139,7 +142,7 @@ if($message != "")
                     <a href="user_password.php">Change Password</a>
                 </li>
                 <li>
-                    <a href="logout.php">Logout (<?php echo $user->get_name(); ?>)</a>
+                    <a href="logout.php">Logout (<?php echo $user->get_name($conn); ?>)</a>
                 </li>
             </ul>
         </div>

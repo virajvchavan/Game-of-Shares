@@ -6,11 +6,11 @@ class User
     var $name;
     var $balance;
     
-    function __construct($new_name, $new_id, $new_balance)
+    function __construct($new_id, $conn)
     {
         $this->id = $new_id;
-        $this->name = $new_name;
-        $this->balance = $new_balance;
+        $this->get_name($conn);
+        $this->get_balance($conn);
     }
     
     function set_balance($conn, $new_balance)
@@ -48,14 +48,32 @@ class User
         return $this->id;
     }
     
-    function get_name()
+    function get_name($conn)
     {
-        return $this->name;
+        $query = "SELECT first_name FROM users WHERE id='$this->id'";
+        if($run = mysqli_query($conn, $query))
+        {
+            while($array = mysqli_fetch_assoc($run))
+            {
+                $name = $array['first_name'];
+                $this->name = $name;
+            }
+            return $name;
+        }
     }
     
-    function get_balance()
+    function get_balance($conn)
     {
-        return $this->balance;
+        $query = "SELECT balance FROM users WHERE id='$this->id'";
+        if($run = mysqli_query($conn, $query))
+        {
+            while($array = mysqli_fetch_assoc($run))
+            {
+                $balance = $array['balance'];
+                $this->balance = $balance;
+            }
+            return $balance;
+        }
     }
     
     
@@ -271,6 +289,29 @@ class User
                     $message_to_return .= "$count Orders were executed. See <a href='trades.php'>Trade Book</a>";
             }
             return $message_to_return;
+        }
+    }
+    
+    //check for notifications (messages) for user
+    function checkMessages($conn)
+    {
+        $query = "SELECT message FROM users WHERE id = $this->id";
+        if($run = mysqli_query($conn, $query))
+        {
+            while($array = mysqli_fetch_assoc($run))
+            {
+                $message = $array['message'];
+                
+                if($message != "")
+                {
+                    echo "<div id='note'>$message<a id='close' class='pull-right'>[Close]</a></div>";
+                    $message = "";
+                }
+                
+                 $query_message = "UPDATE users SET message = '$message' WHERE id = '$this->id'";
+        
+                 mysqli_query($conn, $query_message);
+            }
         }
     }
     

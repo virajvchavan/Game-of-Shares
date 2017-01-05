@@ -17,6 +17,9 @@ if(!isset($_GET['id']) && empty($_GET['id']))
     header("Location:index.php");
 }
 
+//check for any messages    
+$user->checkMessages($conn);
+
 //change the share price of companies (from functions.index.php)
 changePrices($conn, $time_limit_for_company, $price_limit_for_company);
     
@@ -103,7 +106,7 @@ if($message != "")
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li id="balance">
-                    Balance: <?php echo number_format($user->get_balance()); ?>
+                    Balance: <?php echo number_format($user->get_balance($conn)); ?>
                 </li>
                 <li>
                     <a href="index.php">Dashboard</a>
@@ -125,7 +128,7 @@ if($message != "")
                     <a href="user_password.php">Change Password</a>
                 </li>
                 <li>
-                    <a href="logout.php">Logout (<?php echo $user->get_name(); ?>)</a>
+                    <a href="logout.php">Logout (<?php echo $user->get_name($conn); ?>)</a>
                 </li>
             </ul>
         </div>
