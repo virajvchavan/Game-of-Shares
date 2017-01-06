@@ -83,13 +83,16 @@ changePrices($conn, $time_limit_for_company, $price_limit_for_company);
                     Admin
                 </li>
                 <li>
-                    <a href='admin.php'>Companies</a>
+                    <a href='admin.php'>Session</a>
+                </li>
+                <li>
+                    <a href="companies_admin.php">Companies</a>
                 </li>
                 <li>
                     <a href='users.php'>Users</a>
                 </li>
                 <li>
-                    <a href='password.php' class='active'>Change Password</a>
+                    <a href='admin_password.php' class='active'>Change Password</a>
                 </li>
                 <li>
                     <a href='logout.php'>Logout</a>
@@ -104,6 +107,7 @@ changePrices($conn, $time_limit_for_company, $price_limit_for_company);
                 <div class="row">
                     <div class="col-lg-12">
                         <form action="admin.php" method="post" onsubmit="return validateForm()" name="password">
+                            <br><br>
                             <div class="form-group">
                                 <label for="name">Current Password</label>
                                 <input type="text" class="form-control" name="current_p" required>

@@ -113,6 +113,7 @@ if($message != "")
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
+                        <br>
                         <h2>Waiting to be written...</h2>
                        
                     </div>

@@ -123,6 +123,7 @@ if($message != "")
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
+                        <br><br>
                         <form action="index.php" method="post" onsubmit="return validateForm()" name="password">
                             <div class="form-group">
                                 <label for="name">Current Password</label>

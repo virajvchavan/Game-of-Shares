@@ -98,47 +98,6 @@ if(isset($_POST['new_name']) && isset($_POST['new_abbr']) && isset($_POST['new_d
     
     
 }
-    
-//start or stop the session    
-if(isset($_SESSION['gos_admin']) && isset($_GET['session']) && !empty($_GET['session']))
-{
-    $session = $_GET['session'];
-    $time = time();
-    $query_session = "UPDATE admin SET session = '$session', time = '$time' WHERE 1";
-    if(mysqli_query($conn, $query_session))
-    {
-        header("Location:admin.php");
-    }
-    else
-        echo "Falure";    
-}
-    
-//check if session is on or off
-$query = "SELECT session, time FROM admin WHERE id = 1";
-if($run = mysqli_query($conn, $query))
-{
-    while($array = mysqli_fetch_assoc($run))
-    {
-        $session_db = $array['session'];
-        $start_time = $array['time'];
-    }
-    
-    if($session_db == "on")
-        $switch = "off";
-    elseif($session_db == "off")
-        $switch = "on";
-    
-    if($session_db == "on")
-    {
-        $duration = time() - $start_time;
-        $timer =  gmdate("H:i:s", (int)$duration);
-        
-    }
-    else
-        $timer = "";
-    
-}
-    
 ?>
     
 <head>
@@ -172,14 +131,8 @@ if($run = mysqli_query($conn, $query))
             body{
                 font-family: 'Montserrat', sans-serif;
             }
-            
-        .center {
-            margin-top: 18%;
-            text-align: center;
-            }
     
     </style>
-    
 
 </head>
 
@@ -193,11 +146,12 @@ if($run = mysqli_query($conn, $query))
                 <li id="balance">
                     Admin
                 </li>
+                
                 <li>
-                    <a href="admin.php"  class="active">Session</a>
+                    <a href="admin.php">Session</a>
                 </li>
                 <li>
-                    <a href="companies_admin.php">Companies</a>
+                    <a href="companies_admin.php"  class="active">Companies</a>
                 </li>
                 <li>
                     <a href="users.php">Users</a>
@@ -216,20 +170,64 @@ if($run = mysqli_query($conn, $query))
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="center">
-                        <?php
+                    <div class="col-lg-12"><br><br>
+                        <a href="new_company.php" class="btn btn-primary btn-md">Add a new Company</a><br><br>
+                        <table class="table-fill">
+                            <thead>
+                            <tr>
+                            <th>No.</th>
+                            <th>Name</th>
+                            <th>Abbr</th>
+                            <th>Descripition</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody class="table-hover">
+                                
+                                <?php
+                                
+                                $query = "SELECT * FROM companies";
+                                
+                                if($run = mysqli_query($conn, $query))
+                                {
+                                    if(mysqli_num_rows($run) < 1)
+                                    {
+                                        echo "<tr><td colspan='6'>No Companies to show</td></tr>";
+                                    }
+                                    else
+                                    {
+                                        $no = 0;
+                                        while($array = mysqli_fetch_assoc($run))
+                                        {
+                                            $no++;
+                                            $company_id = $array['id'];
+                                            $name = $array['name'];
+                                            $abbr = $array['abbr'];
+                                            $price = $array['price'];
+                                            $description = $array['description'];
+
+                                            echo "<tr>
+                                                    <td>".$no."</td>
+                                                    <td>$name</td>
+                                                    <td>$abbr</td>
+                                                    <td>".substr($description, 0,42);
+                                            if(strlen($description)> 42)
+                                                echo "...";
+                                            echo "</td>
+                                                    <td>$price</td>
+                                                    <td>
+                                                        <form action='company_edit.php' method = 'post'><input type='text' value='$company_id' name='edit_id' hidden><input type='submit' class='btn btn-sm btn-primary' value='Edit'></form>
+                                                    <td>
+                                                </tr>";       
+                                        }
+                                    }
+                                }   
+                                
+                                ?>
+                            </tbody>
+                        </table>
                         
-                        ?>
-                        <a href="admin.php?session=<?php echo $switch; ?>" class="btn btn-<?php if($switch == "on") echo "success"; elseif($switch == "off") echo "danger"; ?> btn-lg"><?php if($switch == "on") echo "Start"; elseif($switch == "off") echo "Stop"; ?> the Session</a><br><br>
-                        <?php
-                        if($timer != "")
-                        {
-                            ?>
-                        <h1><span id="realtime"><?php echo $timer; ?></span></h1>
-                   <?php }
-                        ?>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -244,54 +242,6 @@ if($run = mysqli_query($conn, $query))
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-    
-    <script>
-    $(document).ready (function () {
-    startCount();
-});
- 
-function startCount()
-{
-	timer = setInterval(count,1000);
-}
-function count()
-{
-	var time_shown = $("#realtime").text();
-        var time_chunks = time_shown.split(":");
-        var hour, mins, secs;
- 
-        hour=Number(time_chunks[0]);
-        mins=Number(time_chunks[1]);
-        secs=Number(time_chunks[2]);
-        secs++;
-            if (secs==60){
-                secs = 0;
-                mins=mins + 1;
-               } 
-              if (mins==60){
-                mins=0;
-                hour=hour + 1;
-              }
-              if (hour==13){
-                hour=1;
-              }
- 
-        $("#realtime").text(hour +":" + plz(mins) + ":" + plz(secs));
- 
-}
- 
-function plz(digit){
- 
-    var zpad = digit + '';
-    if (digit < 10) {
-        zpad = "0" + zpad;
-    }
-    return zpad;
-}
-Posted 
-    
-    
-    </script>
     
         <script>
  close = document.getElementById("close");

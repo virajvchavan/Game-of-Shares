@@ -18,7 +18,22 @@ changePrices($conn, $time_limit_for_company, $price_limit_for_company);
     
 //check for any messages    
 $user->checkMessages($conn);
+
+//check if market is open or not
+$query = "SELECT session, time FROM admin WHERE id = 1";
+if($run = mysqli_query($conn, $query))
+{
+    while($array = mysqli_fetch_assoc($run))
+    {
+        $session_db = $array['session'];
+        $start_time = $array['time'];
+    }
     
+    if($session_db == "off")
+    {
+        echo "<div id='note'>The market is closed at this moment.</div>";
+    }    
+}    
 //execute orders for logged in user
 $message = $user->executeOrders($conn);
 if($message != "")
@@ -115,6 +130,7 @@ if($message != "")
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
+                        <br>
                         <h2>Developed By:</h2>
                         <div class="panel panel-primary">
                             <div class="panel-heading">

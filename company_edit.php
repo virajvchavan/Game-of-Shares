@@ -69,13 +69,16 @@ if(!isset($_POST['edit_id']) || empty($_POST['edit_id']))
                     Admin
                 </li>
                 <li>
-                    <a href="admin.php"  class="active">Companies</a>
+                    <a href="admin.php">Session</a>
+                </li>
+                <li>
+                    <a href="companies_admin.php"  class="active">Companies</a>
                 </li>
                 <li>
                     <a href="users.php">Users</a>
                 </li>
                 <li>
-                    <a href="password.php">Change Password</a>
+                    <a href="admin_password.php">Change Password</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout</a>

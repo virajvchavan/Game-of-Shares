@@ -62,13 +62,16 @@ if(!isset($_SESSION['gos_admin']))
                     Admin
                 </li>
                 <li>
-                    <a href="admin.php">Companies</a>
+                    <a href="admin.php">Session</a>
+                </li>
+                <li>
+                    <a href="companies_admin.php">Companies</a>
                 </li>
                 <li>
                     <a href="users.php"  class="active">Users</a>
                 </li>
                 <li>
-                    <a href="password.php">Change Password</a>
+                    <a href="admin_password.php">Change Password</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout</a>
@@ -82,7 +85,7 @@ if(!isset($_SESSION['gos_admin']))
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        
+                        <br><br>
                         <form action="export_users.php" method="post" name="export_excel">
                              <div class="control-group">
                                 <div class="controls">

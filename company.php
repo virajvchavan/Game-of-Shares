@@ -20,6 +20,7 @@ if(!isset($_GET['id']) && empty($_GET['id']))
 //check for any messages    
 $user->checkMessages($conn);
 
+   
 //change the share price of companies (from functions.index.php)
 changePrices($conn, $time_limit_for_company, $price_limit_for_company);
     

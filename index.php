@@ -43,7 +43,7 @@ if(!isLoggedIn())
 }
 
     
-//change the password for admin    
+//change the password for user   
 if(isset($_POST['current_p']) && isset($_POST['new_p']) && isset($_POST['new_confirm_p']))
 {
     $query = "SELECT password FROM users WHERE id = $user->id";
@@ -65,18 +65,22 @@ if(isset($_POST['current_p']) && isset($_POST['new_p']) && isset($_POST['new_con
          echo "<div id='note'>Password Changed Successfuly. <a id='close' class='pull-right'>[Close]&nbsp;</a></div>";
     }
     
-}    
-//change the share price of companies (from functions.index.php)
-changePrices($conn, $time_limit_for_company, $price_limit_for_company);
+}
+    
+if($session_db != "off")    
+    //change the share price of companies (from functions.index.php)
+    changePrices($conn, $time_limit_for_company, $price_limit_for_company);
 
 //check for any messages    
 $user->checkMessages($conn);
-    
-//execute orders for logged in user
-$message = $user->executeOrders($conn);
-if($message != "")
-{
-    echo "<div id='note'>$message<a id='close' class='pull-right'>[Close]</a></div>";
+
+if($session_db != "off")
+{  //execute orders for logged in user
+    $message = $user->executeOrders($conn);
+    if($message != "")
+    {
+        echo "<div id='note'>$message<a id='close' class='pull-right'>[Close]</a></div>";
+    }
 }
     
 ?>
@@ -185,7 +189,7 @@ if($message != "")
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
-                 
+                 <br>
                 
               <div class="col-md-5">
     <div class="form-area">  
@@ -238,7 +242,7 @@ if($message != "")
                     <div class="form-group">
 						<input type="number" class="form-control" id="limit_price" name="limit_price" placeholder="Limit Price" id="required_later">
 					</div>
-                    <input type="submit" id="submit" name="Submit" class="btn btn-primary pull-right">
+                    <input type="submit" id="submit" name="Submit" class="btn btn-primary pull-right" <?php if($session_db == "off") echo "disabled"; ?> >
                     </div>
             
         

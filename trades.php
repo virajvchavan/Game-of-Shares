@@ -113,6 +113,7 @@ if($message != "")
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
+                        <br>
                         <table class="table-fill">
                             <thead>
                             <tr>
