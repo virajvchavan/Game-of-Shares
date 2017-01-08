@@ -11,7 +11,7 @@ $dbname = "game_of_shares";
 
 //limits for changing the stock price
 $time_limit_for_company = 120;
-$price_limit_for_company = 20.0;
+$price_limit_for_company = 10.0;
 
 $conn = new mysqli($servername, $username_db, $password, $dbname);
 // Check connection

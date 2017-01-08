@@ -12,8 +12,9 @@ if(!isLoggedIn())
     header("Location:login.php");
 }
 
-//change the share price of companies (from functions.index.php)
-changePrices($conn, $time_limit_for_company, $price_limit_for_company);
+if($session_db != "off")    
+    //change the share price of companies (from functions.index.php)
+    changePrices($conn, $time_limit_for_company, $price_limit_for_company);
 
 
 //place the order    
@@ -58,12 +59,15 @@ if(isset($_POST['edit_id']) && !empty($_POST['edit_id']) && isset($_POST['new_pr
 //check for any messages    
 $user->checkMessages($conn);
 
-//execute orders for logged in user
-$message = $user->executeOrders($conn);
-if($message != "")
-{
-    echo "<div id='note'>$message<a id='close' class='pull-right'>[Close]</a></div>";
-}    
+if($session_db != "off")
+{   
+    //execute orders for logged in user
+    $message = $user->executeOrders($conn);
+    if($message != "")
+    {
+        echo "<div id='note'>$message<a id='close' class='pull-right'>[Close]</a></div>";
+    }   
+}
     
 ?>
     
@@ -177,7 +181,7 @@ if($message != "")
                                 {
                                     if(mysqli_num_rows($run) < 1)
                                     {
-                                        echo "<tr><td colspan='6'>No pending orders to show</td></tr>";
+                                        echo "<tr><td colspan='8'>No pending orders to show</td></tr>";
                                     }
                                     else
                                     {

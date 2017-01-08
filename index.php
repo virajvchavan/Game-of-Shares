@@ -6,19 +6,6 @@ include "conn.inc.php";
 include "functions.index.php";    
 
     
-//registering the user    
-if(isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email']) && isset($_POST['phone']) && isset($_POST['password']))
-{
-    if(register($conn, ($_POST['first_name']), ($_POST['last_name']), ($_POST['email']), ($_POST['phone']), md5(($_POST['password']))))
-    {
-        //registration successful
-    }
-    else
-    {
-        echo "Registration error";
-        //might wanna refresh
-    }
-}
     
 //logging in the user
 if(isset($_POST['email']) && isset($_POST['password']))
@@ -117,6 +104,11 @@ if($session_db != "off")
         body{
             font-family: 'Montserrat', sans-serif;
         }
+        .inner_table{
+            width: 200px;
+            font-size: 12px;
+            display: none;
+        }
     
     </style>
     
@@ -133,6 +125,13 @@ if($session_db != "off")
             }
             return true;
         }
+    function toggle_visibility(id) {
+       var e = document.getElementById(id);
+       if(e.style.display == 'block')
+          e.style.display = 'none';
+       else
+          e.style.display = 'block';
+   }
     </script>
 
 </head>
@@ -290,9 +289,70 @@ if($session_db != "off")
                                             if($quantity > 0)
                                             {
                                                 echo "<tr>
-                                                    <td><a href='company.php?id=$company_id'>$company_name ($abbr)</a></td>
-                                                    <td>$quantity</td>
+                                                    <td><a href='company.php?id=$company_id'>$company_name ($abbr)</a></td>";?>
+                                
+                                                    <td><a><div onclick="toggle_visibility('<?php echo $company_id; ?>');">
+                                                    <?php    echo "$quantity <img src='https://cdn4.iconfinder.com/data/icons/simplicity-vector-icon-set/512/click.png' height='22' width='22'></div></a></td>
                                                  </tr>";
+                                                echo "<tr>
+                                                <td colspan='2'>
+                                                <table class='table-fill pull-right inner_table' id='$company_id'>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Buy/Sell</th>
+                                                                    <th>Quantity</th>
+                                                                    <th>Price</th>
+                                                                </tr>
+                                                                </thead>
+                                                            <tbody class='table-hover'>";
+                                            
+                                                $query_inline = "SELECT quantity, price, time FROM transactions WHERE user_id =".$user->id." AND company_id = $company_id";
+                                
+                                                if($run_inline = mysqli_query($conn, $query_inline))
+                                                {
+                                                    
+                                                    if(mysqli_num_rows($run_inline) < 1)
+                                                    {
+                                                        echo "<tr><td colspan='3'>No Past Transactions</td></tr>";
+                                                    }
+                                                    else
+                                                    {
+
+                                                        while($array_inline = mysqli_fetch_assoc($run_inline))
+                                                        {
+
+                                                            $quantity_inline = $array_inline['quantity'];
+                                                            $time_inline = $array_inline['time'];
+                                                            $price_inline = $array_inline['price'];   
+                                                            
+                                                            if($quantity_inline > 0)
+                                                            {
+                                                                $type_inline = "Buy";
+                                                                $color = "green";
+                                                            }
+                                                            else
+                                                            {
+                                                                $type_inline = "Sell";
+                                                                $color = "red";
+                                                            }
+                                                            
+                                                            
+                                                            echo "<tr>
+                                                            <td class='$color'>$type_inline</td>
+                                                            <td class='$color'>".abs($quantity_inline)."</td>
+                                                            <td>$price_inline</td>
+                                                            </tr>";
+                                                            
+                                                           
+                                                        }
+                                                        echo "</td></tr>";
+                                                     
+                                                    }
+                                                    
+                                                }
+                                                   
+                                                   echo  "</tbody></table>";
+                                                
                                             }
                                             
                                         }

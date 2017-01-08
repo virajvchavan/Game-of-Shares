@@ -34,6 +34,7 @@ function register($conn, $first_name, $last_name, $email, $phone, $password)
 			
 			if(login($conn, $email, $password))
             {
+                header("refresh:0,help.php");
                 return true;
             }
             else

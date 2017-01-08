@@ -12,33 +12,21 @@ if(!isLoggedIn())
     header("Location:login.php");
 }
 
-    
-//change the share price of companies (from functions.index.php)
-changePrices($conn, $time_limit_for_company, $price_limit_for_company);
+if($session_db != "off")    
+    //change the share price of companies (from functions.index.php)
+    changePrices($conn, $time_limit_for_company, $price_limit_for_company);
     
 //check for any messages    
 $user->checkMessages($conn);
 
-//check if market is open or not
-$query = "SELECT session, time FROM admin WHERE id = 1";
-if($run = mysqli_query($conn, $query))
+if($session_db != "off")   
 {
-    while($array = mysqli_fetch_assoc($run))
+    //execute orders for logged in user
+    $message = $user->executeOrders($conn);
+    if($message != "")
     {
-        $session_db = $array['session'];
-        $start_time = $array['time'];
+        echo "<div id='note'>$message<a id='close' class='pull-right'>[Close]</a></div>";
     }
-    
-    if($session_db == "off")
-    {
-        echo "<div id='note'>The market is closed at this moment.</div>";
-    }    
-}    
-//execute orders for logged in user
-$message = $user->executeOrders($conn);
-if($message != "")
-{
-    echo "<div id='note'>$message<a id='close' class='pull-right'>[Close]</a></div>";
 }
      
 ?>
@@ -61,7 +49,7 @@ if($message != "")
     <link href="css/table.css" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-
+    <script src="https://use.fontawesome.com/8754a9ba67.js"></script>
     
         <style>
     #balance{
@@ -74,6 +62,19 @@ if($message != "")
         }
             body{
                 font-family: 'Montserrat', sans-serif;
+            }
+            #block{
+                background: #004D40;
+                padding: 5px;
+                margin: 10px;
+                color: white;
+                border-radius: 5px;
+                width: 500px;
+            }
+            #block-title{
+                color: #004D40;
+                background: white;
+                padding: 3px;
             }
     
     </style>
@@ -131,17 +132,38 @@ if($message != "")
                 <div class="row">
                     <div class="col-lg-12">
                         <br>
-                        <h2>Developed By:</h2>
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h3>Viraj Chavan</h3>
-                            </div>
-                            <div class="panel-body">
-                            Third Year Information Technology,<br>
-                            Walchand College of Engineering, Sangli
-                                </div>
-                        </div>
                        
+                            <div id="block">
+                                <div id="block-title">
+                                    <h2>Organized By:</h2>
+                                </div>
+                                
+                                    <ul>
+                                        <li><h4>Chani Bhate</h4></li>
+                                        <li><h4>Purnima Iyer</h4></li>
+                                        <li><h4>Prajakta Ghuli</h4></li>
+                                        <li><h4>Sorabh Suryavanshi</h4></li>
+                                    </ul>
+                            </div>
+                            <br>                          
+ 
+                            <div id="block">
+                                <div id="block-title">
+                                    <h2>Developed By:</h2>
+                                </div>
+                                <div class="pull-right" style="padding:5px; font-size:30px">
+                                <a href="http://github.com/virajvchavan"><i class="fa fa-github" aria-hidden="true"></i></a>&nbsp;
+                                    <a href="http://linkedin.com/in/virajvchavan"><i class="fa fa-linkedin" aria-hidden="true"></i></a>&nbsp;
+                                    <a href="http://facebook.com/virajvchavan"><i class="fa fa-facebook" aria-hidden="true"></i></a>&nbsp;
+                                </div>
+                               <ul>
+                                    <li><h4>Viraj Chavan</h4></li>
+                                    <ul>
+                                        <li><h5>TY IT</h5></li>
+                                        <li><h5>WCE, Sangli</h5></li>
+                                   </ul>
+                               </ul>
+                            </div>
                     </div>
                 </div>
             </div>

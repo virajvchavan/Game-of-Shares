@@ -13,18 +13,22 @@ if(!isLoggedIn())
     header("Location:login.php");
 }
 
-//change the share price of companies (from functions.index.php)
-changePrices($conn, $time_limit_for_company, $price_limit_for_company);
+if($session_db != "off")    
+    //change the share price of companies (from functions.index.php)
+    changePrices($conn, $time_limit_for_company, $price_limit_for_company);
    
 //check for any messages    
 $user->checkMessages($conn);
-    
-//execute orders for logged in user
-$message = $user->executeOrders($conn);
 
-if($message != "")
-{
-    echo "<div id='note'>$message<a id='close' class='pull-right'>[Close]</a></div>";
+if($session_db != "off")
+{   
+    //execute orders for logged in user
+    $message = $user->executeOrders($conn);
+
+    if($message != "")
+    {
+        echo "<div id='note'>$message<a id='close' class='pull-right'>[Close]</a></div>";
+    }
 }
     
 

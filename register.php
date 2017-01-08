@@ -48,7 +48,7 @@
            <div class="modal-body">
 <div class="row">
     <div class="col-xs-12">
-		<form role="form" method="post" action="index.php" name="register"  onsubmit="return validateForm()">
+		<form role="form" method="post" action="help.php" name="register"  onsubmit="return validateForm()">
 			<h2 class="text-center">Register</h2>
 			<hr class="colorgraph">
 			<div class="row">
