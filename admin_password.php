@@ -110,15 +110,15 @@ changePrices($conn, $time_limit_for_company, $price_limit_for_company);
                             <br><br>
                             <div class="form-group">
                                 <label for="name">Current Password</label>
-                                <input type="text" class="form-control" name="current_p" required>
+                                <input type="password" class="form-control" name="current_p" required>
                             </div>
                             <div class="form-group">
                                 <label for="abbr">New Password:</label>
-                                <input type="text" class="form-control" name="new_p" required>
+                                <input type="password" class="form-control" name="new_p" required>
                             </div>
                             <div class="form-group">
                                 <label for="price">Retype New Password</label>
-                                <input type='text' class="form-control" name="new_confirm_p" required>
+                                <input type='password' class="form-control" name="new_confirm_p" required>
                             </div>
                                 <input type="submit" class="btn btn-success" value="Change Password">
                         </form>

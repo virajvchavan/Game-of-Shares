@@ -143,6 +143,7 @@ if($session_db != "off")
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
+                        
                        <?php
                         
                         $company_id = $_GET['id'];
@@ -302,14 +303,17 @@ if($session_db != "off")
                         $query_graph = "SELECT price, time FROM price_variation WHERE company_id = $company_id";
                         if($run_graph = mysqli_query($conn, $query_graph))
                         {
+                            //for converting GMT time to IST, add this to GMT (19800)
+                                $GMT_to_IST = 16200;
                             
                             while($array_graph = mysqli_fetch_assoc($run_graph))
                             {
                                 $time = $array_graph['time'];
                                 $price = $array_graph['price'];
+                                  
                                 
                                 echo "{
-                                    'date':'".date("Y-m-d H:i:s", strtotime($time))."',
+                                    'date':'".date("Y-m-d H:i:s", strtotime($time) + $GMT_to_IST)."',
                                     'value': $price
                                 },";
                             }

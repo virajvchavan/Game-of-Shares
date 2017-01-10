@@ -82,7 +82,8 @@ if(!isset($_SESSION['gos_admin']))
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-12">           
+                    <div class="col-lg-12"> 
+                        <br>
                     <form action="admin.php" method="post">
                         <div class="form-group">
                             <label for="name">Name:</label>

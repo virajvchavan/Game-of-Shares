@@ -93,6 +93,9 @@ if($session_db != "off")
                 padding: 5px;
                 display: none;
             }
+            #bb1{
+                display: block;
+            }
     
     </style>
     
