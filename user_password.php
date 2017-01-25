@@ -104,7 +104,10 @@ if($session_db != "off")
                 <li>
                     <a href="trades.php">Trade Book</a>
                 </li>
-                <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                <li>
+                    <a href="leaders.php">LeaderBoard</a>
+                </li>
+                <br><br><br><br><br><br><br><br><br><br><br><br>
                 <li>
                     <a href="help.php">Help</a>
                 </li>
@@ -127,6 +130,7 @@ if($session_db != "off")
                 <div class="row">
                     <div class="col-lg-12">
                         <br><br>
+                        <!-- The form for changing password -->
                         <form action="index.php" method="post" onsubmit="return validateForm()" name="password">
                             <div class="form-group">
                                 <label for="name">Current Password</label>
@@ -158,22 +162,15 @@ if($session_db != "off")
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
     
-        <script>
- close = document.getElementById("close");
- close.addEventListener('click', function() {
-   note = document.getElementById("note");
-   note.style.display = 'none';
- }, false);
-</script>
+    <script>
+             close = document.getElementById("close");
+             close.addEventListener('click', function() 
+             {
+                note = document.getElementById("note");
+                note.style.display = 'none';
+             }, false);
+    </script>
 
 </body>
 
 </html>
-
-
-<?php
-
-
-
-
-?>

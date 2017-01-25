@@ -155,7 +155,10 @@ if($session_db != "off")
                 <li>
                     <a href="trades.php">Trade Book</a>
                 </li>
-                <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                <li>
+                    <a href="leaders.php">LeaderBoard</a>
+                </li>
+                <br><br><br><br><br><br><br><br><br><br><br><br>
                 <li>
                     <a href="help.php">Help</a>
                 </li>
@@ -171,18 +174,17 @@ if($session_db != "off")
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
-        <style>
-        
-.red{
-    color:red;
-    }
-.form-area
-{
-    background-color: #FAFAFA;
-	padding: 10px 40px 60px;
-	margin: 10px 0px 60px;
-	border: 1px solid GREY;
-	}
+        <style>   
+            .red{
+                color:red;
+                }
+            .form-area
+            {
+                background-color: #FAFAFA;
+                padding: 10px 40px 60px;
+                margin: 10px 0px 60px;
+                border: 1px solid GREY;
+                }
         </style>
         
         <!-- Page Content -->
@@ -190,10 +192,11 @@ if($session_db != "off")
             <div class="container-fluid">
                  <br>
                 
-              <div class="col-md-5">
-    <div class="form-area">  
-        <form role="form" method="post" action="orders.php" onsubmit="return validateForm()" name="order">
-        <br style="clear:both">
+        <div class="col-md-5">
+        <div class="form-area">
+            <!-- Form for placing order -->
+            <form role="form" method="post" action="orders.php" onsubmit="return validateForm()" name="order">
+            <br style="clear:both">
                     <h3 style="margin-bottom: 25px; text-align: center;">Place Order</h3>
                     <div class="form-group">
                     <label class="radio-inline"><input type="radio" name="buysell" value="buy" required>Buy</label>
@@ -246,10 +249,11 @@ if($session_db != "off")
             
         
         </form>
-                  
-    </div>
+        </div>
           
+                
         <div class="col-md-6 pull-right">
+                <!-- Show shares owned by the user -->
                 <div class="col-lg-12">
                     <div class="table-title">
                             <h3>Your Shares</h3>

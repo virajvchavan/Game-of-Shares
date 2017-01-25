@@ -109,15 +109,6 @@ if($session_db != "off")
    }
 </script>
     
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
 </head>
 
 <body>
@@ -139,7 +130,10 @@ if($session_db != "off")
                 <li>
                     <a href="trades.php">Trade Book</a>
                 </li>
-                <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                <li>
+                    <a href="leaders.php">LeaderBoard</a>
+                </li>
+                <br><br><br><br><br><br><br><br><br><br><br><br>
                 <li>
                     <a href="help.php"  class="active">Help</a>
                 </li>
@@ -162,10 +156,11 @@ if($session_db != "off")
                 <div class="row">
                     <div class="col-lg-12">
                         <br>
-                        <h4>Click on the below titles to reveal the answer.</h4>
+                        <h4>Please read this page before starting :-)</h4>
+                        <h5>Click on the below titles to reveal the answer.</h5>
                         <div class="row">
                             <div class="block col-xs-6">
-                                <div class="block-title" onclick="toggle_visibility('bb1');">What is this website?</div>
+                                <a href="#"><div class="block-title" onclick="toggle_visibility('bb1');">What is this website?</div></a>
                                 <div class="block-body" id="bb1">
                                 <ul>
                                     <li>It's a stock market game.</li>
@@ -176,9 +171,12 @@ if($session_db != "off")
                                 </div>
                             </div>
                             <div class="block class col-xs-6">
-                                <div class="block-title"  onclick="toggle_visibility('bb2');">Who can use this?</div>
+                                <a href="#"><div class="block-title"  onclick="toggle_visibility('bb2');">Who can use this?</div></a>
                                 <div class="block-body" id="bb2">
-                                People with no or very little knowledge of share market.
+                                <ul>
+                                    <li>Those who want to learn about share market.</li>
+                                    <li>Having no or very little knowledge of share market.</li>                       
+                                </ul>
                                 </div>
                             </div>
                         </div>
@@ -186,15 +184,15 @@ if($session_db != "off")
                         <h3>Concepts you need to know:</h3>
                         <div class="row">
                             <div class="block col-xs-6">
-                                <div class="block-title" onclick="toggle_visibility('bb3');">Stock/Share/Equity</div>
+                                <a href="#"><div class="block-title" onclick="toggle_visibility('bb3');">Stock/Share/Equity</div></a>
                                 <div class="block-body" id="bb3">
-                                    A stock is a type of security that signifies ownership in a company and represents a claim on part of the company's assets and earnings.
+                                    A stock signifies ownership in a company and represents a claim on part of the company's assets and earnings.
                                     <hr>
                                     For example, if a company has 1,000 shares of stock outstanding and one person owns 100 shares, that person would own and have claim to 10% of the company's assets.
                                 </div>
                             </div>
                             <div class="block col-xs-6">
-                                <div class="block-title" onclick="toggle_visibility('bb4');">Stock Market</div>
+                                <a href="#"><div class="block-title" onclick="toggle_visibility('bb4');">Stock Market</div></a>
                                 <div class="block-body" id="bb4">
                                 A stock market, is a network of buyers and sellers trading Stocks between each other.
                                 <hr>
@@ -205,7 +203,7 @@ if($session_db != "off")
                         <br>
                         <div class="row">
                             <div class="block col-xs-6">
-                                <div class="block-title" onclick="toggle_visibility('bb5');">What makes the stock price change?</div>
+                                <a href="#"><div class="block-title" onclick="toggle_visibility('bb5');">What makes the stock price change?</div></a>
                                 <div class="block-body" id="bb5">
                                     Share prices change because of supply and demand.
                                     <hr>
@@ -213,7 +211,7 @@ if($session_db != "off")
                                 </div>
                             </div>
                             <div class="block col-xs-6">
-                                <div class="block-title" onclick="toggle_visibility('bb6');">How is profit made?</div>
+                                <a href="#"><div class="block-title" onclick="toggle_visibility('bb6');">How is profit made?</div></a>
                                 <div class="block-body" id="bb6">
                                 Suppose you buy 100 shares of XYZ at $40.<hr>
                                 Now the price keeps on changing.
@@ -225,7 +223,7 @@ if($session_db != "off")
                         <br>
                         <div class="row">
                             <div class="block col-xs-6">
-                                <div class="block-title" onclick="toggle_visibility('bb7');">Market Order</div>
+                                <a href="#"><div class="block-title" onclick="toggle_visibility('bb7');">Market Order</div></a>
                                 <div class="block-body" id="bb7">
                                     Buy/sell at the current available price.
                                     <hr>
@@ -236,7 +234,7 @@ if($session_db != "off")
                                 </div>
                             </div>
                             <div class="block col-xs-6">
-                                <div class="block-title" onclick="toggle_visibility('bb8');">Limit Order</div>
+                                <a href="#"><div class="block-title" onclick="toggle_visibility('bb8');">Limit Order</div></a>
                                 <div class="block-body" id="bb8">
                                 Buy/sell at a user specified price or better.
                                 <hr>

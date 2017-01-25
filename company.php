@@ -121,7 +121,10 @@ if($session_db != "off")
                 <li>
                     <a href="trades.php">Trade Book</a>
                 </li>
-                <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                <li>
+                    <a href="leaders.php">LeaderBoard</a>
+                </li>
+                <br><br><br><br><br><br><br><br><br><br><br><br>
                 <li>
                     <a href="help.php">Help</a>
                 </li>
@@ -304,7 +307,7 @@ if($session_db != "off")
                         if($run_graph = mysqli_query($conn, $query_graph))
                         {
                             //for converting GMT time to IST, add this to GMT (19800)
-                                $GMT_to_IST = 16200;
+                                $GMT_to_IST = 19800;
                             
                             while($array_graph = mysqli_fetch_assoc($run_graph))
                             {

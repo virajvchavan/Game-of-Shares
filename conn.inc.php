@@ -9,18 +9,20 @@ $password = "";
 $dbname = "game_of_shares";
 // Create connection
 
-//limits for changing the stock price
-$time_limit_for_company = 120;
-$price_limit_for_company = 10.0;
+//limits for changing the stock prices
+
+$time_limit_for_company = 120;      //the max time after the price will change
+$price_limit_for_company = 10.0;    //the max amount that the price will change
 
 $conn = new mysqli($servername, $username_db, $password, $dbname);
+
 // Check connection
 if ($conn->connect_error) 
 {
     die("Connection failed: " . $conn->connect_error);
 }
 
-//check if market is open or not
+//check if market is open or not, show the message if not
 $query = "SELECT session, time FROM admin WHERE id = 1";
 if($run = mysqli_query($conn, $query))
 {
@@ -32,10 +34,13 @@ if($run = mysqli_query($conn, $query))
     
     if($session_db == "off")
     {
-        echo "<div id='note'>The market is closed at this moment.</div>";
+        echo "<div id='note'>The market is closed at this moment. The Market Opens at 09:15 hours and Closes at 18:00 hours.</div>";
     }    
 }
 
+
+//checks if a user is logged in or not, 
+//returns a boolean
 function isLoggedIn()
 {
 	if(isset($_SESSION['gos_user_id']) && !empty($_SESSION['gos_user_id']))
@@ -132,8 +137,4 @@ function changePrices($conn, $time_limit_for_company, $price_limit_for_company)
 function random_float ($min,$max) {
     return ($min + lcg_value()*(abs($max - $min)));
 }
-
-
- 
-
 ?>

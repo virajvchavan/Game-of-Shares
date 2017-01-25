@@ -28,4 +28,37 @@ if($session_db != "off")
         }
     }
 }
+
+//now start or close the market according to the current time
+
+/*$current_time = time();
+
+//for converting GMT time to IST, add this to GMT (19800)
+$GMT_to_IST = 19800;
+
+$current_time += $GMT_to_IST;
+
+$hours = gmdate("H:i:s", (int)$current_time);
+
+$hours = substr($hours, 0,2);
+
+
+$time = time();
+
+//session chalu kar
+if($hours >=9 && $hours <= 18)
+{
+    $session = "on";
+}
+//session band kar
+else
+{
+    $session = "off";
+}
+
+if(mysqli_query($conn, "UPDATE admin SET session = '$session', time = '$time' WHERE 1"))
+    echo "Success";
+else
+    echo "Fail";*/
+    
 ?>

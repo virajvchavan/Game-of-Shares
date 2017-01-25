@@ -114,7 +114,7 @@ if(isset($_SESSION['gos_admin']) && isset($_GET['session']) && !empty($_GET['ses
         echo "Falure";    
 }
     
-//check if session is on or off
+//check if session is on or off and set the timer
 $query = "SELECT session, time FROM admin WHERE id = 1";
 if($run = mysqli_query($conn, $query))
 {

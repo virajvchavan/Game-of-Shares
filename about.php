@@ -4,24 +4,23 @@
 <?php
 include "classes.inc.php";
 include "conn.inc.php";
-    
-    
+        
 //leave if not logged in
 if(!isLoggedIn())
 {
     header("Location:login.php");
 }
 
+//change the share price of companies (from functions.index.php)    
 if($session_db != "off")    
-    //change the share price of companies (from functions.index.php)
     changePrices($conn, $time_limit_for_company, $price_limit_for_company);
     
 //check for any messages    
 $user->checkMessages($conn);
 
+//execute orders for logged in user
 if($session_db != "off")   
-{
-    //execute orders for logged in user
+{ 
     $message = $user->executeOrders($conn);
     if($message != "")
     {
@@ -49,7 +48,6 @@ if($session_db != "off")
     <link href="css/table.css" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <script src="https://use.fontawesome.com/8754a9ba67.js"></script>
     
         <style>
     #balance{
@@ -63,30 +61,25 @@ if($session_db != "off")
             body{
                 font-family: 'Montserrat', sans-serif;
             }
-            #block{
-                background: #004D40;
-                padding: 5px;
-                margin: 10px;
-                color: white;
-                border-radius: 5px;
-                width: 500px;
-            }
-            #block-title{
+           #links_bottom{
+    position: fixed;
+    z-index: 101;
+    bottom: 0;
+    left: 250px;
+    right: 0;
+    background: #fde073;
+    text-align: center;
+    line-height: 3;
+    overflow: hidden; 
+    -webkit-box-shadow: 0 0 5px black;
+    -moz-box-shadow:    0 0 5px black;
+    box-shadow:         0 0 5px black;
+}
+            h3{
                 color: #004D40;
-                background: white;
-                padding: 3px;
             }
     
     </style>
-    
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
 </head>
 
@@ -109,7 +102,10 @@ if($session_db != "off")
                 <li>
                     <a href="trades.php">Trade Book</a>
                 </li>
-                <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                <li>
+                    <a href="leaders.php">LeaderBoard</a>
+                </li>
+                <br><br><br><br><br><br><br><br><br><br><br><br>
                 <li>
                     <a href="help.php">Help</a>
                 </li>
@@ -131,39 +127,36 @@ if($session_db != "off")
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
+                        <div id="links_bottom">
+                        Contact/Feedback: &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="http://github.com/virajvchavan" target='_blank'>Github</a>
+                        &nbsp;&nbsp;&nbsp;<a href="http://linkedin.com/in/virajvchavan" target='_blank'>LinkedIn</a>
+                        &nbsp;&nbsp;&nbsp;<a href="http://facebook.com/virajvchavan" target='_blank'>Facebook</a>
+                        &nbsp;&nbsp;&nbsp;Call: 8975201655    
+                        </div>
+                        
                         <br>
+                        <h3>Devepoled as a Mini Project by:</h3>
+                        <h4>
+                            <ul>
+                                <li>Shubham Hapse</li>
+                                <li>Viraj Chavan &nbsp;&nbsp;&nbsp;
+                                </li>
+                                <li>Varun Maheshwari</li>
+                            </ul>
+                        </h4>
+                        <hr>
+                        <h3>
+                            Under the guidance of:</h3> <h4><ul><li>Mr. Mayur Rathi<br><br> Department of Information Technology,<br>
+                        Walchand College of Engineering, Sangli.<br></li></ul></h4>
                        
-                            <div id="block">
-                                <div id="block-title">
-                                    <h2>Organized By:</h2>
-                                </div>
-                                
-                                    <ul>
-                                        <li><h4>Chani Bhate</h4></li>
-                                        <li><h4>Purnima Iyer</h4></li>
-                                        <li><h4>Prajakta Ghuli</h4></li>
-                                        <li><h4>Sorabh Suryavanshi</h4></li>
-                                    </ul>
-                            </div>
-                            <br>                          
- 
-                            <div id="block">
-                                <div id="block-title">
-                                    <h2>Developed By:</h2>
-                                </div>
-                                <div class="pull-right" style="padding:5px; font-size:30px">
-                                <a href="http://github.com/virajvchavan"><i class="fa fa-github" aria-hidden="true"></i></a>&nbsp;
-                                    <a href="http://linkedin.com/in/virajvchavan"><i class="fa fa-linkedin" aria-hidden="true"></i></a>&nbsp;
-                                    <a href="http://facebook.com/virajvchavan"><i class="fa fa-facebook" aria-hidden="true"></i></a>&nbsp;
-                                </div>
-                               <ul>
-                                    <li><h4>Viraj Chavan</h4></li>
-                                    <ul>
-                                        <li><h5>TY IT</h5></li>
-                                        <li><h5>WCE, Sangli</h5></li>
-                                   </ul>
-                               </ul>
-                            </div>
+                        <hr>
+                        
+                        <h3>Concept by:</h3>
+                        <h4><ul><li>Chani Bhate<br><br>
+                            Chintamanrao Institute of Management Development And Research, 
+                            <br>Sangli
+                            </li></ul></h4><br>
                     </div>
                 </div>
             </div>
