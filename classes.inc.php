@@ -1,5 +1,4 @@
 <?php
-
 class User
 {
     var $id;
@@ -315,8 +314,22 @@ class User
         }
     }
     
+    //restart the game, delete/reset things
+    function restartGame($conn)
+    {
+        $query_all = "DELETE FROM shares WHERE user_id = $this->id; DELETE FROM transactions WHERE user_id = $this->id; DELETE FROM orders WHERE user_id = $this->id; UPDATE users SET balance = 500000, message='Reset Successfull.' WHERE id = $this->id";
+        
+        if(mysqli_multi_query($conn, $query_all))
+        {
+            header("Location:index.php");
+        }
+        else
+           echo "Error quiery";
+        
+        return;
+    }
+    
 }
-
 
 
 class Company
@@ -446,7 +459,6 @@ class Company
     }
     
 }
-
 
 
 class Order

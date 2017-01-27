@@ -138,3 +138,27 @@ function random_float ($min,$max) {
     return ($min + lcg_value()*(abs($max - $min)));
 }
 ?>
+
+<!-- Modal -->
+<div id="restartModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Are you sure?</h4>
+      </div>
+      <div class="modal-body">
+        <p>All your current data will be erased.<hr> All your shares will be gone.<hr> Your balance will be set to 500000.<hr>It is not recoverable.</p>
+      </div>
+      <div class="modal-footer">
+        <form method="post" action="index.php"><input type="text" name="restart" value="yes" hidden><input type="submit" class="btn btn-danger" value="Yes">
+        <button type="button" class="btn btn-success" data-dismiss="modal">No</button>  
+        </form>
+        
+      </div>
+    </div>
+
+  </div>
+</div>

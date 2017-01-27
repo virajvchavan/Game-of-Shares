@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en">    
 <?php
 include "classes.inc.php";
 include "conn.inc.php";
 include "functions.index.php";    
-
-    
-    
+   
 //logging in the user
 if(isset($_POST['email']) && isset($_POST['password']))
 {
@@ -29,7 +27,14 @@ if(!isLoggedIn())
         header("Location:login.php");
 }
 
-    
+if(isset($_POST['restart']) && !empty($_POST['restart']))
+{
+    if($_POST['restart'] == "yes")
+    {
+        $user->restartGame($conn);
+        
+    }
+}
 //change the password for user   
 if(isset($_POST['current_p']) && isset($_POST['new_p']) && isset($_POST['new_confirm_p']))
 {
@@ -158,7 +163,7 @@ if($session_db != "off")
                 <li>
                     <a href="leaders.php">LeaderBoard</a>
                 </li>
-                <br><br><br><br><br><br><br><br><br><br><br><br>
+                <br><br><br><br><br><br><br><br><br><br>
                 <li>
                     <a href="help.php">Help</a>
                 </li>
@@ -167,6 +172,9 @@ if($session_db != "off")
                 </li>
                 <li>
                     <a href="user_password.php">Change Password</a>
+                </li>
+                <li>
+                    <a data-toggle="modal" data-target="#restartModal">Restart Game</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout (<?php echo $user->get_name($conn); ?>)</a>
@@ -263,6 +271,7 @@ if($session_db != "off")
                             <tr>
                             <th>Company</th>
                             <th>Quantity</th>
+                            <th>Price</th>
                             </tr>
                             </thead>
                             <tbody class="table-hover">
@@ -289,6 +298,7 @@ if($session_db != "off")
                                             $company = new Company($company_id);
                                             $company_name = $company->get_company_name($conn); 
                                             $abbr = $company->get_abbr($conn);
+                                            $company_price = $company->get_company_price($conn);
                                             
                                             if($quantity > 0)
                                             {
@@ -297,6 +307,7 @@ if($session_db != "off")
                                 
                                                     <td><a><div onclick="toggle_visibility('<?php echo $company_id; ?>');">
                                                     <?php    echo "$quantity <img src='https://cdn4.iconfinder.com/data/icons/simplicity-vector-icon-set/512/click.png' height='22' width='22'></div></a></td>
+                                                    <td>$company_price</td>
                                                  </tr>";
                                                 echo "<tr>
                                                 <td colspan='2'>
@@ -432,16 +443,12 @@ if($session_db != "off")
                                         }
                                         
                                     }
-                                }
-                                
-                                
-                                
+                                }        
                                 
                             ?>
                             </tbody>
                         </table>
-                       
-                       
+                               
                     </div>
                     
                 </div>
@@ -456,6 +463,8 @@ if($session_db != "off")
 
     <!-- /#wrapper -->
 
+        
+
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
 
@@ -469,7 +478,5 @@ if($session_db != "off")
    note.style.display = 'none';
  }, false);
 </script>
-
 </body>
-
 </html>

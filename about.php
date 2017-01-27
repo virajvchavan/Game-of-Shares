@@ -105,7 +105,7 @@ if($session_db != "off")
                 <li>
                     <a href="leaders.php">LeaderBoard</a>
                 </li>
-                <br><br><br><br><br><br><br><br><br><br><br><br>
+                <br><br><br><br><br><br><br><br><br><br>
                 <li>
                     <a href="help.php">Help</a>
                 </li>
@@ -114,6 +114,9 @@ if($session_db != "off")
                 </li>
                 <li>
                     <a href="user_password.php">Change Password</a>
+                </li>
+                <li>
+                    <a data-toggle="modal" data-target="#restartModal">Restart Game</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout (<?php echo $user->get_name($conn); ?>)</a>
