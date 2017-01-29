@@ -321,6 +321,7 @@ class User
         
         if(mysqli_multi_query($conn, $query_all))
         {
+            $this->balance = 500000;
             header("Location:index.php");
         }
         else
@@ -507,9 +508,9 @@ class Order
             return false;
     }
     
-    function edit_order($conn, $new_price)
+    function edit_order($conn, $new_price, $new_quantity)
     {
-        $query_update = "UPDATE orders SET limit_price = '$new_price' WHERE id=$this->id";
+        $query_update = "UPDATE orders SET limit_price = '$new_price', quantity = $new_quantity WHERE id=$this->id";
         
         if(mysqli_query($conn, $query_update))
         {

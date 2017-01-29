@@ -46,7 +46,6 @@ if($session_db != "off")
     <!-- Custom CSS -->
     <link href="css/sidebar.css" rel="stylesheet">
     <link href="css/table.css" rel="stylesheet">
-
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     
         <style>
@@ -71,6 +70,9 @@ if($session_db != "off")
             }
             #bronz{
                 background: #CD7F32;
+            }
+            #user_color{
+                border: solid #004D40 2px;
             }
     
     </style>
@@ -106,10 +108,10 @@ if($session_db != "off")
                     <a href="about.php">About</a>
                 </li>
                 <li>
-                    <a href="user_password.php">Change Password</a>
+                    <a href="account.php">Account Settings</a>
                 </li>
                 <li>
-                    <a data-toggle="modal" data-target="#restartModal">Restart Game</a>
+                    <a href="feedback.php">Feedback</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout (<?php echo $user->get_name($conn); ?>)</a>
@@ -224,8 +226,7 @@ if($session_db != "off")
                                 usort($array_sorted, 'sortByTotal');
                                 
                                 $no = 0;
-                                
-                                
+                                                                
                                 //now print the leaderboard table rows
                                 foreach($array_sorted as $key=>$value)
                                 {
@@ -238,6 +239,12 @@ if($session_db != "off")
                                     $total = $value['total'];
                                     $stock_v = $value['stock_v'];
                                     
+                                    if($id == $user->id)
+                                    {
+                                        $u_color = "user_color";
+                                    }
+                                    else
+                                        $u_color = "nothing";
                                     if($no == 1)
                                         $color = "golden";
                                     elseif($no == 2)
@@ -247,7 +254,7 @@ if($session_db != "off")
                                     else
                                         $color = "";
                                     
-                                    echo "<tr>
+                                    echo "<tr id = '$u_color'>
                                             <td id='$color'>".$no."</td>
                                             <td id='$color'>$fname $lname</td>
                                             <td>$balance</td>

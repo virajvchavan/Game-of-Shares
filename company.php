@@ -51,8 +51,7 @@ if($session_db != "off")
 
     <!-- Custom CSS -->
     <link href="css/sidebar.css" rel="stylesheet">
-    <link href="css/table.css" rel="stylesheet">
-    
+    <link href="css/table.css" rel="stylesheet">   
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
     
@@ -66,10 +65,8 @@ if($session_db != "off")
         margin: 8px;
         }
             body{
-                font-family: 'Montserrat', sans-serif;
-                
-            }
-            
+                font-family: 'Montserrat', sans-serif;   
+            }    
             
         #chartdiv {
             background-color: #30303d; color: #fff;
@@ -91,15 +88,6 @@ if($session_db != "off")
     
     </style>
     
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
 </head>
 
 <body>
@@ -132,10 +120,10 @@ if($session_db != "off")
                     <a href="about.php">About</a>
                 </li>
                 <li>
-                    <a href="user_password.php">Change Password</a>
+                    <a href="account.php">Account Settings</a>
                 </li>
                 <li>
-                    <a data-toggle="modal" data-target="#restartModal">Restart Game</a>
+                    <a href="feedback.php">Feedback</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout (<?php echo $user->get_name($conn); ?>)</a>

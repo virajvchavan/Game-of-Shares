@@ -52,7 +52,6 @@ function register($conn, $first_name, $last_name, $email, $phone, $password)
         return false;
 }
 
-
 //login the user
 function login($conn, $email, $password)
 {

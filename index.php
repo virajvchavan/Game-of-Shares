@@ -27,6 +27,7 @@ if(!isLoggedIn())
         header("Location:login.php");
 }
 
+//restart the game for logged in user
 if(isset($_POST['restart']) && !empty($_POST['restart']))
 {
     if($_POST['restart'] == "yes")
@@ -35,6 +36,8 @@ if(isset($_POST['restart']) && !empty($_POST['restart']))
         
     }
 }
+    
+    
 //change the password for user   
 if(isset($_POST['current_p']) && isset($_POST['new_p']) && isset($_POST['new_confirm_p']))
 {
@@ -66,8 +69,9 @@ if($session_db != "off")
 //check for any messages    
 $user->checkMessages($conn);
 
+//execute orders for logged in user    
 if($session_db != "off")
-{  //execute orders for logged in user
+{  
     $message = $user->executeOrders($conn);
     if($message != "")
     {
@@ -114,6 +118,9 @@ if($session_db != "off")
             font-size: 12px;
             display: none;
         }
+        #limit_div{
+            display: none;
+        }
     
     </style>
     
@@ -130,13 +137,27 @@ if($session_db != "off")
             }
             return true;
         }
-    function toggle_visibility(id) {
-       var e = document.getElementById(id);
-       if(e.style.display == 'block')
-          e.style.display = 'none';
-       else
-          e.style.display = 'block';
-   }
+        
+        function toggle_visibility(id) 
+        {
+           var e = document.getElementById(id);
+           if(e.style.display == 'block')
+              e.style.display = 'none';
+           else
+              e.style.display = 'block';
+        }
+        
+        function show_limit(id)
+        {
+           var e = document.getElementById(id);
+           e.style.display = 'block';
+        }
+        
+        function hide_limit(id)
+        {
+           var e = document.getElementById(id);
+           e.style.display = 'none';
+        }
     </script>
 
 </head>
@@ -171,10 +192,10 @@ if($session_db != "off")
                     <a href="about.php">About</a>
                 </li>
                 <li>
-                    <a href="user_password.php">Change Password</a>
+                    <a href="account.php">Account Settings</a>
                 </li>
                 <li>
-                    <a data-toggle="modal" data-target="#restartModal">Restart Game</a>
+                    <a href="feedback.php">Feedback</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout (<?php echo $user->get_name($conn); ?>)</a>
@@ -245,11 +266,11 @@ if($session_db != "off")
 					</div>
             
                     <div class="form-group">
-                    <label class="radio-inline"><input type="radio" id="market" name="limit_or_market" value="market" required>Market</label>
-                    <label class="radio-inline"><input type="radio" id="limit" name="limit_or_market" value="limit" required>Limit</label>
+                    <label class="radio-inline"><input type="radio" id="market" name="limit_or_market" value="market" required  onclick="hide_limit('limit_div');">Market</label>
+                    <label class="radio-inline"><input type="radio" id="limit" name="limit_or_market" value="limit" required  onclick="show_limit('limit_div');">Limit</label>
                     </div>   
             
-                    <div class="form-group">
+                    <div class="form-group" id="limit_div">
 						<input type="number" class="form-control" id="limit_price" name="limit_price" placeholder="Limit Price" id="required_later">
 					</div>
                     <input type="submit" id="submit" name="Submit" class="btn btn-primary pull-right" <?php if($session_db == "off") echo "disabled"; ?> >
@@ -285,7 +306,7 @@ if($session_db != "off")
                                     
                                     if(mysqli_num_rows($run) < 1)
                                     {
-                                        echo "<tr><td colspan='2'>You do not own any shares</td></tr>";
+                                        echo "<tr><td colspan='3'>You do not own any shares</td></tr>";
                                     }
                                     else
                                     {

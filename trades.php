@@ -99,10 +99,10 @@ if($session_db != "off")
                     <a href="about.php">About</a>
                 </li>
                 <li>
-                    <a href="user_password.php">Change Password</a>
+                    <a href="account.php">Account Settings</a>
                 </li>
                 <li>
-                    <a data-toggle="modal" data-target="#restartModal">Restart Game</a>
+                    <a href="feedback.php">Feedback</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout (<?php echo $user->get_name($conn); ?>)</a>
@@ -131,8 +131,8 @@ if($session_db != "off")
                             </thead>
                             <tbody class="table-hover">
                                 <?php
-                                
-                                $query = "SELECT * FROM transactions WHERE user_id =".$user->get_id();
+                                $user_id = $user->id;
+                                $query = "SELECT * FROM transactions WHERE user_id ='$user_id' ORDER BY time";
                                 
                                 if($run = mysqli_query($conn, $query))
                                 {
@@ -156,10 +156,14 @@ if($session_db != "off")
                                             $company_name = $company->get_company_name($conn);
                                             $company_price = $company->get_company_price($conn);
                                             
+                                            //for converting GMT time to IST, add this to GMT (19800)
+                                            $GMT_to_IST = 19800;
                                             
-                                            $balance -= $quantity*$price;
+                                            
+                                            $balance -= ($quantity*$price);
+                                            
                                             echo "<tr>
-                                                    <td>$time</td>
+                                                    <td>".date("Y-m-d H:i:s", strtotime($time) + $GMT_to_IST)."</td>
                                                     <td>";
                                                     if($quantity > 0)
                                                     {

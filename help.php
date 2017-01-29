@@ -141,10 +141,10 @@ if($session_db != "off")
                     <a href="about.php">About</a>
                 </li>
                 <li>
-                    <a href="user_password.php">Change Password</a>
+                    <a href="account.php">Account Settings</a>
                 </li>
                 <li>
-                    <a data-toggle="modal" data-target="#restartModal">Restart Game</a>
+                    <a href="feedback.php">Feedback</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout (<?php echo $user->get_name($conn); ?>)</a>

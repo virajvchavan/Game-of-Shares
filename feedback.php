@@ -27,6 +27,22 @@ if($session_db != "off")
         echo "<div id='note'>$message<a id='close' class='pull-right'>[Close]</a></div>";
     }
 }
+
+//save feedback in db
+if(isset($_POST['name']) && isset($_POST['email']) && isset($_POST['feedback']) && !empty($_POST['feedback']))
+{
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $feedback = $_POST['feedback'];
+    
+    $query = "INSERT INTO feedback(name, email, feedback) VALUES('$name','$email','$feedback')";
+    if(mysqli_query($conn, $query))
+    {
+        echo "<div id='note'>Thank you for your Feedback. Keep rocking!</div>";
+    }
+    else
+        echo "Problemo feedback";
+}
      
 ?>
     
@@ -61,23 +77,16 @@ if($session_db != "off")
             body{
                 font-family: 'Montserrat', sans-serif;
             }
-           #links_bottom{
-    position: fixed;
-    z-index: 101;
-    bottom: 0;
-    left: 250px;
-    right: 0;
-    background: #fde073;
-    text-align: center;
-    line-height: 3;
-    overflow: hidden; 
-    -webkit-box-shadow: 0 0 5px black;
-    -moz-box-shadow:    0 0 5px black;
-    box-shadow:         0 0 5px black;
-}
             h3{
                 color: #004D40;
             }
+            .form-area
+            {
+                background-color: #FAFAFA;
+                padding: 10px 40px 60px;
+                margin: 10px 0px 60px;
+                border: 1px solid GREY;
+                }
     
     </style>
 
@@ -110,13 +119,13 @@ if($session_db != "off")
                     <a href="help.php">Help</a>
                 </li>
                 <li>
-                    <a href="about.php" class="active">About</a>
+                    <a href="about.php">About</a>
                 </li>
                 <li>
                     <a href="account.php">Account Settings</a>
                 </li>
                 <li>
-                    <a href="feedback.php">Feedback</a>
+                    <a href="feedback.php" class="active">Feedback</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout (<?php echo $user->get_name($conn); ?>)</a>
@@ -129,37 +138,43 @@ if($session_db != "off")
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div id="links_bottom">
-                        Contact/Feedback: &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="http://github.com/virajvchavan" target='_blank'>Github</a>
-                        &nbsp;&nbsp;&nbsp;<a href="http://linkedin.com/in/virajvchavan" target='_blank'>LinkedIn</a>
-                        &nbsp;&nbsp;&nbsp;<a href="http://facebook.com/virajvchavan" target='_blank'>Facebook</a>
-                        &nbsp;&nbsp;&nbsp;Call: 8975201655    
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8">
+                        <div class="form-area">
+                        <form role="form" method="post" action="feedback.php">
+            <br style="clear:both">
+                    <h3 style="margin-bottom: 25px; text-align: center;">Send Us Feedback!</h3>
+                            <br>
+					<div class="form-group">
+                        <div class="row">
+                            
+						  <div class="col-xs-2">Name:</div> 
+                           <div class="col-xs-10"> <input type="text" class="form-control" name="name" placeholder="Leave blank to be Anonomous"></div>
                         </div>
-                        
-                        <br>
-                        <h3>Devepoled as a Mini Project by:</h3>
-                        <h4>
-                            <ul>
-                                <li>Shubham Hapse</li>
-                                <li>Viraj Chavan &nbsp;&nbsp;&nbsp;
-                                </li>
-                                <li>Varun Maheshwari</li>
-                            </ul>
-                        </h4>
-                        <hr>
-                        <h3>
-                            Under the guidance of:</h3> <h4><ul><li>Mr. Mayur Rathi<br><br> Department of Information Technology,<br>
-                        Walchand College of Engineering, Sangli.<br></li></ul></h4>
-                       
-                        <hr>
-                        
-                        <h3>Concept by:</h3>
-                        <h4><ul><li>Chani Bhate<br><br>
-                            Chintamanrao Institute of Management Development And Research, 
-                            <br>Sangli
-                            </li></ul></h4><br>
+					</div>
+                    <div class="form-group">
+                        <div class="row">
+                           
+						  <div class="col-xs-2">Email:</div> 
+                           <div class="col-xs-10"> <input type="email" class="form-control" name="email" placeholder="Leave blank to be Anonomous"></div>
+                        </div>
+					</div>
+                    <div class="form-group">
+                        <div class="row">
+                           
+						  <div class="col-xs-2">Feedback:</div> 
+                            <div class="col-xs-10"> 
+                                <textarea class="form-control" name="feedback" placeholder="Your thoughts on 'Game Of Shares'" required cols="20" rows="6"></textarea></div>
+                        </div>
+					</div>
+                            <br>
+                        <div class="row">
+                        <div class="col-xs-10"></div>
+                            <input type="submit" class="btn btn-primary">
+                        </div>
+                            
+                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
