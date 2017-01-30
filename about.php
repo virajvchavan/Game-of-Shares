@@ -16,7 +16,7 @@ if($session_db != "off")
     changePrices($conn, $time_limit_for_company, $price_limit_for_company);
     
 //check for any messages    
-$user->checkMessages($conn);
+//$user->checkMessages($conn);
 
 //execute orders for logged in user
 if($session_db != "off")   
@@ -93,6 +93,9 @@ if($session_db != "off")
                 <li id="balance">
                     Balance: <?php echo number_format($user->get_balance($conn)); ?>
                 </li>
+                <li id="balance" style="font-size:12px;">
+                    Valuation: <?php echo number_format($user->get_valuation($conn)); ?> | Total: <?php echo number_format($user->get_valuation($conn) + $user->balance)  ; ?>
+                </li>
                 <li>
                     <a href="index.php">Dashboard</a>
                 </li>
@@ -105,7 +108,7 @@ if($session_db != "off")
                 <li>
                     <a href="leaders.php">LeaderBoard</a>
                 </li>
-                <br><br><br><br><br><br><br><br><br><br>
+                <br><br><br><br><br><br><br>
                 <li>
                     <a href="help.php">Help</a>
                 </li>
@@ -137,6 +140,8 @@ if($session_db != "off")
                         &nbsp;&nbsp;&nbsp;<a href="http://facebook.com/virajvchavan" target='_blank'>Facebook</a>
                         &nbsp;&nbsp;&nbsp;Call: 8975201655    
                         </div>
+                        
+                        <div id="note">Love solving puzzles? Visit <a href="http://puzzlepedia.esy.es/" target='_blank'>PuzzlePedia</a> to play now!</div>
                         
                         <br>
                         <h3>Devepoled as a Mini Project by:</h3>

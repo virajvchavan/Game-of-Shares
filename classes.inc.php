@@ -78,8 +78,7 @@ class User
     
     //function to place the order
     function placeOrder($conn, $type, $company_id, $quantity, $limit_or_market, $limit_price)
-    {
-        
+    {       
         //first check if this is a valid order to be placed
         
         //check if has enough balance to buy
@@ -328,6 +327,42 @@ class User
            echo "Error quiery";
         
         return;
+    }
+    
+    //returns valuation of all the shares
+    function get_valuation($conn)
+    {
+        $valuation_in_shares = 0;
+        $query_shares = "SELECT * FROM shares WHERE user_id = $this->id";
+                                
+        if($run_shares = mysqli_query($conn, $query_shares))
+        {
+            if(mysqli_num_rows($run_shares) < 1)
+            {
+                $valuation_in_shares = 0;
+            }
+            else
+            {
+                //for each company
+                while($array_shares = mysqli_fetch_assoc($run_shares))
+                {
+                    $company_id = $array_shares['company_id'];
+                    $quantity = $array_shares['quantity'];
+                                                        
+                    $query_company_price = "SELECT price FROM companies WHERE id = $company_id";
+                                                        
+                    $getPrice = mysqli_fetch_assoc(mysqli_query($conn, $query_company_price));
+                    $company_price = $getPrice['price'];
+                                                        
+                    $shares_value = $quantity*$company_price;
+                                                        
+                    $valuation_in_shares += $shares_value;
+                                                        
+                }
+                                                    
+            }
+        } 
+        return $valuation_in_shares;
     }
     
 }

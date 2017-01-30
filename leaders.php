@@ -88,6 +88,9 @@ if($session_db != "off")
                 <li id="balance">
                     Balance: <?php echo number_format($user->get_balance($conn)); ?>
                 </li>
+                <li id="balance" style="font-size:12px;">
+                    Valuation: <?php echo number_format($user->get_valuation($conn)); ?> | Total: <?php echo number_format($user->get_valuation($conn) + $user->balance)  ; ?>
+                </li>
                 <li>
                     <a href="index.php">Dashboard</a>
                 </li>
@@ -100,7 +103,7 @@ if($session_db != "off")
                 <li>
                     <a href="leaders.php" class="active">LeaderBoard</a>
                 </li>
-                <br><br><br><br><br><br><br><br><br><br>
+                <br><br><br><br><br><br><br>
                 <li>
                     <a href="help.php">Help</a>
                 </li>
@@ -162,39 +165,13 @@ if($session_db != "off")
                                             $lname = $array['last_name'];
                                             $balance = $array['balance'];
                                             
+                                            $temp_user = new User($user_id, $conn);
+                                            
                                             //get user's shares and valuate them
                                             $total_valuation = 0;
-                                            $valuation_in_shares = 0;
+                                            $valuation_in_shares = $temp_user->get_valuation($conn);
                                             
-                                            $query_shares = "SELECT * FROM shares WHERE user_id =$user_id";
-                                
-                                            if($run_shares = mysqli_query($conn, $query_shares))
-                                            {
-                                                if(mysqli_num_rows($run_shares) < 1)
-                                                {
-                                                   $valuation_in_shares = 0;
-                                                }
-                                                else
-                                                {
-                                                    //for each company
-                                                    while($array_shares = mysqli_fetch_assoc($run_shares))
-                                                    {
-                                                        $company_id = $array_shares['company_id'];
-                                                        $quantity = $array_shares['quantity'];
-                                                        
-                                                        $query_company_price = "SELECT price FROM companies WHERE id = $company_id";
-                                                        
-                                                        $getPrice = mysqli_fetch_assoc(mysqli_query($conn, $query_company_price));
-                                                        $company_price = $getPrice['price'];
-                                                        
-                                                        $shares_value = $quantity*$company_price;
-                                                        
-                                                        $valuation_in_shares += $shares_value;
-                                                        
-                                                    }
-                                                    
-                                                }
-                                            }
+                                            
                                             $total_valuation = $balance + $valuation_in_shares;
                                             
                                             
@@ -257,9 +234,9 @@ if($session_db != "off")
                                     echo "<tr id = '$u_color'>
                                             <td id='$color'>".$no."</td>
                                             <td id='$color'>$fname $lname</td>
-                                            <td>$balance</td>
-                                            <td>$stock_v</td>
-                                            <td>$total</td>
+                                            <td>".number_format($balance)."</td>
+                                            <td>".number_format($stock_v)."</td>
+                                            <td>".number_format($total)."</td>
                                     </tr>";
                                 }
                                 

@@ -97,12 +97,11 @@ if($session_db != "off")
 
     <!-- Custom CSS -->
     <link href="css/sidebar.css" rel="stylesheet">
-    <link href="css/table.css" rel="stylesheet">
-    
+    <link href="css/table.css" rel="stylesheet">   
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     
     <style>
-    #balance{
+        #balance{
         color: #f6f8f6;
         font-size: 23px;
         background-color: #004D40;
@@ -172,6 +171,9 @@ if($session_db != "off")
                 <li id="balance">
                     Balance: <?php echo number_format($user->get_balance($conn)); ?>
                 </li>
+                <li id="balance" style="font-size:12px;">
+                    Valuation: <?php echo number_format($user->get_valuation($conn)); ?> | Total: <?php echo number_format($user->get_valuation($conn) + $user->balance)  ; ?>
+                </li>
                 <li>
                     <a href="index.php"  class="active">Dashboard</a>
                 </li>
@@ -184,7 +186,7 @@ if($session_db != "off")
                 <li>
                     <a href="leaders.php">LeaderBoard</a>
                 </li>
-                <br><br><br><br><br><br><br><br><br><br>
+                <br><br><br><br><br><br><br>
                 <li>
                     <a href="help.php">Help</a>
                 </li>
@@ -301,9 +303,7 @@ if($session_db != "off")
                                 $query = "SELECT * FROM shares WHERE user_id =".$user->get_id();
                                 
                                 if($run = mysqli_query($conn, $query))
-                                {
-                                    
-                                    
+                                {                                   
                                     if(mysqli_num_rows($run) < 1)
                                     {
                                         echo "<tr><td colspan='3'>You do not own any shares</td></tr>";
@@ -420,9 +420,7 @@ if($session_db != "off")
                             </tr>
                             </thead>
                             <tbody class="table-hover">
-                                
-                                
-                                
+                          
                             <?php
                                 
                                 //get all the company names and their prices
@@ -481,10 +479,7 @@ if($session_db != "off")
         <!-- /#page-content-wrapper -->
         
     </div>
-
-    <!-- /#wrapper -->
-
-        
+        <!-- /#wrapper -->
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
@@ -493,11 +488,11 @@ if($session_db != "off")
     <script src="js/bootstrap.min.js"></script>
 
     <script>
- close = document.getElementById("close");
- close.addEventListener('click', function() {
-   note = document.getElementById("note");
-   note.style.display = 'none';
- }, false);
-</script>
+         close = document.getElementById("close");
+         close.addEventListener('click', function() {
+           note = document.getElementById("note");
+           note.style.display = 'none';
+         }, false);
+    </script>
 </body>
 </html>

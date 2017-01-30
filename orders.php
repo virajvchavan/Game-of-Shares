@@ -115,6 +115,9 @@ if($session_db != "off")
                 <li id="balance">
                     Balance: <?php echo number_format($user->get_balance($conn)); ?>
                 </li>
+                <li id="balance" style="font-size:12px;">
+                    Valuation: <?php echo number_format($user->get_valuation($conn)); ?> | Total: <?php echo number_format($user->get_valuation($conn) + $user->balance)  ; ?>
+                </li>
                 <li>
                     <a href="index.php">Dashboard</a>
                 </li>
@@ -127,7 +130,7 @@ if($session_db != "off")
                 <li>
                     <a href="leaders.php">LeaderBoard</a>
                 </li>
-                <br><br><br><br><br><br><br><br><br><br>
+                <br><br><br><br><br><br><br>
                 <li>
                     <a href="help.php">Help</a>
                 </li>
@@ -258,9 +261,7 @@ if($session_db != "off")
                                 
                                 ?>
                             </tbody>
-                        </table>
-                       
-                       
+                        </table>     
                     </div>
                 </div>
             </div>
@@ -290,7 +291,6 @@ if($session_db != "off")
 
 
 <?php
-
 function detectMobile()
 {
     $useragent=$_SERVER['HTTP_USER_AGENT'];
