@@ -79,8 +79,8 @@ if($session_db != "off")
                 <li id="balance">
                     Balance: <?php echo number_format($user->get_balance($conn)); ?>
                 </li>
-                <li id="balance" style="font-size:12px;">
-                    Valuation: <?php echo number_format($user->get_valuation($conn)); ?> | Total: <?php echo number_format($user->get_valuation($conn) + $user->balance)  ; ?>
+                <li id="balance" style="font-size: 19px;">
+                    Total Value: <?php echo number_format($user->get_valuation($conn) + $user->balance)  ; ?>
                 </li>
                 <li>
                     <a href="index.php">Dashboard</a>
@@ -147,7 +147,7 @@ if($session_db != "off")
                                     {
                                         //set the initial balance
                                         //IMPORTANT: This has to be same as the one stored in the database
-                                        $balance = 500000;
+                                        $balance = floatval(500000);
                                         
                                         while($array = mysqli_fetch_assoc($run))
                                         {
@@ -163,7 +163,7 @@ if($session_db != "off")
                                             $GMT_to_IST = 19800;
                                             
                                             
-                                            $balance -= ($quantity*$price);
+                                            $balance -= ($quantity*floatval($price));
                                             
                                             echo "<tr>
                                                     <td>".date("Y-m-d H:i:s", strtotime($time) + $GMT_to_IST)."</td>

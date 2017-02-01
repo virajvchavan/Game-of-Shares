@@ -71,7 +71,7 @@ class User
                 $balance = $array['balance'];
                 $this->balance = $balance;
             }
-            return $balance;
+            return floatval($balance);
         }
     }
     
@@ -86,7 +86,7 @@ class User
         {
             //first get price of the share
             $company = new Company($company_id);
-            $price = $company->get_company_price($conn);
+            $price = floatval($company->get_company_price($conn));
 
             if($this->balance < $quantity*$price)
             {
@@ -150,6 +150,7 @@ class User
                 return $message_to_return;
             }
             $count = 0;
+            //for eah order
             while($array = mysqli_fetch_assoc($run_get_orders))
             {
                 $order_id = $array['id'];
@@ -157,11 +158,11 @@ class User
                 $type = $array['type'];
                 $quantity = $array['quantity'];
                 $limit_or_market = $array['limit_or_market'];
-                $limit_price = $array['limit_price'];
+                $limit_price = floatval($array['limit_price']);
                 
                 //get price of the share
                 $company = new Company($company_id);
-                $price = $company->get_company_price($conn);
+                $price = floatval($company->get_company_price($conn));
                 
                 //check validity for limit orders
                 if($limit_or_market == "limit" && (($type == "sell" && $price  < $limit_price) || ($type == "buy" && $price >$limit_price)))    
@@ -174,9 +175,10 @@ class User
                 if($type == "buy")
                 {
                     $this->balance -= $total_price;
-                    if($this->balance <= 0)
+                    if($this->balance < 0)
                     {
-                        $message_to_return.="One order could not be executed due to: Insufficient Balance\n.";
+                        $this->balance+=$total_price;
+                        $message_to_return.="One order could not be executed due to: Insufficient Balance.";
                         continue;
                     }
                 
@@ -210,7 +212,8 @@ class User
                             {
                                 if($owned < $quantity)
                                 {
-                                    $message_to_return.="\nOne order could not be executed due to: Insufficient Shares\n";
+                                    $this->balance -= $total_price;
+                                    $message_to_return.="One order could not be executed due to: Insufficient Shares<br>";
                                     continue;
                                 }
                                 $new_quantity = $owned - $quantity;
@@ -232,8 +235,9 @@ class User
                             
                             if($type == "sell")
                             {
-                               $message_to_return.="\nOne order could not be executed due to: Insufficient Shares\n";
-                                continue;
+                               $this->balance -= $total_price;
+                               $message_to_return.="One order could not be executed due to: Insufficient Shares<br>";
+                               continue;
                             }
 
                             //insert new entry
@@ -250,9 +254,7 @@ class User
                             }
                         }
                   
-                    }
-                
-                
+                    }                
                 //update user balance
                 $this->set_balance($conn, $this->balance);
                 
@@ -303,8 +305,10 @@ class User
                 if($message != "")
                 {
                     echo "<div id='note'>$message<a id='close' class='pull-right'>[Close]</a></div>";
+                    
+                    //this is for removing the message
                     $message = "";
-                }
+                }             
                 
                  $query_message = "UPDATE users SET message = '$message' WHERE id = '$this->id'";
         
@@ -448,7 +452,7 @@ class Company
             {
                 $price = $array['price'];
             }
-            return $price;
+            return floatval($price);
         }
     }
     

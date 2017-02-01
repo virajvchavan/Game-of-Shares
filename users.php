@@ -107,7 +107,7 @@ if(!isset($_SESSION['gos_admin']))
                                 
                                 <?php
                                 
-                                $query = "SELECT * FROM users";
+                                $query = "SELECT * FROM users ORDER BY id";
                                 
                                 if($run = mysqli_query($conn, $query))
                                 {

@@ -88,8 +88,8 @@ if($session_db != "off")
                 <li id="balance">
                     Balance: <?php echo number_format($user->get_balance($conn)); ?>
                 </li>
-                <li id="balance" style="font-size:12px;">
-                    Valuation: <?php echo number_format($user->get_valuation($conn)); ?> | Total: <?php echo number_format($user->get_valuation($conn) + $user->balance)  ; ?>
+                <li id="balance" style="font-size: 19px;">
+                    Total Value: <?php echo number_format($user->get_valuation($conn) + $user->balance)  ; ?>
                 </li>
                 <li>
                     <a href="index.php">Dashboard</a>
@@ -164,6 +164,7 @@ if($session_db != "off")
                                             $fname = $array['first_name'];
                                             $lname = $array['last_name'];
                                             $balance = $array['balance'];
+                                            $highest_rank = $array['highest_rank'];
                                             
                                             $temp_user = new User($user_id, $conn);
                                             
@@ -215,10 +216,44 @@ if($session_db != "off")
                                     $balance = $value['balance'];
                                     $total = $value['total'];
                                     $stock_v = $value['stock_v'];
-                                    
+                                    $highest_r = $value['highest_rank'];
+   
                                     if($id == $user->id)
                                     {
+                                        if($no < $highest_r)
+                                        {
+                                            $highest_r = $no;
+                                            if(mysqli_query($conn, "UPDATE users SET highest_rank = $highest_r WHERE id = $id"))
+                                                echo "";
+                                            else
+                                                echo "Errr";
+                                        }
+                                        
+                                        if($no == 1)
+                                        {
+                                            echo "<div id='note'><span class='pull-left' style='margin-left: 40px; padding: 0px 10px 0px 10px;' id = 'user_color'>Rank: $no</span>Who's the boss? You're the boss!! First on the leaderboard!<span class='pull-right' id = 'user_color' style='margin-right: 40px;padding: 0px 10px 0px 10px;'>Your Highest: $highest_r</span></div>";
+                                        }
+                                        elseif($no == 2)
+                                        {
+                                            echo "<div id='note'><span class='pull-left' style='margin-left: 40px; padding: 0px 10px 0px 10px;' id = 'user_color'>Rank: $no</span>You are amazing! Second on the leaderboard! Keep it up!<span class='pull-right' id = 'user_color' style='margin-right: 40px;padding: 0px 10px 0px 10px;'>Your Highest: $highest_r</span></div>";
+                                        }
+                                        elseif($no == 3)
+                                        {
+                                            echo "<div id='note'><span class='pull-left' style='margin-left: 40px; padding: 0px 10px 0px 10px;' id = 'user_color'>Rank: $no</span>Keep it up, buddy! Third on the leaderboard!<span class='pull-right' id = 'user_color' style='margin-right: 40px;padding: 0px 10px 0px 10px;'>Your Highest: $highest_r</span></div>";
+                                        }
+                                        elseif(3<$no && $no < 11)
+                                        {
+                                            echo "<div id='note'><span class='pull-left' style='margin-left: 40px; padding: 0px 10px 0px 10px;' id = 'user_color'>Rank: $no</span>Keep it up, buddy! You're in top 10. A little more and you'll be in top 3.<span class='pull-right' id = 'user_color' style='margin-right: 40px;padding: 0px 10px 0px 10px;'>Your Highest: $highest_r</span></div>";
+                                        }
+                                        elseif(11<=$no && $no < 31)
+                                        {
+                                            echo "<div id='note'><span class='pull-left' style='margin-left: 40px; padding: 0px 10px 0px 10px;' id = 'user_color'>Rank: $no</span>You're in top 30. You can easily be in top 10 now!<span class='pull-right' id = 'user_color' style='margin-right: 40px;padding: 0px 10px 0px 10px;'>Your Highest: $highest_r</span></div>";
+                                        }
+                                        else
+                                            echo "<div id='note'><span class='pull-left' style='margin-left: 40px; padding: 0px 10px 0px 10px;' id = 'user_color'>Rank: $no</span>Keep investing!<span class='pull-right' id = 'user_color' style='margin-right: 40px;padding: 0px 10px 0px 10px;'>Your Highest: $highest_r</span></div>";
+                                        
                                         $u_color = "user_color";
+                                        
                                     }
                                     else
                                         $u_color = "nothing";

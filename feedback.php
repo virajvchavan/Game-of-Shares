@@ -102,8 +102,8 @@ if(isset($_POST['name']) && isset($_POST['email']) && isset($_POST['feedback']) 
                 <li id="balance">
                     Balance: <?php echo number_format($user->get_balance($conn)); ?>
                 </li>
-                <li id="balance" style="font-size:12px;">
-                    Valuation: <?php echo number_format($user->get_valuation($conn)); ?> | Total: <?php echo number_format($user->get_valuation($conn) + $user->balance)  ; ?>
+                <li id="balance" style="font-size: 19px;">
+                    Total Value: <?php echo number_format($user->get_valuation($conn) + $user->balance)  ; ?>
                 </li>
                 <li>
                     <a href="index.php">Dashboard</a>

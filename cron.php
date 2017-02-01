@@ -21,13 +21,20 @@ if($session_db != "off")
             $temp_user = new User($user_id, $conn);
 
             $message = $temp_user->executeOrders($conn);
-
-            $query_message = "UPDATE users SET message = '$message' WHERE id = '$user_id'";
-
-            mysqli_query($conn, $query_message);
+            
+            //append to thee already present message/notification
+            if($message != "") 
+            {
+                $query_message = "UPDATE users SET message = CONCAT_WS(CHAR(10 USING UTF8), message, '$message') WHERE id = '$user_id'";
+                mysqli_query($conn, $query_message);
+            }
         }
     }
 }
+
+
+//notification for feedbcak text
+//We'd love to have your feedback! <a href='feedback.php'>Click here and Tell us what you think!</a>
 
 //now start or close the market according to the current time
 

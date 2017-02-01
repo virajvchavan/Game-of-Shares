@@ -171,8 +171,8 @@ if($session_db != "off")
                 <li id="balance">
                     Balance: <?php echo number_format($user->get_balance($conn)); ?>
                 </li>
-                <li id="balance" style="font-size:12px;">
-                    Valuation: <?php echo number_format($user->get_valuation($conn)); ?> | Total: <?php echo number_format($user->get_valuation($conn) + $user->balance)  ; ?>
+                <li id="balance" style="font-size: 19px;">
+                    Total Value: <?php echo number_format($user->get_valuation($conn) + $user->balance)  ; ?>
                 </li>
                 <li>
                     <a href="index.php"  class="active">Dashboard</a>
@@ -273,7 +273,7 @@ if($session_db != "off")
                     </div>   
             
                     <div class="form-group" id="limit_div">
-						<input type="number" class="form-control" id="limit_price" name="limit_price" placeholder="Limit Price" id="required_later">
+						<input type="text" class="form-control" id="limit_price" name="limit_price" placeholder="Limit Price" id="required_later">
 					</div>
                     <input type="submit" id="submit" name="Submit" class="btn btn-primary pull-right" <?php if($session_db == "off") echo "disabled"; ?> >
                     </div>
