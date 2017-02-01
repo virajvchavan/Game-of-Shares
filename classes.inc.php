@@ -74,8 +74,7 @@ class User
             return floatval($balance);
         }
     }
-    
-    
+        
     //function to place the order
     function placeOrder($conn, $type, $company_id, $quantity, $limit_or_market, $limit_price)
     {       

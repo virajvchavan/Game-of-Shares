@@ -111,7 +111,7 @@ if($session_db != "off")
                     <a href="about.php">About</a>
                 </li>
                 <li>
-                    <a href="account.php">Account Settings</a>
+                    <a href="profile.php">Your Profile</a>
                 </li>
                 <li>
                     <a href="feedback.php">Feedback</a>
@@ -208,7 +208,9 @@ if($session_db != "off")
                                 //now print the leaderboard table rows
                                 foreach($array_sorted as $key=>$value)
                                 {
+                                    //this is the current rank of this user
                                     $no++;
+                                                                       
                                     
                                     $id = $value['id'];
                                     $fname = $value['first_name'];
@@ -218,6 +220,9 @@ if($session_db != "off")
                                     $stock_v = $value['stock_v'];
                                     $highest_r = $value['highest_rank'];
    
+                                    mysqli_query($conn, "UPDATE users SET rank = '$no' WHERE id = '$id'");
+                                    
+                                    //show his stats to the user
                                     if($id == $user->id)
                                     {
                                         if($no < $highest_r)
@@ -268,7 +273,7 @@ if($session_db != "off")
                                     
                                     echo "<tr id = '$u_color'>
                                             <td id='$color'>".$no."</td>
-                                            <td id='$color'>$fname $lname</td>
+                                            <td id='$color'><a href='profile.php?id=$id'>$fname $lname</a></td>
                                             <td>".number_format($balance)."</td>
                                             <td>".number_format($stock_v)."</td>
                                             <td>".number_format($total)."</td>

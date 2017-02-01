@@ -108,7 +108,7 @@ if($session_db != "off")
                     <a href="about.php">About</a>
                 </li>
                 <li>
-                    <a href="account.php" class="active">Account Settings</a>
+                    <a href="profile.php">Your Profile</a>
                 </li>
                 <li>
                     <a href="feedback.php">Feedback</a>

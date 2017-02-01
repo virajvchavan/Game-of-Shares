@@ -125,7 +125,7 @@ if(isset($_POST['name']) && isset($_POST['email']) && isset($_POST['feedback']) 
                     <a href="about.php">About</a>
                 </li>
                 <li>
-                    <a href="account.php">Account Settings</a>
+                    <a href="profile.php">Your Profile</a>
                 </li>
                 <li>
                     <a href="feedback.php" class="active">Feedback</a>
