@@ -368,6 +368,15 @@ class User
         return $valuation_in_shares;
     }
     
+    //change user's consent about showing info of his stocks to others
+    function set_consent($conn, $consent)
+    {
+        if(mysqli_query($conn, "UPDATE users SET consent = '$consent' WHERE id = '$this->id'"))
+            return true;
+        else
+            return false;
+    }
+    
 }
 
 

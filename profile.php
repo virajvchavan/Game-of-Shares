@@ -11,6 +11,16 @@ if(!isLoggedIn())
     header("Location:login.php");
 }
 
+//change user's consent about showing info of his stocks to others
+if(isset($_POST['consent']) && !empty($_POST['consent']))
+{
+    $new_consent = $_POST['consent'];
+    if($user->set_consent($conn, $new_consent))
+        echo "<div id='note'>Changes saved!<a id='close' class='pull-right'>[Close]</a></div>";
+    //mysqli_query($conn, "UPDATE users SET consent = '$new_consent' WHERE id = '$user->id'");
+}
+    
+   
 //change the share price of companies (from functions.index.php)    
 if($session_db != "off")    
     changePrices($conn, $time_limit_for_company, $price_limit_for_company);
@@ -59,6 +69,8 @@ else
             
             if($profile_highest_rank == 1000)
                 $profile_highest_rank = $profile_rank;
+    
+            $profile_consent = $array['consent'];
         }
     }    
      
@@ -201,11 +213,51 @@ else
                                         <div class='panel-body'><?php echo number_format($profile_valuation + $profile_balance); ?></div>
                                     </div>                                
                                 </div>
+                    
+                    <!--Show This Users Shares-->
+                    <?php
+                    //show only if it is allowed
+                    if(($profile_id == $user->id) || ($profile_consent == "yes"))
+                    {
                         
-                        <div class="col-lg-5">
+                    ?>    
+                    <div class="col-lg-6">
                     <div class="table-title">
-                            <h3><?php echo "$profile_f_name's Stocks"?></h3>
-                        </div>
+                        <h3><?php echo "$profile_f_name's Stocks"?></h3>
+                        <?php
+                        
+                        //show an form for consent to the logged in user only
+                        if($profile_id == $user->id)
+                        {?>
+                            <form action="profile.php" method="post" class="form-inline">
+                                Show this to Other Users:
+                                &nbsp;&nbsp;&nbsp;
+                                <div class="form-group">
+                                    <div class="radio">
+                                        <label class="radio-inline"><input type="radio" name="consent" value="yes" <?php if($profile_consent == "yes") echo "checked='checked'"; ?> >Yes</label>
+                                    </div>
+                                </div>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="form-group">
+                                    <div class="radio">
+                                        <label class="radio-inline"><input type="radio" name="consent" value="no" <?php if($profile_consent == "no") echo "checked='checked'"; ?>>No</label>
+                                    </div>
+                                </div>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <small>
+                                    <span class="btn-group">
+                                        <button class="btn btn-mini btn-success" type="submit">Change</button>
+                                    </span>
+                                </small>
+                            </form>
+                            <br>
+                        <?php         
+                        }
+                        
+                        ?>
+                            
+                        
+                    </div>
                 <table class="table-fill">
                             <thead>
                             <tr>
@@ -241,8 +293,8 @@ else
                                                 echo "<tr>
                                                     <td><a href='company.php?id=$company_id'>$company_name ($abbr)</a></td>";?>
                                 
-                                                    <td><a><div onclick="toggle_visibility('<?php echo $company_id; ?>');">
-                                                    <?php    echo "$quantity</div></a></td>
+                                                    <td><a>
+                                                    <?php echo "$quantity</div></a></td>
                                                  </tr>";
                                                 
                                             }
@@ -256,6 +308,14 @@ else
                             </tr>
                         </table>
                 </div>
+                    
+                    <?php
+                    }//the users share table block ends here
+                     else
+                     {                        
+                         echo "<h4  style='padding:25px;'>$profile_f_name doesn't want you to see his stocks.</h4>";
+                     }   
+                    ?>
                     </div>
                 </div>
             </div>
@@ -270,6 +330,14 @@ else
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+            
+        <script>
+         close = document.getElementById("close");
+         close.addEventListener('click', function() {
+           note = document.getElementById("note");
+           note.style.display = 'none';
+         }, false);
+    </script>
 
 </body>
 
