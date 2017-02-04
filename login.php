@@ -45,9 +45,8 @@ changePrices($conn, $time_limit_for_company, $price_limit_for_company);
 
                      <div class="form-group">
                          <input type="submit" class="btn btn-block btn-lg btn-primary" value="Login"/>
-                         <span class="pull-left" id="link"> <a href="admin_login.php">Admin Access</a></span>
                          <span class="pull-right" id="link"><a href="register.php">Register</a></span>
-                         <span id="link" class="pull-left"><a href="#">Forgot Password</a></span><br>
+                         <span id="link" class="pull-left"><a href="recover.php">Forgot Password</a></span><br>
                          
                      </div>
                 </form>

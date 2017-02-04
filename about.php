@@ -84,6 +84,7 @@ if($session_db != "off")
 </head>
 
 <body>
+    
 
     <div id="wrapper">
 
@@ -128,6 +129,10 @@ if($session_db != "off")
         </div>
         <!-- /#sidebar-wrapper -->
 
+        
+        <?php include "fb_inc.php";  ?>
+        
+       
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
@@ -173,6 +178,9 @@ if($session_db != "off")
 
     </div>
     <!-- /#wrapper -->
+    
+    
+    
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>

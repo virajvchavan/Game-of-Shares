@@ -135,6 +135,7 @@ if($session_db != "off")
         </div>
         <!-- /#sidebar-wrapper -->
 
+        <?php include "fb_inc.php" ?>
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
@@ -297,7 +298,7 @@ if($session_db != "off")
                             "dataProvider": [
                         <?php
                         
-                        $query_graph = "SELECT price, time FROM price_variation WHERE company_id = $company_id";
+                        $query_graph = "SELECT price, time FROM price_variation WHERE company_id = $company_id ORDER BY time";
                         if($run_graph = mysqli_query($conn, $query_graph))
                         {
                             //for converting GMT time to IST, add this to GMT (19800)

@@ -34,7 +34,7 @@ if($run = mysqli_query($conn, $query))
     
     if($session_db == "off")
     {
-        echo "<div id='note'>The market is closed at this moment. The Market Opens at 09:15 hours and Closes at 18:00 hours.</div>";
+        echo "<div id='note'>The market is closed at this moment. The Market Opens at 08:00 hours and Closes at 20:00 hours.</div>";
     }    
 }
 

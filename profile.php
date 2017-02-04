@@ -172,6 +172,10 @@ else
         </div>
         <!-- /#sidebar-wrapper -->
 
+        
+        <?php include "fb_inc.php";  ?>
+        
+       
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">

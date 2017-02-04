@@ -150,6 +150,10 @@ if($session_db != "off")
         </div>
         <!-- /#sidebar-wrapper -->
 
+        
+        <?php include "fb_inc.php";  ?>
+        
+       
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
@@ -217,7 +221,7 @@ if($session_db != "off")
                                                     <td><a href='company.php?id=$company_id'>$company_name</a></td>
                                                      <td> <form method='post' action='orders.php'>
                                                             <input type='text' value='$order_id' name='edit_id' hidden>
-                                                            <input type='text' name='new_quantity' class='input-sm col-xs-$input_width' value=\"$quantity\">
+                                                            <input type='number' name='new_quantity' class='input-sm col-xs-$input_width' value=\"$quantity\" min='1'>
                                                     </td>
                                                     <td>".ucfirst($limit_or_market);
                                             
@@ -239,7 +243,7 @@ if($session_db != "off")
                                 <?php
                                             echo "</td>
                                                     <td>
-                                                    <input type='text' name='new_price' class='input-sm col-xs-$input_width' value=\"$limit_price\">
+                                                    <input type='text' name='new_price' class='input-sm col-xs-$input_width' value=\"$limit_price\" min='1'>
                                                     &nbsp;&nbsp;
                                                     <input type='submit' class='btn btn-primary btn-sm' value='Change'>
                                                     </form>

@@ -205,6 +205,11 @@ if($session_db != "off")
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
+        
+        <?php include "fb_inc.php";  ?>
+        
+       
+        
         <style>   
             .red{
                 color:red;
@@ -264,7 +269,7 @@ if($session_db != "off")
                     </div>
 
 					<div class="form-group">
-						<input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" required>
+						<input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" required min="1">
 					</div>
             
                     <div class="form-group">

@@ -23,7 +23,7 @@ if(isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['em
 //leave if not logged in
 if(!isLoggedIn())
 {
-    header("Location:login.php");
+    header("refresh:0,login.php");
 }
 
 if($session_db != "off")    
@@ -113,6 +113,7 @@ if($session_db != "off")
 
 <body>
 
+
     <div id="wrapper">
 
         <!-- Sidebar -->
@@ -156,6 +157,8 @@ if($session_db != "off")
         </div>
         <!-- /#sidebar-wrapper -->
 
+        <?php include "fb_inc.php";  ?>
+        
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
@@ -259,6 +262,7 @@ if($session_db != "off")
 
     </div>
     <!-- /#wrapper -->
+        
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>

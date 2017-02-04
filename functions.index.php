@@ -17,10 +17,11 @@ function register($conn, $first_name, $last_name, $email, $phone, $password)
 	$query_email_check = "SELECT id FROM users WHERE email = '$email'";
 	if($run = mysqli_query($conn, $query_email_check))
 	{
-		if(mysqli_num_rows($run) >= 1)
+		if(mysqli_num_rows($run) == 1)
 		{
 			echo "<script>alert('Email already registered.');</script>";
 			$ok = false;
+            header("refresh:0,register.php");
 		}
 	}
 	
@@ -29,12 +30,10 @@ function register($conn, $first_name, $last_name, $email, $phone, $password)
 		$query_resgister = "INSERT INTO users(first_name,last_name, email, phone, password, balance) VALUES('$first_name','$last_name', '$email', '$phone', '$password', '$initial_balance')";
 
 		if(mysqli_query($conn, $query_resgister))
-		{
-			
-			
+		{	
 			if(login($conn, $email, $password))
             {
-                header("refresh:0,help.php");
+                //header("refresh:0,help.php");
                 return true;
             }
             else
@@ -85,3 +84,5 @@ function login_session_start($id, $first_name)
 
 
 ?>
+
+

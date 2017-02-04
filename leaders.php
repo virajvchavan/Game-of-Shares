@@ -80,6 +80,22 @@ if($session_db != "off")
 
 <body>
 
+    
+    <div id="fb-root"></div>
+    <script>
+    window.fbAsyncInit = function() {
+    FB.init({appId: '1859297917624873', status: true, cookie: true,
+    xfbml: true});
+    };
+    (function() {
+    var e = document.createElement('script'); e.async = true;
+    e.src = document.location.protocol +
+    '//connect.facebook.net/en_US/all.js';
+    document.getElementById('fb-root').appendChild(e);
+    }());
+    </script>
+                    
+    
     <div id="wrapper">
 
         <!-- Sidebar -->
@@ -102,7 +118,7 @@ if($session_db != "off")
                 </li>
                 <li>
                     <a href="leaders.php" class="active">LeaderBoard</a>
-                </li>
+                </li>         
                 <br><br><br><br><br><br><br>
                 <li>
                     <a href="help.php">Help</a>
@@ -122,7 +138,11 @@ if($session_db != "off")
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
-
+        
+        
+        <?php include "fb_inc.php";  ?>
+        
+       
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
@@ -220,7 +240,17 @@ if($session_db != "off")
                                     $stock_v = $value['stock_v'];
                                     $highest_r = $value['highest_rank'];
    
+                                    //update rank
                                     mysqli_query($conn, "UPDATE users SET rank = '$no' WHERE id = '$id'");
+                                    
+                                    if($no < $highest_r)
+                                    {
+                                        $highest_r= $no;
+                                        
+                                        //update rank
+                                        mysqli_query($conn, "UPDATE users SET highest_rank = '$highest_r' WHERE id = '$id'");
+                                    
+                                    }
                                     
                                     //show his stats to the user
                                     if($id == $user->id)
@@ -234,32 +264,50 @@ if($session_db != "off")
                                                 echo "Errr";
                                         }
                                         
+                                        echo "<div id='note'><span class='pull-left' style='margin-left: 40px; padding: 0px 10px 0px 10px;' id = 'user_color'>Rank: $no</span>";
+                                        
                                         if($no == 1)
                                         {
-                                            echo "<div id='note'><span class='pull-left' style='margin-left: 40px; padding: 0px 10px 0px 10px;' id = 'user_color'>Rank: $no</span>Who's the boss? You're the boss!! First on the leaderboard!<span class='pull-right' id = 'user_color' style='margin-right: 40px;padding: 0px 10px 0px 10px;'>Your Highest: $highest_r</span></div>";
+                                            echo "Who's the boss? You're the boss!! First on the leaderboard!";
                                         }
                                         elseif($no == 2)
                                         {
-                                            echo "<div id='note'><span class='pull-left' style='margin-left: 40px; padding: 0px 10px 0px 10px;' id = 'user_color'>Rank: $no</span>You are amazing! Second on the leaderboard! Keep it up!<span class='pull-right' id = 'user_color' style='margin-right: 40px;padding: 0px 10px 0px 10px;'>Your Highest: $highest_r</span></div>";
+                                            echo "You are amazing! Second on the leaderboard!";
                                         }
                                         elseif($no == 3)
                                         {
-                                            echo "<div id='note'><span class='pull-left' style='margin-left: 40px; padding: 0px 10px 0px 10px;' id = 'user_color'>Rank: $no</span>Keep it up, buddy! Third on the leaderboard!<span class='pull-right' id = 'user_color' style='margin-right: 40px;padding: 0px 10px 0px 10px;'>Your Highest: $highest_r</span></div>";
+                                            echo "Keep it up, buddy! Third on the leaderboard!";
                                         }
                                         elseif(3<$no && $no < 11)
                                         {
-                                            echo "<div id='note'><span class='pull-left' style='margin-left: 40px; padding: 0px 10px 0px 10px;' id = 'user_color'>Rank: $no</span>Keep it up, buddy! You're in top 10. A little more and you'll be in top 3.<span class='pull-right' id = 'user_color' style='margin-right: 40px;padding: 0px 10px 0px 10px;'>Your Highest: $highest_r</span></div>";
+                                            echo "You're in top 10. A little more and you'll be in top 3.";
                                         }
                                         elseif(11<=$no && $no < 31)
                                         {
-                                            echo "<div id='note'><span class='pull-left' style='margin-left: 40px; padding: 0px 10px 0px 10px;' id = 'user_color'>Rank: $no</span>You're in top 30. You can easily be in top 10 now!<span class='pull-right' id = 'user_color' style='margin-right: 40px;padding: 0px 10px 0px 10px;'>Your Highest: $highest_r</span></div>";
+                                            echo "You're in top 30. You can easily be in top 10 now!";
                                         }
                                         else
-                                            echo "<div id='note'><span class='pull-left' style='margin-left: 40px; padding: 0px 10px 0px 10px;' id = 'user_color'>Rank: $no</span>Keep investing!<span class='pull-right' id = 'user_color' style='margin-right: 40px;padding: 0px 10px 0px 10px;'>Your Highest: $highest_r</span></div>";
+                                            echo "Keep investing!";
                                         
                                         $u_color = "user_color";
                                         
-                                    }
+                                        echo "<span class='pull-right' id = 'user_color' style='margin-right: 40px;padding: 0px 10px 0px 10px;'><div id='shareBtn' class='btn btn-facebook'>
+                        <span class='fa fa-facebook'></span>&nbsp;Tell Your Friends</div>
+                    Your Highest: $highest_r</span></div>";
+                                        ?>
+                                   <script>
+                                        document.getElementById('shareBtn').onclick = function() {
+                                          FB.ui({
+                                            method: 'share',
+                                            display: 'popup',
+                                            href: 'http://gameofshares.esy.es',
+                                           quote: "Beat me if you can! Achieved Rank <?php echo $highest_r; ?> on Game Of Shares! Game of Shares is a fun stock market game where you compete with other people and progress through the Leaderboard."
+                                          }, function(response){});
+                                        }
+                                    </script>
+                                <?php
+                                        
+                                    }      
                                     else
                                         $u_color = "nothing";
                                     if($no == 1)

@@ -38,7 +38,7 @@ if($session_db != "off")
 
 //now start or close the market according to the current time
 
-/*$current_time = time();
+$current_time = time();
 
 //for converting GMT time to IST, add this to GMT (19800)
 $GMT_to_IST = 19800;
@@ -53,7 +53,7 @@ $hours = substr($hours, 0,2);
 $time = time();
 
 //session chalu kar
-if($hours >=9 && $hours <= 18)
+if($hours >=8 && $hours < 20)
 {
     $session = "on";
 }
@@ -66,6 +66,6 @@ else
 if(mysqli_query($conn, "UPDATE admin SET session = '$session', time = '$time' WHERE 1"))
     echo "Success";
 else
-    echo "Fail";*/
+    echo "Fail";
     
 ?>
