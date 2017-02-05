@@ -63,6 +63,12 @@ else
             $profile_rank = $array['rank'];
             $profile_balance = $array['balance'];
             
+            $gold = $array['gold'];
+            $silver = $array['silver'];
+            $bronze = $array['bronz'];
+            $top_10 = $array['top_10'];
+            $top_30 = $array['top_30'];
+            
             $profile = new User($profile_id, $conn);
             
             $profile_valuation = $profile->get_valuation($conn);
@@ -116,11 +122,31 @@ else
                 color: white;
             }
             #user_shares{
-                 background-color: white;
+                background-color: white;
                 color: #262626;
                 padding: 8px;
                 font-size: 16px;
                 border-radius: 7px;
+            }
+            .stats{
+                padding: 8px;
+                font-size: 16px;
+                border-radius: 7px;
+                width: 120px;
+                margin-right: 30px;
+                
+            }
+            #gold{
+                background-color: goldenrod;
+                color: #262626;
+            }
+            #silver{
+                background-color: silver;
+                color: #262626;
+            }
+            #bronze{
+                background-color: #CD7F32;
+                color: #262626;
             }
     
     </style>
@@ -133,42 +159,7 @@ else
 
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li id="balance">
-                    Balance: <?php echo number_format($user->get_balance($conn)); ?>
-                </li>
-                <li id="balance" style="font-size: 19px;">
-                    Total Value: <?php echo number_format($user->get_valuation($conn) + $user->balance)  ; ?>
-                </li>
-                <li>
-                    <a href="index.php">Dashboard</a>
-                </li>
-                <li>
-                    <a href="orders.php">Pending Orders</a>
-                </li>
-                <li>
-                    <a href="trades.php">Trade Book</a>
-                </li>
-                <li>
-                    <a href="leaders.php">LeaderBoard</a>
-                </li>
-                <br><br><br><br><br><br><br>
-                <li>
-                    <a href="help.php">Help</a>
-                </li>
-                <li>
-                    <a href="about.php">About</a>
-                </li>
-                <li>
-                    <a href="profile.php" <?php if($profile_id == $user->id) echo "class='active'"?>>Your Profile</a>
-                </li>
-                <li>
-                    <a href="feedback.php">Feedback</a>
-                </li>
-                <li>
-                    <a href="logout.php">Logout (<?php echo $user->get_name($conn); ?>)</a>
-                </li>
-            </ul>
+            <?php include "sidebar_nav_inc.php"; ?>
         </div>
         <!-- /#sidebar-wrapper -->
 
@@ -190,6 +181,13 @@ else
                                 <div class='page-header'>
                                  <h1>$profile_f_name $profile_l_name</h1>
                               </div>";
+                        echo "<div class='row'>";
+                        echo "<div id='gold' class='col-md-2 stats'>Gold: $gold</div>
+                                <div id='silver' class='col-md-2 stats'>Silver: $silver</div>
+                                <div id='bronze' class='col-md-2 stats'>Bronze: $bronze</div>
+                                <div class='col-md-2 stats'>Top 10: $top_10</div>
+                                <div class='col-md-2 stats'>Top 30: $top_30</div>";
+                        echo "</div>";
                         if($profile_id == $user->id)
                               echo "<a href='account.php' class='btn btn-primary pull-right'>Account Settings</a>";
                              echo "</div>";

@@ -33,39 +33,8 @@ if($session_db != "off")
 }
 
 
-//notification for feedbcak text
-//We'd love to have your feedback! <a href='feedback.php'>Click here and Tell us what you think!</a>
-
 //now start or close the market according to the current time
+market_start_or_stop($conn);
 
-$current_time = time();
-
-//for converting GMT time to IST, add this to GMT (19800)
-$GMT_to_IST = 19800;
-
-$current_time += $GMT_to_IST;
-
-$hours = gmdate("H:i:s", (int)$current_time);
-
-$hours = substr($hours, 0,2);
-
-
-$time = time();
-
-//session chalu kar
-if($hours >=8 && $hours < 20)
-{
-    $session = "on";
-}
-//session band kar
-else
-{
-    $session = "off";
-}
-
-if(mysqli_query($conn, "UPDATE admin SET session = '$session', time = '$time' WHERE 1"))
-    echo "Success";
-else
-    echo "Fail";
-    
+start_new_league($conn);  
 ?>

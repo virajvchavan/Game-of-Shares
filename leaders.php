@@ -100,42 +100,7 @@ if($session_db != "off")
 
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li id="balance">
-                    Balance: <?php echo number_format($user->get_balance($conn)); ?>
-                </li>
-                <li id="balance" style="font-size: 19px;">
-                    Total Value: <?php echo number_format($user->get_valuation($conn) + $user->balance)  ; ?>
-                </li>
-                <li>
-                    <a href="index.php">Dashboard</a>
-                </li>
-                <li>
-                    <a href="orders.php">Pending Orders</a>
-                </li>
-                <li>
-                    <a href="trades.php">Trade Book</a>
-                </li>
-                <li>
-                    <a href="leaders.php" class="active">LeaderBoard</a>
-                </li>         
-                <br><br><br><br><br><br><br>
-                <li>
-                    <a href="help.php">Help</a>
-                </li>
-                <li>
-                    <a href="about.php">About</a>
-                </li>
-                <li>
-                    <a href="profile.php">Your Profile</a>
-                </li>
-                <li>
-                    <a href="feedback.php">Feedback</a>
-                </li>
-                <li>
-                    <a href="logout.php">Logout (<?php echo $user->get_name($conn); ?>)</a>
-                </li>
-            </ul>
+            <?php include "sidebar_nav_inc.php"; ?>
         </div>
         <!-- /#sidebar-wrapper -->
         
@@ -181,10 +146,6 @@ if($session_db != "off")
                                         while($array = mysqli_fetch_assoc($run))
                                         {
                                             $user_id = $array['id'];
-                                            $fname = $array['first_name'];
-                                            $lname = $array['last_name'];
-                                            $balance = $array['balance'];
-                                            $highest_rank = $array['highest_rank'];
                                             
                                             $temp_user = new User($user_id, $conn);
                                             

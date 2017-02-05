@@ -5,6 +5,9 @@ include "classes.inc.php";
 include "conn.inc.php";
 include "functions.index.php";    
    
+//now start or close the market according to the current time
+market_start_or_stop($conn);
+
 //logging in the user
 if(isset($_POST['email']) && isset($_POST['password']))
 {
@@ -167,49 +170,12 @@ if($session_db != "off")
 
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li id="balance">
-                    Balance: <?php echo number_format($user->get_balance($conn)); ?>
-                </li>
-                <li id="balance" style="font-size: 19px;">
-                    Total Value: <?php echo number_format($user->get_valuation($conn) + $user->balance)  ; ?>
-                </li>
-                <li>
-                    <a href="index.php"  class="active">Dashboard</a>
-                </li>
-                <li>
-                    <a href="orders.php">Pending Orders</a>
-                </li>
-                <li>
-                    <a href="trades.php">Trade Book</a>
-                </li>
-                <li>
-                    <a href="leaders.php">LeaderBoard</a>
-                </li>
-                <br><br><br><br><br><br><br>
-                <li>
-                    <a href="help.php">Help</a>
-                </li>
-                <li>
-                    <a href="about.php">About</a>
-                </li>
-                <li>
-                    <a href="profile.php">Your Profile</a>
-                </li>
-                <li>
-                    <a href="feedback.php">Feedback</a>
-                </li>
-                <li>
-                    <a href="logout.php">Logout (<?php echo $user->get_name($conn); ?>)</a>
-                </li>
-            </ul>
+            <?php include "sidebar_nav_inc.php"; ?>
         </div>
         <!-- /#sidebar-wrapper -->
         
         <?php include "fb_inc.php";  ?>
-        
-       
-        
+         
         <style>   
             .red{
                 color:red;

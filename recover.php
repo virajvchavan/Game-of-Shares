@@ -53,13 +53,17 @@ if(isLoggedIn())
     header("Location:index.php");
 }    
 
-if(isset($_POST['new_p']) && !empty($_POST['new_p'] && isset($_POST['email_user']) && !empty($_POST['email_user']))
+//set the new password in db
+if(isset($_POST['new_p']) && !empty($_POST['new_p'] && isset($_POST['email_user']) && !empty($_POST['email_user'])))
 {
     $new_p = md5($_POST['new_p']);
     $email_user = $_POST['email_user'];
     
     if(mysqli_query($conn, "UPDATE users SET password = '$new_p' WHERE email = '$email_user'"))
-        echo "success";
+    {
+        echo "<script>alert('Password Changed Successfully. Now login.')</script>";
+        header("refresh:0,login.php");
+    }
     else
         echo "not sucess";
 }
@@ -111,16 +115,12 @@ elseif(isset($_POST['email']) && !empty($_POST['email']))
 
     //store the recovery code in database
     $query = "UPDATE users SET recover_code = '$recovery_code' WHERE email = '$email_address'";
-    if(!mysqli_query($conn, $query))
-        echo "Reeere";
-    $txt = "
-    <p>Click on the below link to change your account's password.<br><br>
-    
+    mysqli_query($conn, $query);
+        
+    $txt = "<p>Click on the below link to change your account's password.<br><br>
     <a href='http://gameofshares.esy.es/recover.php?rec=$recovery_code&user_email=$email_address'>http://gameofshares.esy.es/recover.php?rec=$recovery_code&user_email=$email_address
-    </a>
+    </a></p>";
     
-    </p>
-    ";
     $headers = "From: virajc@live.com" . "\r\n" .
     "CC: viraj.c014@gmail.com";
     

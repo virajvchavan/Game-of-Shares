@@ -26,21 +26,6 @@ class User
         else
             echo "Error balance update in db";
     }
-    
-    /*function set_id($new_id)
-    {
-        $this->id = $new_id;
-    }
-    
-    function set_name($new_name)
-    {
-        $this->name = $new_name;
-    }
-    
-    function set_balance($new_balance)
-    {
-        $this->balance = $new_balance;
-    }*/
         
     function get_id()
     {
@@ -134,8 +119,7 @@ class User
             
         }
     }
-    
-   
+      
     //execute the orders for this user
     function executeOrders($conn)
     {
@@ -319,15 +303,16 @@ class User
     //restart the game, delete/reset things
     function restartGame($conn)
     {
+        //delete all the things done by user, set user's balance to 500000
         $query_all = "DELETE FROM shares WHERE user_id = $this->id; DELETE FROM transactions WHERE user_id = $this->id; DELETE FROM orders WHERE user_id = $this->id; UPDATE users SET balance = 500000, message='Reset Successfull.' WHERE id = $this->id";
         
         if(mysqli_multi_query($conn, $query_all))
         {
             $this->balance = 500000;
-            header("Location:index.php");
+            //header("Location:index.php");
         }
         else
-           echo "Error quiery";
+           echo mysqli_error($conn);
         
         return;
     }

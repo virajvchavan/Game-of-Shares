@@ -98,42 +98,7 @@ if(isset($_POST['name']) && isset($_POST['email']) && isset($_POST['feedback']) 
 
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li id="balance">
-                    Balance: <?php echo number_format($user->get_balance($conn)); ?>
-                </li>
-                <li id="balance" style="font-size: 19px;">
-                    Total Value: <?php echo number_format($user->get_valuation($conn) + $user->balance)  ; ?>
-                </li>
-                <li>
-                    <a href="index.php">Dashboard</a>
-                </li>
-                <li>
-                    <a href="orders.php">Pending Orders</a>
-                </li>
-                <li>
-                    <a href="trades.php">Trade Book</a>
-                </li>
-                <li>
-                    <a href="leaders.php">LeaderBoard</a>
-                </li>
-                <br><br><br><br><br><br><br>
-                <li>
-                    <a href="help.php">Help</a>
-                </li>
-                <li>
-                    <a href="about.php">About</a>
-                </li>
-                <li>
-                    <a href="profile.php">Your Profile</a>
-                </li>
-                <li>
-                    <a href="feedback.php" class="active">Feedback</a>
-                </li>
-                <li>
-                    <a href="logout.php">Logout (<?php echo $user->get_name($conn); ?>)</a>
-                </li>
-            </ul>
+            <?php include "sidebar_nav_inc.php"; ?>
         </div>
         <!-- /#sidebar-wrapper -->
         
