@@ -18,6 +18,7 @@ if($session_db != "off")
 //check for any messages    
 //$user->checkMessages($conn);
 
+    
 //execute orders for logged in user
 if($session_db != "off")   
 { 

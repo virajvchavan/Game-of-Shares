@@ -146,6 +146,10 @@ if($session_db != "off")
                                         while($array = mysqli_fetch_assoc($run))
                                         {
                                             $user_id = $array['id'];
+                                            $fname = $array['first_name'];
+                                            $lname = $array['last_name'];
+                                            $balance = $array['balance'];
+                                            $highest_rank = $array['highest_rank'];
                                             
                                             $temp_user = new User($user_id, $conn);
                                             

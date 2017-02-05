@@ -65,7 +65,7 @@ else
             
             $gold = $array['gold'];
             $silver = $array['silver'];
-            $bronze = $array['bronz'];
+            $bronze = $array['bronze'];
             $top_10 = $array['top_10'];
             $top_30 = $array['top_30'];
             
@@ -148,6 +148,12 @@ else
                 background-color: #CD7F32;
                 color: #262626;
             }
+            #user_color{
+                border: solid #004D40 2px;
+            }
+            #first{
+                
+            }
     
     </style>
 
@@ -164,9 +170,7 @@ else
         <!-- /#sidebar-wrapper -->
 
         
-        <?php include "fb_inc.php";  ?>
-        
-       
+        <?php include "fb_inc.php";  ?>     
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
@@ -190,9 +194,7 @@ else
                         echo "</div>";
                         if($profile_id == $user->id)
                               echo "<a href='account.php' class='btn btn-primary pull-right'>Account Settings</a>";
-                             echo "</div>";
-                        
-                        
+                             echo "</div>";                  
                         ?>
                         
                         <div class='col-sm-4'>
@@ -298,9 +300,7 @@ else
                                                     <td><a>
                                                     <?php echo "$quantity</div></a></td>
                                                  </tr>";
-                                                
-                                            }
-                                            
+                                           }
                                         }
                                     }
                                 }
@@ -317,7 +317,60 @@ else
                      {                        
                          echo "<h4  style='padding:25px;'>$profile_f_name doesn't want you to see his stocks.</h4>";
                      }   
-                    ?>
+                    ?>                        
+                        <div class="col-md-7">
+                        <h3>Performance in Leagues</h3>
+                            <table class="table-fill">
+                            <thead>
+                            <tr>
+                            <th>League</th>
+                            <th>Rank</th>
+                            <th>Highest Rank</th>
+                            <th>Balance</th>
+                            <th>Share Valuation</th>
+                            <th>Total</th>
+                            </tr>
+                            </thead>
+                                
+                            <tbody class="table-hover">
+                                <?php
+                                $query_leagues = "SELECT * FROM leagues_performances WHERE user_id = $profile_id ORDER BY league_id DESC";
+                                if($run_leagues = mysqli_query($conn, $query_leagues))
+                                {
+                                    if(mysqli_num_rows($run_leagues) < 1)
+                                        echo "<tr><td colspan=6>No past leagues</td></tr>";
+                                    while($array_leagues = mysqli_fetch_assoc($run_leagues))
+                                    {
+                                        $league_id = $array_leagues['league_id'];
+                                        $rank_l = $array_leagues['rank'];
+                                        $highest_rank_l = $array_leagues['highest_rank'];
+                                        $balance_l = $array_leagues['balance'];
+                                        $shares_v_l = $array_leagues['valuation_shares'];
+                                        $total_l = $balance_l + $shares_v_l;
+        
+                                        if($rank_l == 1)
+                                            $border_color = "first";
+                                        elseif($rank_l == 2)
+                                            $border_color = "second";
+                                        elseif($rank_l == 3)
+                                            $border_color == "third";
+                                        else
+                                            $border_color = "";
+                                                echo "<tr>
+                                                <td>$league_id</td>
+                                                <td id='$border_color'>$rank_l</td>
+                                                <td>$highest_rank_l</td>
+                                                <td>$balance_l</td>
+                                                <td>$shares_v_l</td>
+                                                <td>$total_l</td>
+                                        </tr>";
+                                    }
+                                }                          
+                                ?>
+                                
+                            </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

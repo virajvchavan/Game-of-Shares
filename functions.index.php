@@ -112,54 +112,46 @@ function market_start_or_stop($conn)
     mysqli_query($conn, "UPDATE admin SET session = '$session', time = '$time' WHERE 1");
 }
 
+
 function start_new_league($conn)
 {
     //first save all the neccessary data 
     //then reset the game for each user
     //then start a new league
     
-    $query = "SELECT id, rank, highest_rank, balance FROM users";
-
-    $all_users = array();
-    //get data of each user
-    if($run = mysqli_query($conn, $query))
+    $query_get_users = "SELECT id, rank, highest_rank, balance FROM users";
+    if($run_get_users = mysqli_query($conn, $query_get_users))
     {
-        //for each user
-        while($array = mysqli_fetch_assoc($run))
+        while($array_users = mysqli_fetch_assoc($run_get_users))
         {
-            array_push($all_users, $array);
-        }
-        mysqli_free_result($run);
-    }
-    
-        foreach($all_users as $key=>$value)
-        {
-                
-            $user_id = $value['id'];
-            $current_rank = $value['rank'];
-            $highest_rank = $value['highest_rank'];
-            $user_balance = $value['balance'];
+            $user_id = $array_users['id'];
+            $current_rank = $array_users['rank'];
+            $highest_rank = $array_users['highest_rank'];
+            $balance = $array_users['balance'];
+            
+            $temp_user = new User($user_id, $conn);
+            $shares_valuation = $temp_user->get_valuation($conn);
             
             //update user badges(gold/silver/bronze etc)
             if($current_rank == 1)
             {
-                mysqli_query($conn, "UPDATE users SET gold = gold + 1");
+                mysqli_query($conn, "UPDATE users SET gold = gold + 1 WHERE id = '$user_id'");
             }
             elseif($current_rank == 2)
             {
-                mysqli_query($conn, "UPDATE users SET silver = silver + 1");
+                mysqli_query($conn, "UPDATE users SET silver = silver + 1 WHERE id = '$user_id'");
             }
             elseif($current_rank == 3)
             {
-                mysqli_query($conn, "UPDATE users SET bronze = bronze + 1");
+                mysqli_query($conn, "UPDATE users SET bronze = bronze + 1 WHERE id = '$user_id'");
             }
             elseif($current_rank >3 && $current_rank <= 10)
             {
-                mysqli_query($conn, "UPDATE users SET top_10 = top_10 + 1");
+                mysqli_query($conn, "UPDATE users SET top_10 = top_10 + 1 WHERE id = '$user_id'");
             }
             elseif($current_rank >10 && $current_rank <= 30)
             {
-                mysqli_query($conn, "UPDATE users SET top_10 = top_10 + 1");
+                mysqli_query($conn, "UPDATE users SET top_30 = top_30 + 1 WHERE id = '$user_id'");
             }
             
             //get the current league id (the max one has to be the current one)
@@ -169,57 +161,48 @@ function start_new_league($conn)
                 {
                     $league_id = $array_league['league_id'];
                 }
-                mysqli_free_result($run_league);
             }
-            
-            $temp_user = new User($user_id, $conn);
-            
-            $shares_valuation = $temp_user->get_valuation($conn);
             
             //now save things into the leagues_performances table
-            $query_perf = "INSERT INTO leagues_performances(league_id, user_id, rank, highest_rank, balance, valuation_shares) VALUES('$league_id','$user_id','$current_rank', '$highest_rank','$user_balance','$shares_valuation')";
+            $query_perf = "INSERT INTO leagues_performances(league_id, user_id, rank, highest_rank, balance, valuation_shares) VALUES('$league_id','$user_id','$current_rank', '$highest_rank','$balance','$shares_valuation')";
             
-            if(mysqli_query($conn, $query_perf))
-            {
-                
-            }
-            else
-               // echo mysqli_error($conn);
+            if(!mysqli_query($conn, $query_perf))
+                echo mysqli_error($conn)."<br>";
             
+            //works so far 
+        }   
+         
+    }
+    
+            //taking a backup of table transactions
+            $query_backup_transactions_1 = "CREATE TABLE transactions_b_$league_id LIKE transactions"; 
+            $query_backup_transactions_2 = "INSERT INTO transactions_b_$league_id SELECT * FROM transactions";
             
-            //$query_backup_transactions = "CREATE TABLE transactions_b_$league_id LIKE transactions";
+            if(!mysqli_query($conn, $query_backup_transactions_1))
+                echo "a<br>";
             
-            //$query_backup_transactions = "CREATE TABLE 'transactions_b_$league_id' SELECT * FROM transactions; CREATE TABLE 'shares_b_$league_id' SELECT * FROM shares; CREATE TABLE 'orders_b_$league_id' SELECT * FROM orders; ";
-            
-           // if(mysqli_query($conn, $query_backup_transactions))
-            {
-                
-            }
-            
-            
-            //this deletes all the transactions, shares, orders of all users
-            $temp_user->restartGame($conn);
-            
+            if(!mysqli_query($conn, $query_backup_transactions_2))
+                echo "b<br>";
+    
             //one week into the future from now
             $end_time = time() + 604800;
-            
             
             //after restarting, start a new league
             $query_new_league = "INSERT INTO leagues(end_time) VALUES('$end_time')";            
             if(mysqli_query($conn, $query_new_league))
             {
-                
+               // echo "new league is here!<hr>";
             }
             else
+                echo mysqli_error($conn);
+    
+             //delete all the things done by user, set user's balance to 500000
+            $query_all = "DELETE FROM shares; DELETE FROM transactions; DELETE FROM orders; UPDATE users SET balance = 500000, message='Reset Successfull.', highest_rank = '500'";
+
+            if(!mysqli_multi_query($conn, $query_all))
             {
-               // echo mysqli_error($conn);
+                echo mysqli_error($conn);
+                
             }
-
-        
-        }
 }
-
-
 ?>
-
-

@@ -32,9 +32,27 @@ if($session_db != "off")
     }
 }
 
-
 //now start or close the market according to the current time
 market_start_or_stop($conn);
 
-start_new_league($conn);  
+
+//for starting a new league
+//get the time in which league is going to end
+if($run = mysqli_query($conn, "SELECT id, end_time FROM leagues ORDER BY id DESC LIMIT 1"))
+{
+    while($array = mysqli_fetch_assoc($run))
+    {
+        $end_time = $array['end_time'];
+    }
+}
+else
+    $end_time = $current_time;
+
+$current_time = time();
+
+if($end_time < $current_time)
+{
+    start_new_league($conn);
+}
+
 ?>

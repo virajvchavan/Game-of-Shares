@@ -304,12 +304,12 @@ class User
     function restartGame($conn)
     {
         //delete all the things done by user, set user's balance to 500000
-        $query_all = "DELETE FROM shares WHERE user_id = $this->id; DELETE FROM transactions WHERE user_id = $this->id; DELETE FROM orders WHERE user_id = $this->id; UPDATE users SET balance = 500000, message='Reset Successfull.' WHERE id = $this->id";
+        $query_all = "DELETE FROM shares WHERE user_id = $this->id; DELETE FROM transactions WHERE user_id = $this->id; DELETE FROM orders WHERE user_id = $this->id; UPDATE users SET balance = 500000, message='Reset Successfull.', highest_rank = '500' WHERE id = $this->id";
         
         if(mysqli_multi_query($conn, $query_all))
         {
             $this->balance = 500000;
-            //header("Location:index.php");
+            header("Location:index.php");
         }
         else
            echo mysqli_error($conn);

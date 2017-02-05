@@ -10,18 +10,27 @@
 
 <div class="fb-share-button" id="facebook_share" data-href="http://gameofshares.esy.es" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Invite Your friends to play!</a></div>
 
-
 <?php
 
 //get the time in which league is going to end
-if($run = mysqli_query($conn, "SELECT MAX(id), end_time FROM leagues"))
+if($run = mysqli_query($conn, "SELECT id, end_time FROM leagues ORDER BY id DESC LIMIT 1"))
 {
     while($array = mysqli_fetch_assoc($run))
     {
         $end_time = $array['end_time'];
     }
 }
+else
+    $end_time = $current_time;
+
 $current_time = time();
+
+if($end_time < $current_time)
+{
+    start_new_league($conn);
+    
+    $end_time += 604800;
+}
 
 $league_duration = $end_time - $current_time;
 

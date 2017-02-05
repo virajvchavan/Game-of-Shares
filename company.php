@@ -99,9 +99,6 @@ if($session_db != "off")
             <?php include "sidebar_nav_inc.php"; ?>
         </div>
         <!-- /#sidebar-wrapper -->
-        <div id="links_bottom">
-This is League 1. League 1 Ends in 12:8:34
-</div>
         <?php include "fb_inc.php" ?>
         <!-- Page Content -->
         <div id="page-content-wrapper">

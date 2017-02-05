@@ -18,9 +18,10 @@
                 <li>
                     <a href="leaders.php" <?php if(basename($_SERVER['PHP_SELF']) == "leaders.php") echo "class='active'"; ?>>LeaderBoard</a>
                 </li>
-                <br><br><br>
+                <li><a href="winners.php" <?php if(basename($_SERVER['PHP_SELF']) == "winners.php") echo "class='active'"; ?>>Winners</a></li>
+                <br>
                 <li>
-                    <a class="active" href="#" data-toggle="modal" data-target="#leagues"><div style="font-size: 11px;">League ends in:</div> <span id="countdown" style="font-size: 24px; padding-left:20px;" class="timer"></span><span style="font-size: 11px;"> &nbsp;&nbsp;(Know more)</span   ></a>
+                    <a class="active" href="#" data-toggle="modal" data-target="#leagues"><div style="font-size: 11px;">League ends in:</div> <span id="countdown" style="font-size: 22px; padding-left:20px;" class="timer"></span><span style="font-size: 9px;"> &nbsp;&nbsp;(Click to Know)</span></a>
                 </li>
  
                 <li>

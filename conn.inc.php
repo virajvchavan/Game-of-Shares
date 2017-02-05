@@ -38,6 +38,7 @@ if($run = mysqli_query($conn, $query))
     }    
 }
 
+
 //checks if a user is logged in or not, 
 //returns a boolean
 function isLoggedIn()

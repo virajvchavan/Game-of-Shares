@@ -91,7 +91,7 @@
 			<hr class="colorgraph">
 			<div class="form-group">
                          <input type="submit" class="btn btn-block btn-lg btn-primary" value="Register"/>
-                         <span class="pull-right" id="link"><a href="register.php">Login</a></span>
+                         <span class="pull-right" id="link"><a href="login.php">Login</a></span>
                          <br>
                          
                      </div>
