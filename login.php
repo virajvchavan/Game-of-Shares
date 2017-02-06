@@ -1,6 +1,11 @@
 <html>
     <head>
         <title>Login | Game Of Shares</title>
+        <meta name="description" content="Game of shares is a Share market game/Stock market game where users compete with each other to stay at the top of the leader board." />
+        <meta name="keywords" content="stock market, share market, game, learn stocks, begginer, virtual market, virtual shares, virtual stock market" />
+        <meta name="author" content="Viraj Chavan"/>
+        <meta name="robots" content="index, follow" />
+        
         <link type="text/css" href="css/login.css" rel="stylesheet">
         <style>
             #link{
@@ -21,9 +26,10 @@ if(isLoggedIn())
 {
     header("Location:index.php");
 }    
-    
+
 //change the share price of companies (from functions.index.php)
-changePrices($conn, $time_limit_for_company, $price_limit_for_company);
+if($session_db != "off")
+    changePrices($conn, $time_limit_for_company, $price_limit_for_company);
 
 ?>    
 <body>

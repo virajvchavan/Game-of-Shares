@@ -20,8 +20,8 @@ if(!isset($_GET['id']) && empty($_GET['id']))
 //check for any messages    
 $user->checkMessages($conn);
 
+//change the share price of companies (from functions.index.php)    
 if($session_db != "off")   
-    //change the share price of companies (from functions.index.php)
     changePrices($conn, $time_limit_for_company, $price_limit_for_company);
 
 if($session_db != "off")
@@ -41,8 +41,10 @@ if($session_db != "off")
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=1024">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Game of shares is a Share market game/Stock market game where users compete with each other to stay at the top of the leader board." />
+    <meta name="keywords" content="stock market, share market, game, learn stocks, begginer" />
+    <meta name="author" content="Viraj Chavan"/>
+    <meta name="robots" content="index, follow" />
 
     <title>Game Of Shares</title>
 

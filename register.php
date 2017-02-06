@@ -2,6 +2,11 @@
     <head>
         <title>Register | Game Of Shares</title>
         
+        <meta name="description" content="Game of shares is a Share market game/Stock market game where users compete with each other to stay at the top of the leader board." />
+        <meta name="keywords" content="stock market, share market, game, learn stocks, begginer" />
+        <meta name="author" content="Viraj Chavan"/>
+        <meta name="robots" content="index, follow" />
+        
         <link type="text/css" href="css/login.css" rel="stylesheet">
         
         <style>

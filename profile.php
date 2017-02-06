@@ -87,8 +87,10 @@ else
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=1024">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Game of shares is a Share market game/Stock market game where users compete with each other to stay at the top of the leader board." />
+    <meta name="keywords" content="stock market, share market, game, learn stocks, begginer" />
+    <meta name="author" content="Viraj Chavan"/>
+    <meta name="robots" content="index, follow" />
 
     <title>Game Of Shares</title>
 
@@ -148,6 +150,10 @@ else
                 background-color: #CD7F32;
                 color: #262626;
             }
+            #green{
+                background-color: #44c744;
+                color: #262626;
+            }
             #user_color{
                 border: solid #004D40 2px;
             }
@@ -189,8 +195,8 @@ else
                         echo "<div id='gold' class='col-md-2 stats'>Gold: $gold</div>
                                 <div id='silver' class='col-md-2 stats'>Silver: $silver</div>
                                 <div id='bronze' class='col-md-2 stats'>Bronze: $bronze</div>
-                                <div class='col-md-2 stats'>Top 10: $top_10</div>
-                                <div class='col-md-2 stats'>Top 30: $top_30</div>";
+                                <div id = 'green' class='col-md-2 stats'>Top 10: $top_10</div>
+                                <div id = 'green' class='col-md-2 stats'>Top 30: $top_30</div>";
                         echo "</div>";
                         if($profile_id == $user->id)
                               echo "<a href='account.php' class='btn btn-primary pull-right'>Account Settings</a>";

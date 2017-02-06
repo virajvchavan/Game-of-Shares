@@ -5,8 +5,9 @@
 include "classes.inc.php";
 include "conn.inc.php";
 
-//change the share price of companies (from functions.index.php)
-changePrices($conn, $time_limit_for_company, $price_limit_for_company);
+//change the share price of companies (from functions.index.php)    
+if($session_db != "off")
+    changePrices($conn, $time_limit_for_company, $price_limit_for_company);
     
 //leave if admin not logged in
 if(!isset($_SESSION['gos_admin']))

@@ -65,8 +65,8 @@ if(isset($_POST['current_p']) && isset($_POST['new_p']) && isset($_POST['new_con
     
 }
     
+//change the share price of companies (from functions.index.php)    
 if($session_db != "off")    
-    //change the share price of companies (from functions.index.php)
     changePrices($conn, $time_limit_for_company, $price_limit_for_company);
 
 //check for any messages    
@@ -90,8 +90,10 @@ if($session_db != "off")
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=1024">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Game of shares is a Share market game/Stock market game where users compete with each other to stay at the top of the leader board." />
+    <meta name="keywords" content="stock market, share market, game, learn stocks, begginer" />
+    <meta name="author" content="Viraj Chavan"/>
+    <meta name="robots" content="index, follow" />
 
     <title>Game Of Shares</title>
 
@@ -313,10 +315,11 @@ if($session_db != "off")
                                                                 </thead>
                                                             <tbody class='table-hover'>";
                                             
-                                                $query_inline = "SELECT quantity, price, time FROM transactions WHERE user_id =".$user->id." AND company_id = $company_id";
+                                                $query_inline = "SELECT quantity, price, time FROM transactions WHERE user_id =".$user->id." AND company_id = $company_id ORDER BY time DESC";
                                 
                                                 if($run_inline = mysqli_query($conn, $query_inline))
                                                 {
+                                                    echo "<tr><td colspan = '3'>In Latest First order</td></tr>";
                                                     
                                                     if(mysqli_num_rows($run_inline) < 1)
                                                     {
