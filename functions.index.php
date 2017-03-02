@@ -99,7 +99,7 @@ function market_start_or_stop($conn)
     $time = time();
 
     //session chalu kar
-    if($hours >=8 && $hours < 20)
+    if($hours >=8 && $hours < 22)
     {
         $session = "on";
     }

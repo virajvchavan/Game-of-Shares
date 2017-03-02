@@ -1,3 +1,14 @@
+<?php
+if($run_league_no = mysqli_query($conn, "SELECT MAX(id) as league_n FROM leagues"))
+{
+    while($array = mysqli_fetch_assoc($run_league_no))
+    {
+        $league_no = $array['league_n'];
+    }
+}
+
+?>
+
 <ul class="sidebar-nav">
                 <li id="balance">
                     Balance: <?php echo number_format($user->get_balance($conn)); ?>
@@ -21,7 +32,7 @@
                 <li><a href="winners.php" <?php if(basename($_SERVER['PHP_SELF']) == "winners.php") echo "class='active'"; ?>>Winners</a></li>
                 <br>
                 <li>
-                    <a class="active" href="#" data-toggle="modal" data-target="#leagues"><div style="font-size: 11px;">League ends in:</div> <span id="countdown" style="font-size: 22px; padding-left:20px;" class="timer"></span><span style="font-size: 9px;"> &nbsp;&nbsp;(Click to Know)</span></a>
+                    <a class="active" href="#" data-toggle="modal" data-target="#leagues"><div style="font-size: 11px;">League <?php echo $league_no; ?> ends in:</div> <span id="countdown" style="font-size: 22px; padding-left:20px;" class="timer"></span><span style="font-size: 9px;"> &nbsp;&nbsp;(Click to Know)</span></a>
                 </li>
  
                 <li>

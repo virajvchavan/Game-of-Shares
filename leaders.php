@@ -133,7 +133,7 @@ if($session_db != "off")
                                 
                                 $array_sorted = array();
                                 
-                                $query = "SELECT * FROM users ORDER BY balance DESC";
+                                $query = "SELECT * FROM users WHERE balance != '500000' ORDER BY balance DESC";
                                 
                                 if($run = mysqli_query($conn, $query))
                                 {

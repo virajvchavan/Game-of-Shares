@@ -47,7 +47,7 @@ else
 {
     $profile_id = $user->id;
 }
-    
+    //select all the data of user with id
     $query = "SELECT * FROM users WHERE id = $profile_id";
     if($run = mysqli_query($conn, $query))
     {
@@ -62,6 +62,12 @@ else
             $profile_highest_rank = $array['highest_rank'];
             $profile_rank = $array['rank'];
             $profile_balance = $array['balance'];
+            
+            if($profile_rank == "500")
+            {
+                $profile_rank = "None";
+                $profile_highest_rank = "None";
+            }
             
             $gold = $array['gold'];
             $silver = $array['silver'];
@@ -160,6 +166,12 @@ else
             #first{
                 
             }
+            #user_panels{
+                border-color: #004D40;
+            }
+            #user_panel_h{
+                background-color: #004D40;
+            }
     
     </style>
 
@@ -204,27 +216,27 @@ else
                         ?>
                         
                         <div class='col-sm-4'>
-                                    <div class='panel panel-primary'>
-                                        <div class='panel-heading'>Balance</div>
+                                    <div class='panel panel-primary' id="user_panels">
+                                        <div class='panel-heading' id="user_panel_h">Balance</div>
                                         <div class='panel-body'><?php echo number_format($profile_balance);?></div>
                                     </div>
                                 </div>
                                     
                                 <div class='col-sm-4'>
-                                    <div class='panel panel-primary'>
-                                        <div class='panel-heading'>Valuation in Stocks</div>
+                                    <div class='panel panel-primary' id="user_panels">
+                                        <div class='panel-heading' id="user_panel_h">Valuation in Stocks</div>
                                         <div class='panel-body'><?php echo number_format($profile_valuation);?></div>
                                     </div>
                                 </div>
                                 
                                 <div class='col-sm-4'>               
-                                    <div class='panel panel-primary'>
-                                        <div class='panel-heading'>Total Valuation</div>
+                                    <div class='panel panel-primary' id="user_panels">
+                                        <div class='panel-heading' id="user_panel_h">Total Valuation</div>
                                         <div class='panel-body'><?php echo number_format($profile_valuation + $profile_balance); ?></div>
                                     </div>                                
                                 </div>
                     
-                    <!--Show This Users Shares-->
+                    <!--Show this User's owned shares-->
                     <?php
                     //show only if it is allowed
                     if(($profile_id == $user->id) || ($profile_consent == "yes"))
@@ -303,8 +315,8 @@ else
                                                 echo "<tr>
                                                     <td><a href='company.php?id=$company_id'>$company_name ($abbr)</a></td>";?>
                                 
-                                                    <td><a>
-                                                    <?php echo "$quantity</div></a></td>
+                                                    <td>
+                                                    <?php echo "$quantity</div></td>
                                                  </tr>";
                                            }
                                         }
@@ -353,6 +365,13 @@ else
                                         $balance_l = $array_leagues['balance'];
                                         $shares_v_l = $array_leagues['valuation_shares'];
                                         $total_l = $balance_l + $shares_v_l;
+                                        
+                                        if($rank_l == 500)
+                                        {
+                                            echo "<tr>
+                                            <td>$league_id</td>
+                                            <td colspan = '5'>Did not participate</td></tr>";
+                                        }
         
                                         if($rank_l == 1)
                                             $border_color = "first";
@@ -362,14 +381,17 @@ else
                                             $border_color == "third";
                                         else
                                             $border_color = "";
-                                                echo "<tr>
-                                                <td>$league_id</td>
-                                                <td id='$border_color'>$rank_l</td>
-                                                <td>$highest_rank_l</td>
-                                                <td>$balance_l</td>
-                                                <td>$shares_v_l</td>
-                                                <td>$total_l</td>
-                                        </tr>";
+                                        if($rank_l != 500)
+                                        {
+                                            echo "<tr>
+                                                    <td>$league_id</td>
+                                                    <td id='$border_color'>$rank_l</td>
+                                                    <td>$highest_rank_l</td>
+                                                    <td>$balance_l</td>
+                                                    <td>$shares_v_l</td>
+                                                    <td>$total_l</td>
+                                            </tr>";
+                                        }
                                     }
                                 }                          
                                 ?>

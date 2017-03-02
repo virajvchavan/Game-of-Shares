@@ -299,7 +299,7 @@ if($session_db != "off")
                                                 echo "<tr>
                                                     <td><a href='company.php?id=$company_id'>$company_name ($abbr)</a></td>";?>
                                 
-                                                    <td><a><div onclick="toggle_visibility('<?php echo $company_id; ?>');">
+                                                    <td><a href='#'><div onclick="toggle_visibility('<?php echo $company_id; ?>');">
                                                     <?php    echo "$quantity <img src='https://cdn4.iconfinder.com/data/icons/simplicity-vector-icon-set/512/click.png' height='22' width='22'></div></a></td>
                                                     <td>$company_price</td>
                                                  </tr>";
