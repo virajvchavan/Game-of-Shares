@@ -29,12 +29,12 @@ if($run_league_no = mysqli_query($conn, "SELECT MAX(id) as league_n FROM leagues
                 <li>
                     <a href="leaders.php" <?php if(basename($_SERVER['PHP_SELF']) == "leaders.php") echo "class='active'"; ?>>LeaderBoard</a>
                 </li>
-                <li><a href="winners.php" <?php if(basename($_SERVER['PHP_SELF']) == "winners.php") echo "class='active'"; ?>>Winners</a></li>
+                <li><a href="winners.php" <?php if(basename($_SERVER['PHP_SELF']) == "winners.php") echo "class='active'"; ?>>League Winners</a></li>
                 <br>
                 <li>
-                    <a class="active" href="#" data-toggle="modal" data-target="#leagues"><div style="font-size: 11px;">League <?php echo $league_no; ?> ends in:</div> <span id="countdown" style="font-size: 22px; padding-left:20px;" class="timer"></span><span style="font-size: 9px;"> &nbsp;&nbsp;(Click to Know)</span></a>
+                    <a class="active" href="#" data-toggle="modal" data-target="#leagues"><div style="font-size: 13px;">Leagues are now closed!</a>
                 </li>
- 
+                <br>
                 <li>
                     <a href="help.php" <?php if(basename($_SERVER['PHP_SELF']) == "help.php") echo "class='active'"; ?>>Help</a>
                 </li>

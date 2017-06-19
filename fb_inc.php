@@ -11,8 +11,9 @@
 <div class="fb-share-button" id="facebook_share" data-href="http://gameofshares.esy.es" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Invite Your friends to play!</a></div>
 
 <?php
+//commented out this code because: Leagues are now stopped
 
-//get the time in which league is going to end
+/*//get the time in which league is going to end
 if($run = mysqli_query($conn, "SELECT id, end_time FROM leagues ORDER BY id DESC LIMIT 1"))
 {
     while($array = mysqli_fetch_assoc($run))
@@ -32,12 +33,17 @@ if($end_time < $current_time)
     $end_time += 604800;
 }
 
-$league_duration = $end_time - $current_time;
+$league_duration = $end_time - $current_time;*/
 
 ?>
 
-<script>
-var upgradeTime = <?php echo $league_duration; ?>;
+
+<!-- Commented Out Because: Leagues are now stopped
+ -->
+ <script>
+
+//Shows the timer which tells when the league will end
+/*var upgradeTime = <?php echo $league_duration; ?>;
 var seconds = upgradeTime;
 function timer() {
     var days        = Math.floor(seconds/24/60/60);
@@ -57,7 +63,7 @@ function timer() {
         seconds--;
     }
 }
-var countdownTimer = setInterval('timer()', 1000);
+var countdownTimer = setInterval('timer()', 1000);*/
 </script>
 
 
@@ -69,7 +75,7 @@ var countdownTimer = setInterval('timer()', 1000);
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">What is a League?</h4>
+        <h4 class="modal-title">What's a League? (<b>Stopped</b> due do decresed response! )</h4>
       </div>
       <div class="modal-body">
         <p>A League is a <b>One Week</b> long Competition.<br>At the end of each League, you'll get a badge if you have a good Rank on the Leaderboard.<br><br>At the end of each league, every user's game will be reset.<br><br>
@@ -77,6 +83,7 @@ var countdownTimer = setInterval('timer()', 1000);
           Your performance will be recorded for each league.</p>
       </div>
       <div class="modal-footer">
+        <p>First 20 Leagues received huge response!</p>
         <button type="button" class="btn btn-success" data-dismiss="modal">Got it!</button>      
       </div>
     </div>

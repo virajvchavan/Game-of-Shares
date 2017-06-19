@@ -113,7 +113,10 @@ function market_start_or_stop($conn)
 }
 
 
-function start_new_league($conn)
+//commented out because: Leagues are now stopped
+
+//starts a new league
+/*function start_new_league($conn)
 {
     //first save all the neccessary data 
     //then reset the game for each user
@@ -170,6 +173,7 @@ function start_new_league($conn)
                 echo mysqli_error($conn)."<br>";
             
             //works so far 
+            mysqli_query($conn, "UPDATE users SET rank ='500', highest_rank = '500' ");
         }   
          
     }
@@ -204,5 +208,7 @@ function start_new_league($conn)
                 echo mysqli_error($conn);
                 
             }
-}
+    
+    
+}*/
 ?>

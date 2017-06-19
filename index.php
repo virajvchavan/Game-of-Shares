@@ -22,24 +22,15 @@ if(isset($_POST['email']) && isset($_POST['password']))
         
     }
 }
+
+
     
 //leave if not logged in
 if(!isLoggedIn())
 {
     if(!isset($_POST['email']))    
         header("Location:login.php");
-}
-
-//restart the game for logged in user
-if(isset($_POST['restart']) && !empty($_POST['restart']))
-{
-    if($_POST['restart'] == "yes")
-    {
-        $user->restartGame($conn);
-        
-    }
-}
-    
+}    
     
 //change the password for user   
 if(isset($_POST['current_p']) && isset($_POST['new_p']) && isset($_POST['new_confirm_p']))
@@ -72,6 +63,7 @@ if($session_db != "off")
 //check for any messages    
 $user->checkMessages($conn);
 
+
 //execute orders for logged in user    
 if($session_db != "off")
 {  
@@ -81,7 +73,20 @@ if($session_db != "off")
         echo "<div id='note'>$message<a id='close' class='pull-right'>[Close]</a></div>";
     }
 }
-    
+
+//get top rankers
+echo "<div id='links_bottom'>Top Players:  &nbsp&nbsp";    
+    $query_rankers = "SELECT id, first_name, last_name FROM users ORDER BY rank LIMIT 5";
+    if($run_r = mysqli_query($conn, $query_rankers))
+    {
+        while($array_r = mysqli_fetch_assoc($run_r))
+        {
+            $top_id = $array_r['id'];
+            echo "<a href='profile.php?id=$top_id'>".$array_r['first_name']."</a> &nbsp&nbsp&nbsp&nbsp;";
+        }
+    }
+echo "</div>";
+
 ?>
     
     
@@ -125,7 +130,21 @@ if($session_db != "off")
         #limit_div{
             display: none;
         }
-    
+    #links_bottom{
+    position: fixed;
+    z-index: 101;
+    bottom: 0;
+    left: 250px;
+    right: 0;
+    background: #fde073;
+    text-align: center;
+    line-height: 3;
+    overflow: hidden; 
+    -webkit-box-shadow: 0 0 5px black;
+    -moz-box-shadow:    0 0 5px black;
+    box-shadow:         0 0 5px black;
+}
+
     </style>
     
     <script>
@@ -167,6 +186,8 @@ if($session_db != "off")
 </head>
 
 <body>
+    
+
 
     <div id="wrapper">
 

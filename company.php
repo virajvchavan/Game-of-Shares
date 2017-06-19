@@ -323,6 +323,7 @@ if($session_db != "off")
                                 {
                                     if(mysqli_num_rows($run) < 1)
                                     {
+                                        
                                         echo "<tr><td colspan='5'>No transactions to show</td></tr>";
                                     }
                                     else

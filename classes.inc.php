@@ -59,6 +59,15 @@ class User
             return floatval($balance);
         }
     }
+    
+    //for updating the user's basic info
+    function set_basic_info($conn, $first_name, $last_name, $email)
+    {
+        $query_change_info = "UPDATE users SET first_name = '$first_name', last_name = '$last_name', email = '$email' WHERE id = '$this->id'";
+        
+        if(mysqli_query($conn, $query_change_info))
+            return true;
+    }
         
     //function to place the order
     function placeOrder($conn, $type, $company_id, $quantity, $limit_or_market, $limit_price)

@@ -27,6 +27,37 @@ if($session_db != "off")
         echo "<div id='note'>$message<a id='close' class='pull-right'>[Close]</a></div>";
     }
 }
+    
+//change the users details
+if(isset($_POST['u_name']) && isset($_POST['u_l_name']) && isset($_POST['u_email']) && !empty($_POST['u_name']) && !empty($_POST['u_l_name']) && !empty($_POST['u_email']))
+{
+    $f_name = filter_var($_POST['u_name'], FILTER_SANITIZE_STRING);
+    $l_name = filter_var($_POST['u_l_name'], FILTER_SANITIZE_STRING);
+    $u_email = filter_var($_POST['u_email'], FILTER_SANITIZE_EMAIL);
+    
+    if (strlen($f_name) >= 0 && strlen(trim($f_name)) != 0 && strlen($l_name) >= 0 && strlen(trim($l_name)) != 0)
+    {
+        if($user->set_basic_info($conn, $f_name, $l_name, $u_email))
+        {
+            echo "<div id='note'>Changes Saved<a id='close' class='pull-right'>[Close]</a></div>";
+        }
+    }
+    else
+        echo "<div id='note'>Invalid First Name<a id='close' class='pull-right'>[Close]</a></div>";
+}
+
+//get logged in user details to show in the form 
+//select all the data of user with id
+    $query = "SELECT first_name, last_name, email FROM users WHERE id = $user->id";
+    if($run = mysqli_query($conn, $query))
+    {
+        while($array = mysqli_fetch_assoc($run))
+        {
+            $first_name = $array['first_name'];
+            $last_name = $array['last_name'];
+            $email = $array['email'];
+        }
+    }
   
 ?>
     
@@ -36,7 +67,7 @@ if($session_db != "off")
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=1024">
     <meta name="description" content="Game of shares is a Share market game/Stock market game where users compete with each other to stay at the top of the leader board." />
-    <meta name="keywords" content="stock market, share market, game, learn stocks, begginer" />
+    <meta name="keywords" content="stock market, share market, game, learn stocks, begginer, simulation" />
     <meta name="author" content="Viraj Chavan"/>
     <meta name="robots" content="index, follow" />
 
@@ -93,10 +124,38 @@ if($session_db != "off")
        
         <!-- Page Content -->
         <div id="page-content-wrapper">
+            
+            <div class="container-fluid">
+                <h3>Change Profile Details</h3>
+                <div class="row">
+                <!-- The form for changing user details -->
+                <div class="form-area" class="col-xs-4">
+                        <form action="account.php" method="post">
+                            <div class="row form-group">
+                                <label for="u_name" class="col-xs-2">First Name</label>
+                                <div class="col-xs-10"><input type="text" class="form-control" name="u_name" required value="<?php echo $first_name; ?>">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label for="u_l_name" class="col-xs-2">Last Name</label>
+                                <div class="col-xs-10"><input type="text" class="form-control" name="u_l_name" required value="<?php echo $last_name; ?>">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label for="u_email" class="col-xs-2">Email</label>
+                                <div class="col-xs-10"><input type="email" class="form-control" name="u_email" required value="<?php echo $email; ?>">
+                                </div>
+                            </div>
+                                <input type="submit" class="btn btn-success pull-right" value="Save">
+                        </form>
+                </div>
+                    </div>
+            </div>
+
+            
             <div class="container-fluid">
                 
-                <a data-toggle="modal" data-target="#restartModal" class="btn btn-danger btn-lg">Restart Game</a>
-                <br><br>
+                <br>
                 
                 <h3>Change Password</h3>
                 <div class="row">
@@ -122,6 +181,10 @@ if($session_db != "off")
                     </div>
                 
             </div>
+            
+            
+                            
+        </div>
         </div>
         <!-- /#page-content-wrapper -->
 
@@ -134,33 +197,19 @@ if($session_db != "off")
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
+        <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+            
+        <script>
+         close = document.getElementById("close");
+         close.addEventListener('click', function() {
+           note = document.getElementById("note");
+           note.style.display = 'none';
+         }, false);
+    </script>
 </body>
 
 </html>
-
-<!-- Modal -->
-<div id="restartModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Are you sure?</h4>
-      </div>
-      <div class="modal-body">
-        <p>All your current data will be erased.<hr> All your shares will be gone.<hr> Your balance will be set to 500000.<hr>It is not recoverable.</p>
-      </div>
-      <div class="modal-footer">
-        <form method="post" action="index.php"><input type="text" name="restart" value="yes" hidden><input type="submit" class="btn btn-danger" value="Yes. I know what I'm doing!">
-        <button type="button" class="btn btn-success" data-dismiss="modal">No</button>  
-        </form>
-        
-      </div>
-    </div>
-
-  </div>
-</div>
 
 
 <?php

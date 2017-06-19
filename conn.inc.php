@@ -3,6 +3,11 @@
 ob_start();
 session_start();
 
+
+//u390374791_gos
+//u390374791_viraj
+//mysql.hostinger.in
+
 $servername = "127.0.0.1";
 $username_db = "root";
 $password = "";

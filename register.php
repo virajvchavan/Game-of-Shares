@@ -78,7 +78,7 @@
 			</div>
             
             <div class="form-group">
-				<input type="text" name="phone" id="phone" class="form-control input-lg" placeholder="Phone Number" tabindex="5" required>
+				<input type="text" name="phone" id="phone" class="form-control input-lg" placeholder="Phone Number" tabindex="5">
 			</div>
 			<div class="row">
 				<div class="col-xs-12 col-sm-6 col-md-6">
